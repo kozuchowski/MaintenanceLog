@@ -17,6 +17,7 @@ public class Machine {
     private LocalDate lastUDTexamination;
     private boolean UDTExaminationResult;
     private LocalDate lastMaintenence;
+    private boolean maintenerExaminationRsult;
     private List<String> mainteneces;
     private String manufacturer;
 
