@@ -46,19 +46,23 @@ public class CRUDController {
                              @RequestParam ("surname") String surname,
                              @RequestParam ("login") String login,
                              @RequestParam ("email") String email,
+                             @RequestParam ("licence") String licence,
                              @RequestParam("password") String pass,
                              @RequestParam("confirmPass") String confirmPass){
+        maintener = new Maintener(name, surname, login, pass, email, licence );
+        service.updateMaintener(maintener);
         return login + " " + pass;
     }
 
     @PostMapping("/delete")
     public String deleteUser(@RequestParam("login") String login,
                             @RequestParam("password") String pass){
-        return login + " " + pass;
+        service.deleteUserByLogin(login);
+        return "deleted";
     }
     @PostMapping("/showMaintener")
-    public Maintener showMaintener(@RequestParam("id") Long id){
-        Optional<Maintener> optionalMainener = service.findMaintenerById(id);
+    public Maintener showMaintener(@RequestParam("login") String login){
+        Optional<Maintener> optionalMainener = service.findMaintenerByLogin(login);
         return optionalMainener.orElse(new Maintener("none", "none", "none", "none", "none", "none"));
     }
 

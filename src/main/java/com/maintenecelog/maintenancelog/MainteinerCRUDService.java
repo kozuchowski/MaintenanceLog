@@ -9,6 +9,7 @@ import java.util.Optional;
 
 @Service
 public class MainteinerCRUDService {
+
     private final MainteinerCRUDRepository repository;
     @Autowired
     public MainteinerCRUDService(MainteinerCRUDRepository repository) {
@@ -19,8 +20,16 @@ public class MainteinerCRUDService {
         repository.save(maintener);
     }
 
-    public Optional findMaintenerById(Long id){
-        return repository.findById(id);
+    public Optional<Maintener> findMaintenerByLogin(String login){
+        return repository.findByLogin(login);
+    }
+    public void deleteUserByLogin(String login){
+        repository.deleteByLogin(login);
+    }
+
+    public void updateMaintener(Maintener m){
+        repository.setMaintenerByLogin(m.getName(), m.getSurname(), m.getLogin(), m.getEmail(), m.getPassword(), m.getLicenceNumber());
+
     }
 
 }
