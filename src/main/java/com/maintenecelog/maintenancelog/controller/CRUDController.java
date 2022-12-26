@@ -1,7 +1,7 @@
 package com.maintenecelog.maintenancelog.controller;
 
 import com.maintenecelog.maintenancelog.MainteinerCRUDService;
-import com.maintenecelog.maintenancelog.model.Maintener;
+import com.maintenecelog.maintenancelog.model.Mainteiner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +14,7 @@ import java.util.Optional;
 @RequestMapping("/user")
 public class CRUDController {
 
-    private Maintener maintener;
+    private Mainteiner mainteiner;
     private MainteinerCRUDService service;
 
     @Autowired
@@ -30,8 +30,8 @@ public class CRUDController {
                              @RequestParam ("licence") String licence,
                              @RequestParam("password") String pass,
                              @RequestParam("confirmPass") String confirmPass){
-        maintener = new Maintener(name, surname, login, pass, email, licence );
-        service.createMainteiner(maintener);
+        mainteiner = new Mainteiner(name, surname, login, pass, email, licence );
+        service.createMainteiner(mainteiner);
         return name + " " + surname + " " + pass;
     }
 
@@ -49,8 +49,8 @@ public class CRUDController {
                              @RequestParam ("licence") String licence,
                              @RequestParam("password") String pass,
                              @RequestParam("confirmPass") String confirmPass){
-        maintener = new Maintener(name, surname, login, pass, email, licence );
-        service.updateMaintener(maintener);
+        mainteiner = new Mainteiner(name, surname, login, pass, email, licence );
+        service.updateMaintener(mainteiner);
         return login + " " + pass;
     }
 
@@ -61,9 +61,9 @@ public class CRUDController {
         return "deleted";
     }
     @PostMapping("/showMaintener")
-    public Maintener showMaintener(@RequestParam("login") String login){
-        Optional<Maintener> optionalMainener = service.findMaintenerByLogin(login);
-        return optionalMainener.orElse(new Maintener("none", "none", "none", "none", "none", "none"));
+    public Mainteiner showMaintener(@RequestParam("login") String login){
+        Optional<Mainteiner> optionalMainener = service.findMaintenerByLogin(login);
+        return optionalMainener.orElse(new Mainteiner("none", "none", "none", "none", "none", "none"));
     }
 
 }
