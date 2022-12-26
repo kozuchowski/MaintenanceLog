@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Setter
 @Getter
 @Entity
-public class Mainteinence {
+public class Maintenence {
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
     @Id

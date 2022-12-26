@@ -28,7 +28,7 @@ public class Machine {
     private LocalDate lastMaintenence;
     private boolean maintenerExaminationRsult;
     @OneToMany(mappedBy = "machine")
-    private List<Mainteinence> mainteneces;
+    private List<Maintenence> mainteneces;
     private String manufacturer;
 
     @ManyToOne
@@ -39,13 +39,6 @@ public class Machine {
     @JoinColumn(name="owner_id", nullable=false)
     private Owner owner;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     @Override
     public boolean equals(Object o) {

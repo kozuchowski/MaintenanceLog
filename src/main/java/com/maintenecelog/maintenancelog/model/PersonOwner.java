@@ -1,10 +1,14 @@
 package com.maintenecelog.maintenancelog.model;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.util.List;
+import javax.persistence.Entity;
 
-@Data
+@Setter
+@Getter
+@Entity
 public class PersonOwner extends Owner {
     private String name;
     private String surname;
