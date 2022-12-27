@@ -13,8 +13,6 @@ import java.util.List;
 @Repository
 public interface MachineCRUDRepository extends JpaRepository<Machine, Long> {
 
-    @Query("select m from Machine m where m.mainteiner.id = ?1")
-    List<Machine> getMachinesByMainteinerId (Long mainteinerId);
 
     @Query("update Machine m set m.UDTNumber = ?1, m.VINNumber = ?2, m.serialNumber = ?3, m.dateOfManufacture = ?4," +
             "m.lastUDOExamination = ?5, m.UDTExaminationResult = ?6, m.lastMaintenance = ?7, m.maintainerExaminationResult = ?8," +
@@ -23,5 +21,7 @@ public interface MachineCRUDRepository extends JpaRepository<Machine, Long> {
                                boolean UDTExResult, LocalDate lastMaintenance, boolean mainteinerExResult,
                                String manufacturer, Mainteiner mainteiner, Owner owner, Long id);
     void deleteById(Long id);
+
+    List<Machine> findAllByMainteiner(Mainteiner mainteiner);
 
 }
