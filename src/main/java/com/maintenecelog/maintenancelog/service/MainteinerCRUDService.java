@@ -1,4 +1,4 @@
-package com.maintenecelog.maintenancelog;
+package com.maintenecelog.maintenancelog.service;
 
 import com.maintenecelog.maintenancelog.model.Mainteiner;
 import com.maintenecelog.maintenancelog.repository.MainteinerCRUDRepository;
@@ -20,8 +20,8 @@ public class MainteinerCRUDService {
         repository.save(mainteiner);
     }
 
-    public Optional<Mainteiner> findMaintenerByLogin(String login){
-        return repository.findByLogin(login);
+    public Mainteiner findMainteinerByLogin(String login){
+        return repository.findByLogin(login).orElseThrow();
     }
     public void deleteUserByLogin(String login){
         repository.deleteByLogin(login);
@@ -31,5 +31,6 @@ public class MainteinerCRUDService {
         repository.setMaintenerByLogin(m.getName(), m.getSurname(), m.getLogin(), m.getEmail(), m.getPassword(), m.getLicenceNumber());
 
     }
+
 
 }

@@ -1,18 +1,15 @@
 package com.maintenecelog.maintenancelog.model;
 
 import lombok.*;
-import org.hibernate.Hibernate;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+
 
 @Getter
 @Setter
-@ToString
-@RequiredArgsConstructor
 @Entity
+@ToString
 @NoArgsConstructor
 public class Mainteiner {
     @Id
@@ -27,7 +24,7 @@ public class Mainteiner {
 
     @OneToMany(mappedBy="mainteiner")
     @ToString.Exclude
-    private List<Machine> machines = new ArrayList<>();
+    private List<Machine> machines;
 
     public Mainteiner(String name, String surname, String login, String password, String email, String licenceNumber) {
         this.name = name;
@@ -38,16 +35,6 @@ public class Mainteiner {
         this.licenceNumber = licenceNumber;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Mainteiner mainteiner = (Mainteiner) o;
-        return id != null && Objects.equals(id, mainteiner.id);
-    }
 
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
+
 }

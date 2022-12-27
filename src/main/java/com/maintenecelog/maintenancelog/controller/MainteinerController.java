@@ -1,6 +1,7 @@
 package com.maintenecelog.maintenancelog.controller;
 
-import com.maintenecelog.maintenancelog.MainteinerCRUDService;
+import com.maintenecelog.maintenancelog.model.Machine;
+import com.maintenecelog.maintenancelog.service.MainteinerCRUDService;
 import com.maintenecelog.maintenancelog.model.Mainteiner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -8,17 +9,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/user")
-public class CRUDController {
+public class MainteinerController {
 
     private Mainteiner mainteiner;
     private MainteinerCRUDService service;
 
     @Autowired
-    public CRUDController(MainteinerCRUDService service) {
+    public MainteinerController(MainteinerCRUDService service) {
         this.service = service;
     }
 
@@ -62,8 +64,8 @@ public class CRUDController {
     }
     @PostMapping("/showMaintener")
     public Mainteiner showMaintener(@RequestParam("login") String login){
-        Optional<Mainteiner> optionalMainener = service.findMaintenerByLogin(login);
-        return optionalMainener.orElse(new Mainteiner("none", "none", "none", "none", "none", "none"));
+        Mainteiner mainteiner = service.findMainteinerByLogin(login);
+        return mainteiner;
     }
 
 }

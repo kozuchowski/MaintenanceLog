@@ -6,12 +6,11 @@ import org.hibernate.Hibernate;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Objects;
+
 
 @Getter
 @Setter
-@ToString
-@RequiredArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Machine {
     @Id
@@ -26,30 +25,24 @@ public class Machine {
     private LocalDate lastUDTexamination;
     private boolean UDTExaminationResult;
     private LocalDate lastMaintenence;
-    private boolean maintenerExaminationRsult;
+    private boolean maintenerExaminationResult;
+    private String manufacturer;
     @OneToMany(mappedBy = "machine")
     private List<Maintenence> mainteneces;
-    private String manufacturer;
+
 
     @ManyToOne
     @JoinColumn(name="mainteiner_id", nullable=false)
     private Mainteiner mainteiner;
 
-    @ManyToOne
-    @JoinColumn(name="owner_id", nullable=false)
-    private Owner owner;
+//    @ManyToOne
+//    @JoinColumn(name="owner_id", nullable=false)
+//    private Owner owner;
 
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Machine machine = (Machine) o;
-        return id != null && Objects.equals(id, machine.id);
-    }
+    public Machine(String UDTNumber,Mainteiner mainteiner) {
+        this.UDTNumber = UDTNumber;
+//        this.mainteiner = mainteiner;
 
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
     }
 }
