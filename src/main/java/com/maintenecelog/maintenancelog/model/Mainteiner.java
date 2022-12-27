@@ -9,7 +9,6 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@ToString
 @NoArgsConstructor
 public class Mainteiner {
     @Id
@@ -22,9 +21,6 @@ public class Mainteiner {
     private String email;
     private String licenceNumber;
 
-    @OneToMany(mappedBy="mainteiner")
-    @ToString.Exclude
-    private List<Machine> machines;
 
     public Mainteiner(String name, String surname, String login, String password, String email, String licenceNumber) {
         this.name = name;

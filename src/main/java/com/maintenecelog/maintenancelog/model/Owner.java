@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Setter
 @Getter
@@ -20,10 +19,5 @@ public class Owner {
     private String email;
     private String phoneNumber;
     private String NIP;
-//    @OneToMany(mappedBy = "owner")
-//    private List<Machine> machines;
 
-//    public void setMachines(Machine machine) {
-//        this.machines.add(machine);
-//    }
 }

@@ -5,8 +5,6 @@ import com.maintenecelog.maintenancelog.repository.MainteinerCRUDRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 public class MainteinerCRUDService {
 
@@ -21,14 +19,14 @@ public class MainteinerCRUDService {
     }
 
     public Mainteiner findMainteinerByLogin(String login){
-        return repository.findByLogin(login).orElseThrow();
+        return repository.findByLogin(login);
     }
     public void deleteUserByLogin(String login){
         repository.deleteByLogin(login);
     }
 
     public void updateMaintener(Mainteiner m){
-        repository.setMaintenerByLogin(m.getName(), m.getSurname(), m.getLogin(), m.getEmail(), m.getPassword(), m.getLicenceNumber());
+        repository.setMaintainerByLogin(m.getName(), m.getSurname(), m.getLogin(), m.getEmail(), m.getPassword(), m.getLicenceNumber());
 
     }
 

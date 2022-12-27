@@ -1,11 +1,9 @@
 package com.maintenecelog.maintenancelog.model;
 
 import lombok.*;
-import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
 
 
 @Getter
@@ -22,27 +20,24 @@ public class Machine {
     private String VINNumber;
     private String serialNumber;
     private LocalDate dateOfManufacture;
-    private LocalDate lastUDTexamination;
+    private LocalDate lastUDOExamination;
     private boolean UDTExaminationResult;
-    private LocalDate lastMaintenence;
-    private boolean maintenerExaminationResult;
+    private LocalDate lastMaintenance;
+    private boolean maintainerExaminationResult;
     private String manufacturer;
-    @OneToMany(mappedBy = "machine")
-    private List<Maintenence> mainteneces;
-
 
     @ManyToOne
     @JoinColumn(name="mainteiner_id", nullable=false)
     private Mainteiner mainteiner;
 
-//    @ManyToOne
-//    @JoinColumn(name="owner_id", nullable=false)
-//    private Owner owner;
+    @ManyToOne
+    @JoinColumn(name="owner_id", nullable=false)
+    private Owner owner;
 
 
     public Machine(String UDTNumber,Mainteiner mainteiner) {
         this.UDTNumber = UDTNumber;
-//        this.mainteiner = mainteiner;
+        this.mainteiner = mainteiner;
 
     }
 }
