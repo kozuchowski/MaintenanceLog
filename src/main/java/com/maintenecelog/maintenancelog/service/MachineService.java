@@ -2,7 +2,7 @@ package com.maintenecelog.maintenancelog.service;
 
 import com.maintenecelog.maintenancelog.model.Machine;
 import com.maintenecelog.maintenancelog.model.Mainteiner;
-import com.maintenecelog.maintenancelog.repository.MachineCRUDRepository;
+import com.maintenecelog.maintenancelog.repository.MachineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,10 +11,10 @@ import java.util.Optional;
 
 @Service
 public class MachineService {
-    private MachineCRUDRepository repository;
+    private MachineRepository repository;
 
     @Autowired
-    public MachineService(MachineCRUDRepository repository) {
+    public MachineService(MachineRepository repository) {
         this.repository = repository;
     }
 

@@ -1,16 +1,16 @@
 package com.maintenecelog.maintenancelog.service;
 
 import com.maintenecelog.maintenancelog.model.Mainteiner;
-import com.maintenecelog.maintenancelog.repository.MainteinerCRUDRepository;
+import com.maintenecelog.maintenancelog.repository.MainteinerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class MainteinerCRUDService {
 
-    private final MainteinerCRUDRepository repository;
+    private final MainteinerRepository repository;
     @Autowired
-    public MainteinerCRUDService(MainteinerCRUDRepository repository) {
+    public MainteinerCRUDService(MainteinerRepository repository) {
         this.repository = repository;
     }
 

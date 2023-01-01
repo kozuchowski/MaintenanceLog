@@ -11,7 +11,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Repository
-public interface MachineCRUDRepository extends JpaRepository<Machine, Long> {
+public interface MachineRepository extends JpaRepository<Machine, Long> {
 
 
     @Query("update Machine m set m.UDTNumber = ?1, m.VINNumber = ?2, m.serialNumber = ?3, m.dateOfManufacture = ?4," +

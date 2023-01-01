@@ -1,6 +1,7 @@
 package com.maintenecelog.maintenancelog.model;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
@@ -9,7 +10,7 @@ import javax.persistence.*;
 @Setter
 @Getter
 @Entity
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class Owner {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -20,4 +21,7 @@ public class Owner {
     private String phoneNumber;
     private String NIP;
 
+    public Owner(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 }

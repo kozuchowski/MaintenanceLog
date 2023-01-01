@@ -7,10 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 @Repository
-public interface MainteinerCRUDRepository extends JpaRepository<Mainteiner, Long> {
+public interface MainteinerRepository extends JpaRepository<Mainteiner, Long> {
 
     @Query("select m from Mainteiner m where m.login like ?1")
     Mainteiner findByLogin(String login);
