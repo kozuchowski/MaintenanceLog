@@ -28,7 +28,7 @@ public class MachineService {
         return repository.findAll();
     }
 
-    public List<Machine> getAllMachinesDorOneMainteiner(Mainteiner mainteiner){
+    public List<Machine> getAllMachinesForTheMainteiner(Mainteiner mainteiner){
         return   repository.findAllByMainteiner(mainteiner);
     }
 }

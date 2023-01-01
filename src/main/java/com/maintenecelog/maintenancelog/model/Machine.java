@@ -35,9 +35,17 @@ public class Machine {
     private Owner owner;
 
 
-    public Machine(String UDTNumber,Mainteiner mainteiner) {
+    public Machine(String UDTNumber, String VINNumber, String serialNumber, LocalDate dateOfManufacture, LocalDate lastUDOExamination, boolean UDTExaminationResult, LocalDate lastMaintenance, boolean maintainerExaminationResult, String manufacturer, Mainteiner mainteiner, Owner owner) {
         this.UDTNumber = UDTNumber;
+        this.VINNumber = VINNumber;
+        this.serialNumber = serialNumber;
+        this.dateOfManufacture = dateOfManufacture;
+        this.lastUDOExamination = lastUDOExamination;
+        this.UDTExaminationResult = UDTExaminationResult;
+        this.lastMaintenance = lastMaintenance;
+        this.maintainerExaminationResult = maintainerExaminationResult;
+        this.manufacturer = manufacturer;
         this.mainteiner = mainteiner;
-
+        this.owner = owner;
     }
 }

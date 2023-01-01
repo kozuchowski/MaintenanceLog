@@ -26,7 +26,8 @@ public class MainteinerCRUDService {
     }
 
     public void updateMaintener(Mainteiner m){
-        repository.setMaintainerByLogin(m.getName(), m.getSurname(), m.getLogin(), m.getEmail(), m.getPassword(), m.getLicenceNumber());
+        repository.setMaintainerByLogin(m.getName(), m.getSurname(), m.getLogin(),
+                m.getEmail(), m.getPassword(), m.getLicenceNumber());
 
     }
 
