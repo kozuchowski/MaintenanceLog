@@ -1,28 +1,24 @@
 package com.maintenecelog.maintenancelog.controller;
 
-import com.maintenecelog.maintenancelog.model.Machine;
-import com.maintenecelog.maintenancelog.service.MainteinerCRUDService;
+import com.maintenecelog.maintenancelog.service.MainteinerService;
 import com.maintenecelog.maintenancelog.model.Mainteiner;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/user")
 public class MainteinerController {
 
     private Mainteiner mainteiner;
-    private MainteinerCRUDService service;
+    private MainteinerService service;
 
     @Autowired
-    public MainteinerController(MainteinerCRUDService service) {
+    public MainteinerController(MainteinerService service) {
         this.service = service;
     }
 

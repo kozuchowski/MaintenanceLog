@@ -2,6 +2,7 @@ package com.maintenecelog.maintenancelog.service;
 
 import com.maintenecelog.maintenancelog.model.Machine;
 import com.maintenecelog.maintenancelog.model.Mainteiner;
+import com.maintenecelog.maintenancelog.model.Maintenence;
 import com.maintenecelog.maintenancelog.repository.MachineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,4 +32,5 @@ public class MachineService {
     public List<Machine> getAllMachinesForTheMainteiner(Mainteiner mainteiner){
         return   repository.findAllByMainteiner(mainteiner);
     }
+
 }

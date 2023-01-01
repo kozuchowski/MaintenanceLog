@@ -17,11 +17,13 @@ public class Owner {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    String ownerName;
     private String email;
     private String phoneNumber;
     private String NIP;
 
-    public Owner(String phoneNumber) {
+    public Owner(String phoneNumber, String name) {
+        this.ownerName = name;
         this.phoneNumber = phoneNumber;
     }
 }

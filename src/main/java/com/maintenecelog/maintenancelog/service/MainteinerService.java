@@ -6,11 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MainteinerCRUDService {
+public class MainteinerService {
 
     private final MainteinerRepository repository;
     @Autowired
-    public MainteinerCRUDService(MainteinerRepository repository) {
+    public MainteinerService(MainteinerRepository repository) {
         this.repository = repository;
     }
 
