@@ -14,7 +14,7 @@ import java.util.List;
 @Repository
 public interface MaintenenceRepository extends JpaRepository<Maintenence, Long> {
 
-    List<Maintenence> findAllByMachine ();
+    List<Maintenence> findAllByMachine (Machine machine);
 
     Maintenence findByExDate(LocalDate exDate);
     @Modifying

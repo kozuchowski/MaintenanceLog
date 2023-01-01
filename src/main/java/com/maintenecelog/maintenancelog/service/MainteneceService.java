@@ -19,8 +19,8 @@ public class MainteneceService {
         this.repository = repository;
     }
 
-    public List<Maintenence> findAllByMachine_Id(Long id){
-        return repository.findAllByMachine();
+    public List<Maintenence> findAllByMachine(Machine machine){
+        return repository.findAllByMachine(machine);
     }
 
     public Maintenence findByDate(LocalDate exDate) {

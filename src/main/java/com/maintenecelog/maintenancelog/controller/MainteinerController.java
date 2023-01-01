@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @RestController
@@ -23,7 +24,7 @@ public class MainteinerController {
     }
 
     @PostMapping("/signIn")
-    public String createUser(HttpSession session,
+    public String createUser(HttpServletRequest request,
                              @RequestParam("name") String name,
                              @RequestParam ("surname") String surname,
                              @RequestParam ("login") String login,
@@ -33,27 +34,27 @@ public class MainteinerController {
                              @RequestParam("confirmPass") String confirmPass){
         mainteiner = new Mainteiner(name, surname, login, pass, email, licence );
         service.createMainteiner(mainteiner);
-        session.setAttribute("login", login);
+        request.getSession().setAttribute("login", login);
         return name + " " + surname + " " + pass;
     }
 
     @PostMapping("/logIn")
-    public String loginUser(HttpSession session,
+    public String loginUser(HttpServletRequest request,
                             @RequestParam("login") String login,
                             @RequestParam("password") String pass){
-        session.setAttribute("login", login);
+        request.getSession().setAttribute("login", login);
         return login + " " + pass;
     }
 
     @PostMapping("/update")
-    public String updateUser(HttpSession session,
+    public String updateUser(HttpServletRequest request,
                              @RequestParam("name") String name,
                              @RequestParam ("surname") String surname,
                              @RequestParam ("email") String email,
                              @RequestParam ("licence") String licence,
                              @RequestParam("password") String pass,
                              @RequestParam("confirmPass") String confirmPass){
-        String login = session.getAttribute("login").toString();
+        String login = request.getSession().getAttribute("login").toString();
         mainteiner = new Mainteiner(name, surname, login, pass, email, licence );
         service.updateMaintener(mainteiner);
         return login + " " + pass;
@@ -66,8 +67,9 @@ public class MainteinerController {
         return "deleted";
     }
     @PostMapping("/showMaintener")
-    public Mainteiner showMaintener(HttpSession session){
-        String login = session.getAttribute("login").toString();
+    public Mainteiner showMaintener(HttpServletRequest request){
+        String login = request.getSession().getAttribute("login").toString();
+        System.out.println(login);
         Mainteiner mainteiner = service.findMainteinerByLogin(login);
         return mainteiner;
     }
