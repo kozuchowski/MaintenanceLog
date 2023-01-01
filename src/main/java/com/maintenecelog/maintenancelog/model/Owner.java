@@ -2,10 +2,10 @@ package com.maintenecelog.maintenancelog.model;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Setter
 @Getter
@@ -21,6 +21,9 @@ public class Owner {
     private String email;
     private String phoneNumber;
     private String NIP;
+
+    @OneToMany
+    private List<Machine> machines;
 
     public Owner(String phoneNumber, String name) {
         this.ownerName = name;
