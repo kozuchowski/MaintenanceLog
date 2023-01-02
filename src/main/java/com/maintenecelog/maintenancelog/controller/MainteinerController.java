@@ -1,6 +1,6 @@
 package com.maintenecelog.maintenancelog.controller;
 
-import com.maintenecelog.maintenancelog.service.MainteinerService;
+import com.maintenecelog.maintenancelog.service.MainteinerServiceImpl;
 import com.maintenecelog.maintenancelog.model.Mainteiner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,10 +16,10 @@ import javax.servlet.http.HttpSession;
 public class MainteinerController {
 
     private Mainteiner mainteiner;
-    private MainteinerService service;
+    private MainteinerServiceImpl service;
 
     @Autowired
-    public MainteinerController(MainteinerService service) {
+    public MainteinerController(MainteinerServiceImpl service) {
         this.service = service;
     }
 
@@ -69,7 +69,6 @@ public class MainteinerController {
     @PostMapping("/showMaintener")
     public Mainteiner showMaintener(HttpServletRequest request){
         String login = request.getSession().getAttribute("login").toString();
-        System.out.println(login);
         Mainteiner mainteiner = service.findMainteinerByLogin(login);
         return mainteiner;
     }

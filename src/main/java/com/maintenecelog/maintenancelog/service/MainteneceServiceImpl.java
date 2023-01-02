@@ -10,12 +10,12 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Service
-public class MainteneceService {
+public class MainteneceServiceImpl {
 
     private final MaintenenceRepository repository;
 
     @Autowired
-    public MainteneceService(MaintenenceRepository repository) {
+    public MainteneceServiceImpl(MaintenenceRepository repository) {
         this.repository = repository;
     }
 

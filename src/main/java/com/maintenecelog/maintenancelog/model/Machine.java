@@ -27,13 +27,19 @@ public class Machine {
     private String manufacturer;
 
     @ManyToOne
-    @JoinColumn(name="mainteiner_id", nullable=false)
     private Mainteiner mainteiner;
 
 
 
 
-    public Machine(String UDTNumber, String VINNumber, String serialNumber, LocalDate dateOfManufacture, LocalDate lastUDOExamination, boolean UDTExaminationResult, LocalDate lastMaintenance, boolean maintainerExaminationResult, String manufacturer, Mainteiner mainteiner) {
+
+
+
+
+
+    public Machine(String UDTNumber, String VINNumber, String serialNumber, LocalDate dateOfManufacture,
+                   LocalDate lastUDOExamination, boolean UDTExaminationResult, LocalDate lastMaintenance,
+                   boolean maintainerExaminationResult, String manufacturer, Mainteiner mainteiner) {
         this.UDTNumber = UDTNumber;
         this.VINNumber = VINNumber;
         this.serialNumber = serialNumber;
@@ -44,5 +50,6 @@ public class Machine {
         this.maintainerExaminationResult = maintainerExaminationResult;
         this.manufacturer = manufacturer;
         this.mainteiner = mainteiner;
+
     }
 }

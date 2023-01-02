@@ -1,23 +1,15 @@
 package com.maintenecelog.maintenancelog.service;
 
+import com.maintenecelog.maintenancelog.model.Machine;
 import com.maintenecelog.maintenancelog.model.Owner;
-import com.maintenecelog.maintenancelog.repository.OwnerRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-@Service
-public class OwnerService {
-    private final OwnerRepository repository;
+public interface OwnerService {
 
-    @Autowired
-    public OwnerService(OwnerRepository repository) {
-        this.repository = repository;
-    }
+    void addOwner(Owner owner);
 
-    public void addOwner(Owner owner) {
-        repository.save(owner);
-    }
+    void deleteOwner(Owner owner);
 
-    //@TODO Implement methods
-    //@TODO Create interfaces for Services
+    void updateOwner(Owner owner);
+
+    Owner findOwnerByMachine(Machine machine);
 }

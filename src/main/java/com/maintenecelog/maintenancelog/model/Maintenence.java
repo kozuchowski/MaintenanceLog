@@ -18,7 +18,6 @@ public class Maintenence {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name="machine_id", nullable=false)
     private Machine machine;
     private String description;
     private LocalDate exDate;

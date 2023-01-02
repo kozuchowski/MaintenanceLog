@@ -2,9 +2,10 @@ package com.maintenecelog.maintenancelog.controller;
 
 import com.maintenecelog.maintenancelog.model.Machine;
 import com.maintenecelog.maintenancelog.model.Mainteiner;
-import com.maintenecelog.maintenancelog.service.MachineService;
-import com.maintenecelog.maintenancelog.service.MainteinerService;
-import com.maintenecelog.maintenancelog.service.OwnerService;
+import com.maintenecelog.maintenancelog.model.Owner;
+import com.maintenecelog.maintenancelog.service.MachineServiceImpl;
+import com.maintenecelog.maintenancelog.service.MainteinerServiceImpl;
+import com.maintenecelog.maintenancelog.service.OwnerServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,12 +21,13 @@ import java.time.LocalDate;
 public class MachineController {
 
 
-    private final MachineService machineService;
-    private final MainteinerService mainteinerService;
+    private final MachineServiceImpl machineService;
+    private final MainteinerServiceImpl mainteinerService;
 
-    private final OwnerService ownerService;
+    private final OwnerServiceImpl ownerService;
     @Autowired
-    public MachineController(MachineService machineService, MainteinerService mainteinerService, OwnerService ownerService) {
+    public MachineController(MachineServiceImpl machineService, MainteinerServiceImpl mainteinerService,
+                             OwnerServiceImpl ownerService) {
         this.machineService = machineService;
         this.mainteinerService = mainteinerService;
         this.ownerService = ownerService;
@@ -47,11 +49,16 @@ public class MachineController {
                            @RequestParam
                                @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate lastMaintenance,
                            @RequestParam boolean maintainerExResult,
-                           @RequestParam String manufacturer) {
+                           @RequestParam String manufacturer,
+                           @RequestParam String ownerName,
+                           @RequestParam String email,
+                           @RequestParam String phone,
+                           @RequestParam String NIP) {
 
         String login = request.getSession().getAttribute("login").toString();
         Mainteiner mainteiner = mainteinerService.findMainteinerByLogin(login);
-        //@TODO Get owner to pass
+        Owner owner = new Owner(ownerName, email, phone, NIP);
+        ownerService.addOwner(owner);
         Machine machine = new Machine(UDT, VIN, serial, manufactured, lastUDTEx, UDTExResult,
                 lastMaintenance, maintainerExResult, manufacturer, mainteiner);
 
