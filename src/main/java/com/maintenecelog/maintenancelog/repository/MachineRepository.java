@@ -2,6 +2,7 @@ package com.maintenecelog.maintenancelog.repository;
 
 import com.maintenecelog.maintenancelog.model.Machine;
 import com.maintenecelog.maintenancelog.model.Mainteiner;
+import com.maintenecelog.maintenancelog.model.Owner;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -22,5 +23,8 @@ public interface MachineRepository extends JpaRepository<Machine, Long> {
     void deleteById(Long id);
 
     List<Machine> findAllByMainteiner(Mainteiner mainteiner);
+
+    @Query("select m from Machine m where m.owner = ?1 ")
+    List<Machine> findAllByOwner(Owner owner);
 
 }

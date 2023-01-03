@@ -11,5 +11,5 @@ public interface OwnerService {
 
     void updateOwner(Owner owner);
 
-    Owner findOwnerByMachine(Machine machine);
+    Owner findOwnerById(Long id);
 }

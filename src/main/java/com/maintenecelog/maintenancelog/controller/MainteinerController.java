@@ -3,10 +3,7 @@ package com.maintenecelog.maintenancelog.controller;
 import com.maintenecelog.maintenancelog.service.MainteinerServiceImpl;
 import com.maintenecelog.maintenancelog.model.Mainteiner;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -16,14 +13,14 @@ import javax.servlet.http.HttpSession;
 public class MainteinerController {
 
     private Mainteiner mainteiner;
-    private MainteinerServiceImpl service;
+    private final MainteinerServiceImpl service;
 
     @Autowired
     public MainteinerController(MainteinerServiceImpl service) {
         this.service = service;
     }
 
-    @PostMapping("/signIn")
+    @PostMapping("/signIn/mainteiner")
     public String createUser(HttpServletRequest request,
                              @RequestParam("name") String name,
                              @RequestParam ("surname") String surname,
@@ -38,7 +35,7 @@ public class MainteinerController {
         return name + " " + surname + " " + pass;
     }
 
-    @PostMapping("/logIn")
+    @PostMapping("/logIn/mainteiner")
     public String loginUser(HttpServletRequest request,
                             @RequestParam("login") String login,
                             @RequestParam("password") String pass){
@@ -46,7 +43,7 @@ public class MainteinerController {
         return login + " " + pass;
     }
 
-    @PostMapping("/update")
+    @PutMapping("/update/mainteiner")
     public String updateUser(HttpServletRequest request,
                              @RequestParam("name") String name,
                              @RequestParam ("surname") String surname,
@@ -60,13 +57,13 @@ public class MainteinerController {
         return login + " " + pass;
     }
 
-    @PostMapping("/delete")
+    @DeleteMapping("/delete/mainteiner")
     public String deleteUser(HttpSession session) {
         String login = session.getAttribute("login").toString();
         service.deleteUserByLogin(login);
         return "deleted";
     }
-    @PostMapping("/showMaintener")
+    @GetMapping("/show/mainteiner")
     public Mainteiner showMaintener(HttpServletRequest request){
         String login = request.getSession().getAttribute("login").toString();
         Mainteiner mainteiner = service.findMainteinerByLogin(login);

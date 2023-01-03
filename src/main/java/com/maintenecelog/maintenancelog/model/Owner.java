@@ -23,9 +23,6 @@ public class Owner {
     private String phoneNumber;
     private String NIP;
 
-    @OneToMany(cascade= {CascadeType.ALL})
-    private List<Machine> machines =
-            new ArrayList<>();
 
 
 
@@ -40,4 +37,5 @@ public class Owner {
         this.phoneNumber = phoneNumber;
         this.NIP = NIP;
     }
+
 }

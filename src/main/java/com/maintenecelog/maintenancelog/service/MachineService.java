@@ -2,6 +2,7 @@ package com.maintenecelog.maintenancelog.service;
 
 import com.maintenecelog.maintenancelog.model.Machine;
 import com.maintenecelog.maintenancelog.model.Mainteiner;
+import com.maintenecelog.maintenancelog.model.Owner;
 
 
 import java.util.List;
@@ -13,4 +14,6 @@ public interface MachineService {
     List<Machine> getAllMachines();
 
     List<Machine> getAllMachinesForTheMainteiner(Mainteiner mainteiner);
+
+    List<Machine> getAllMachinesForTheOwner(Owner owner);
 }

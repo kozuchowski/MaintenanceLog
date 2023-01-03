@@ -1,6 +1,5 @@
 package com.maintenecelog.maintenancelog.service;
 
-import com.maintenecelog.maintenancelog.model.Machine;
 import com.maintenecelog.maintenancelog.model.Owner;
 import com.maintenecelog.maintenancelog.repository.OwnerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,17 +20,17 @@ public class OwnerServiceImpl implements OwnerService{
 
     @Override
     public void deleteOwner(Owner owner) {
-
+        repository.delete(owner);
     }
 
     @Override
-    public void updateOwner(Owner owner) {
-
+    public void updateOwner(Owner o) {
+        repository.updateOwner(o.getOwnerName(), o.getEmail(), o.getPhoneNumber(), o.getNIP(), o.getId());
     }
 
     @Override
-    public Owner findOwnerByMachine(Machine machine) {
-        return null;
+    public Owner findOwnerById(Long id) {
+        return repository.findById(id).orElseThrow();
     }
 
 }
