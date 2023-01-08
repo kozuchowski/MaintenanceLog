@@ -13,4 +13,7 @@ public interface TokenRepository extends JpaRepository<Token, Long>{
     Token findByMaintainer (Mainteiner mainteiner);
 
     void deleteByToken(Token token);
+
+    @Query("select t from Token t where  t.token = ?1")
+    Token findByToken(String token);
 }

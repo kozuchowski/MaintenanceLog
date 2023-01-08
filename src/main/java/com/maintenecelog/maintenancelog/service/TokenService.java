@@ -6,5 +6,6 @@ import com.maintenecelog.maintenancelog.model.Token;
 public interface TokenService {
     void deleteToken(Token token);
     Token createToken(Mainteiner mainteiner);
-    Token findTokenByMaintainer(Mainteiner mainteiner);
+    Token getTokenByMaintainer(Mainteiner mainteiner);
+    Token getToken(String token);
 }

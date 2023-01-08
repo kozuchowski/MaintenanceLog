@@ -35,7 +35,7 @@ public class MachineController {
 
 
     @PostMapping("/add")
-    public void addMachine(@RequestHeader(HttpHeaders.AUTHORIZATION) String auth,
+    public void addMachine(@RequestHeader() String auth,
                            @RequestParam String UDT,
                            @RequestParam String VIN,
                            @RequestParam String serial,
@@ -65,8 +65,8 @@ public class MachineController {
     }
 
     @GetMapping("/get")
-    public List<Machine> getMachine(@RequestHeader String auth){
-        Mainteiner mainteiner = mainteinerService.findMaintainerByToken(auth);
+    public List<Machine> getMachine(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorisation){
+        Mainteiner mainteiner = mainteinerService.findMaintainerByToken(authorisation);
         return machineService.getAllMachinesForTheMainteiner(mainteiner);
     }
 

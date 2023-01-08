@@ -34,8 +34,13 @@ public class TokenServiceImpl implements TokenService{
         tokenRepository.deleteByToken(token);
     }
     @Override
-    public Token findTokenByMaintainer(Mainteiner mainteiner) {
+    public Token getTokenByMaintainer(Mainteiner mainteiner) {
         return tokenRepository.findByMaintainer(mainteiner);
+    }
+
+    @Override
+    public Token getToken(String token) {
+        return tokenRepository.findByToken(token);
     }
 
 
@@ -45,6 +50,8 @@ public class TokenServiceImpl implements TokenService{
         tokenRepository.save(token);
         return token;
     }
+
+
 
 
 }

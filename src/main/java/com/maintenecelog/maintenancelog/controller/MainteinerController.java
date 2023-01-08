@@ -5,12 +5,7 @@ import com.maintenecelog.maintenancelog.service.MaintainerServiceImpl;
 import com.maintenecelog.maintenancelog.model.Mainteiner;
 import com.maintenecelog.maintenancelog.service.TokenServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-
-import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/mainteiners")
@@ -53,7 +48,7 @@ public class MainteinerController {
     }
 
     @PutMapping("/update")
-    public String updateUser(@RequestHeader(HttpHeaders.AUTHORIZATION) String auth,
+    public String updateUser(@RequestHeader() String auth,
                              @RequestParam("name") String name,
                              @RequestParam ("surname") String surname,
                              @RequestParam ("email") String email,
@@ -68,14 +63,14 @@ public class MainteinerController {
     }
 
     @DeleteMapping("/delete")
-    public String deleteUser(@RequestHeader(HttpHeaders.AUTHORIZATION) String auth) {
+    public String deleteUser(@RequestHeader() String auth) {
 
         String login = mainteinerService.findMaintainerByToken(auth).getLogin();
         mainteinerService.deleteUserByLogin(login);
         return "deleted";
     }
     @GetMapping("/get")
-    public Mainteiner showMaintener(@RequestHeader(HttpHeaders.AUTHORIZATION) String auth){
+    public Mainteiner showMaintener(@RequestHeader() String auth){
 
         mainteiner = mainteinerService.findMaintainerByToken(auth);
         return mainteiner;
