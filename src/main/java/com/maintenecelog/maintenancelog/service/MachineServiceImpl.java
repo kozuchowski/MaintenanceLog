@@ -4,7 +4,6 @@ import com.maintenecelog.maintenancelog.model.Machine;
 import com.maintenecelog.maintenancelog.model.Mainteiner;
 import com.maintenecelog.maintenancelog.model.Owner;
 import com.maintenecelog.maintenancelog.repository.MachineRepository;
-import com.maintenecelog.maintenancelog.repository.OwnerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,15 +12,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class MachineServiceImpl {
-    private MachineRepository machineRepository;
-    private final OwnerRepository ownerRepository;
+public class MachineServiceImpl implements MachineService{
+    private final MachineRepository machineRepository;
+
 
     @Autowired
-    public MachineServiceImpl(MachineRepository machineRepository,
-                              OwnerRepository ownerRepository) {
+    public MachineServiceImpl(MachineRepository machineRepository) {
         this.machineRepository = machineRepository;
-        this.ownerRepository = ownerRepository;
     }
 
     public void addMachine(Machine machine){

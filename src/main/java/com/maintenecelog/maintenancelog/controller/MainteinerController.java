@@ -1,72 +1,83 @@
 package com.maintenecelog.maintenancelog.controller;
 
-import com.maintenecelog.maintenancelog.service.MainteinerServiceImpl;
+import com.maintenecelog.maintenancelog.model.Token;
+import com.maintenecelog.maintenancelog.service.MaintainerServiceImpl;
 import com.maintenecelog.maintenancelog.model.Mainteiner;
+import com.maintenecelog.maintenancelog.service.TokenServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/mainteiners")
 public class MainteinerController {
 
     private Mainteiner mainteiner;
-    private final MainteinerServiceImpl service;
+
+    private Token token;
+    private final MaintainerServiceImpl mainteinerService;
+    private final TokenServiceImpl tokenService;
 
     @Autowired
-    public MainteinerController(MainteinerServiceImpl service) {
-        this.service = service;
+    public MainteinerController(MaintainerServiceImpl mainteinerService, TokenServiceImpl tokenService) {
+        this.mainteinerService = mainteinerService;
+        this.tokenService = tokenService;
     }
 
-    @PostMapping("/signIn/mainteiner")
-    public String createUser(HttpServletRequest request,
-                             @RequestParam("name") String name,
-                             @RequestParam ("surname") String surname,
-                             @RequestParam ("login") String login,
-                             @RequestParam ("email") String email,
-                             @RequestParam ("licence") String licence,
-                             @RequestParam("password") String pass,
-                             @RequestParam("confirmPass") String confirmPass){
+    @PostMapping("/signIn")
+    public Token createUser(@RequestParam("name") String name,
+                            @RequestParam ("surname") String surname,
+                            @RequestParam ("login") String login,
+                            @RequestParam ("email") String email,
+                            @RequestParam ("licence") String licence,
+                            @RequestParam("password") String pass,
+                            @RequestParam("confirmPass") String confirmPass){
         mainteiner = new Mainteiner(name, surname, login, pass, email, licence );
-        service.createMainteiner(mainteiner);
-        request.getSession().setAttribute("login", login);
-        return name + " " + surname + " " + pass;
+        mainteinerService.createMainteiner(mainteiner);
+
+        token = tokenService.createToken(mainteiner);
+        return token;
     }
 
-    @PostMapping("/logIn/mainteiner")
-    public String loginUser(HttpServletRequest request,
-                            @RequestParam("login") String login,
+    @PostMapping("/logIn")
+    public Token loginUser(@RequestParam("login") String login,
                             @RequestParam("password") String pass){
-        request.getSession().setAttribute("login", login);
-        return login + " " + pass;
+
+        mainteiner = mainteinerService.findMainteinerByLogin(login);
+        token = tokenService.createToken(mainteiner);
+        return token;
     }
 
-    @PutMapping("/update/mainteiner")
-    public String updateUser(HttpServletRequest request,
+    @PutMapping("/update")
+    public String updateUser(@RequestHeader(HttpHeaders.AUTHORIZATION) String auth,
                              @RequestParam("name") String name,
                              @RequestParam ("surname") String surname,
                              @RequestParam ("email") String email,
                              @RequestParam ("licence") String licence,
                              @RequestParam("password") String pass,
                              @RequestParam("confirmPass") String confirmPass){
-        String login = request.getSession().getAttribute("login").toString();
+
+        String login = mainteinerService.findMaintainerByToken(auth).getLogin();
         mainteiner = new Mainteiner(name, surname, login, pass, email, licence );
-        service.updateMaintener(mainteiner);
+        mainteinerService.updateMaintener(mainteiner);
         return login + " " + pass;
     }
 
-    @DeleteMapping("/delete/mainteiner")
-    public String deleteUser(HttpSession session) {
-        String login = session.getAttribute("login").toString();
-        service.deleteUserByLogin(login);
+    @DeleteMapping("/delete")
+    public String deleteUser(@RequestHeader(HttpHeaders.AUTHORIZATION) String auth) {
+
+        String login = mainteinerService.findMaintainerByToken(auth).getLogin();
+        mainteinerService.deleteUserByLogin(login);
         return "deleted";
     }
-    @GetMapping("/show/mainteiner")
-    public Mainteiner showMaintener(HttpServletRequest request){
-        String login = request.getSession().getAttribute("login").toString();
-        Mainteiner mainteiner = service.findMainteinerByLogin(login);
+    @GetMapping("/get")
+    public Mainteiner showMaintener(@RequestHeader(HttpHeaders.AUTHORIZATION) String auth){
+
+        mainteiner = mainteinerService.findMaintainerByToken(auth);
         return mainteiner;
     }
 

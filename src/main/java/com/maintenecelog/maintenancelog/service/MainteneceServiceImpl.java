@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Service
-public class MainteneceServiceImpl {
+public class MainteneceServiceImpl implements MaintenenceService{
 
     private final MaintenenceRepository repository;
 

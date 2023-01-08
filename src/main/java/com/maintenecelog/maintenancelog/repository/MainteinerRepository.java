@@ -13,6 +13,9 @@ public interface MainteinerRepository extends JpaRepository<Mainteiner, Long> {
     @Query("select m from Mainteiner m where m.login like ?1")
     Mainteiner findByLogin(String login);
 
+    @Query("select t.mainteiner from Token t join Mainteiner m on t.mainteiner = m where t.token = ?1")
+    Mainteiner findByToken(String token);
+
     @Modifying
     @Transactional
     @Query("delete from Mainteiner m where m.login like ?1")

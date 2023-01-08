@@ -2,8 +2,6 @@ package com.maintenecelog.maintenancelog.model;
 
 import lombok.*;
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 
 @Getter
@@ -22,6 +20,8 @@ public class Mainteiner {
     private String licenceNumber;
 
 
+
+
     public Mainteiner(String name, String surname, String login, String password, String email, String licenceNumber) {
         this.name = name;
         this.surname = surname;
@@ -30,7 +30,6 @@ public class Mainteiner {
         this.email = email;
         this.licenceNumber = licenceNumber;
     }
-
 
 
 }
