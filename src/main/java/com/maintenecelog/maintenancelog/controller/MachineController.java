@@ -14,7 +14,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping("/machines")
+@RequestMapping("/machine")
 public class MachineController {
 
 

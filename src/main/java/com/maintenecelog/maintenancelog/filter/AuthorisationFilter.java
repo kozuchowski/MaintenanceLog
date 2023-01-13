@@ -26,19 +26,15 @@ public class AuthorisationFilter extends OncePerRequestFilter {
     protected boolean shouldNotFilter(HttpServletRequest request)
             throws ServletException {
         String path = request.getRequestURI();
-        return "/mainteiners/logIn".equals(path) || "/mainteiners/signIn".equals(path) || "/swagger-ui/index.html".equals(path);
+        return "/mainteiners/logIn".equals(path) || "/mainteiners/signIn".equals(path) || path.startsWith("/swagger-ui/");
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String auth = request.getHeader("auth");
         LocalDateTime now = LocalDateTime.now();
-        Token token = null;
-        try {
-            token = tokenService.getToken(auth);
-        }catch (NullPointerException e){
-            e.printStackTrace();
-        }
+        Token token = tokenService.getToken(auth);
+
 
         if(token != null && now.isBefore(token.getExpiring())){
             filterChain.doFilter(request, response);

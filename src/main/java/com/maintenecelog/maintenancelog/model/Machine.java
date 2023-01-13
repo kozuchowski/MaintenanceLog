@@ -1,8 +1,10 @@
 package com.maintenecelog.maintenancelog.model;
 
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 
 
@@ -16,31 +18,46 @@ public class Machine {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @NotEmpty
+    @Pattern(regexp="^[0-9]{10}$", message="Invalid UDT number")
     private String UDTNumber;
+    @NotEmpty(message = "VIN number may not be empty")
+    @Size(min = 17, max = 17, message = "VIN number must be between 2 and 32 characters long")
+    @Pattern(regexp="^[A-Z0-9]$", message="Invalid UDT number")
     private String VINNumber;
+    @NotEmpty(message = "Serial Number number may not be empty")
+    @Size(min = 2, max = 32, message = "Serial number number must be between 2 and 32 characters long")
     private String serialNumber;
+    @DateTimeFormat
     private LocalDate dateOfManufacture;
+    @DateTimeFormat
     private LocalDate lastUDOExamination;
+    @NotNull
     private boolean UDTExaminationResult;
+    @DateTimeFormat
     private LocalDate lastMaintenance;
+    @NotNull
     private boolean maintainerExaminationResult;
+    @NotBlank
     private String manufacturer;
 
+    @NotNull
     @ManyToOne
     private Mainteiner mainteiner;
 
+    @NotNull
     @ManyToOne
     private Owner owner;
 
 
     public Machine(String UDTNumber, String VINNumber, String serialNumber, LocalDate dateOfManufacture,
-                   LocalDate lastUDOExamination, boolean UDTExaminationResult, LocalDate lastMaintenance,
+                   LocalDate lastUDTExamination, boolean UDTExaminationResult, LocalDate lastMaintenance,
                    boolean maintainerExaminationResult, String manufacturer, Mainteiner mainteiner, Owner owner) {
         this.UDTNumber = UDTNumber;
         this.VINNumber = VINNumber;
         this.serialNumber = serialNumber;
         this.dateOfManufacture = dateOfManufacture;
-        this.lastUDOExamination = lastUDOExamination;
+        this.lastUDOExamination = lastUDTExamination;
         this.UDTExaminationResult = UDTExaminationResult;
         this.lastMaintenance = lastMaintenance;
         this.maintainerExaminationResult = maintainerExaminationResult;
@@ -49,4 +66,6 @@ public class Machine {
         this.owner = owner;
 
     }
+
+
 }
