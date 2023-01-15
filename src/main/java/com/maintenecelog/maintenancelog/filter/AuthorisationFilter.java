@@ -31,14 +31,14 @@ public class AuthorisationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String auth = request.getHeader("auth");
-        LocalDateTime now = LocalDateTime.now();
-        Token token = tokenService.getToken(auth);
-
-
-        if(token != null && now.isBefore(token.getExpiring())){
-            filterChain.doFilter(request, response);
-        }
+//        String auth = request.getHeader("auth");
+//        LocalDateTime now = LocalDateTime.now();
+//        Token token = tokenService.getToken(auth);
+//
+//
+//        if(token != null && now.isBefore(token.getExpiring())){
+//            filterChain.doFilter(request, response);
+//        }
         filterChain.doFilter(request, response);
     }
 

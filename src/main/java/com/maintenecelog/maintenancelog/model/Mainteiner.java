@@ -16,11 +16,11 @@ public class Mainteiner {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @NotBlank
+    @NotBlank(message = "Name is required")
     private String name;
-    @NotBlank
+    @NotBlank(message = "Surname is required")
     private String surname;
-    @NotBlank
+    @NotBlank(message = "Login is required")
     private String login;
     @NotNull
     @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$",

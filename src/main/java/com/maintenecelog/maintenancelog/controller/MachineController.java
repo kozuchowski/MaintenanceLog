@@ -8,8 +8,9 @@ import com.maintenecelog.maintenancelog.service.MaintainerServiceImpl;
 import com.maintenecelog.maintenancelog.service.OwnerServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -32,37 +33,51 @@ public class MachineController {
         this.ownerService = ownerService;
 
     }
-
-
     @PostMapping("/new/{mainteiner-login}")
     public void addMachine(@PathVariable("mainteiner-login") String login,
-                           @RequestParam String UDT,
-                           @RequestParam String VIN,
-                           @RequestParam String serial,
-                           @RequestParam
-                               @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate manufactured,
-                           @RequestParam
-                               @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate lastUDTEx,
-                           @RequestParam boolean UDTExResult,
-                           @RequestParam
-                               @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate lastMaintenance,
-                           @RequestParam boolean maintainerExResult,
-                           @RequestParam String manufacturer,
-                           @RequestParam String ownerName,
-                           @RequestParam String email,
-                           @RequestParam String phone,
-                           @RequestParam String NIP) {
+                           @Valid @RequestBody Machine machine) {
 
         Mainteiner mainteiner = mainteinerService.findMainteinerByLogin(login);
-        Owner owner = new Owner(ownerName, email, phone, NIP.replaceAll("[^0-9]", ""));
+
+        Owner owner = machine.getOwner();
         ownerService.addOwner(owner);
-        Machine machine = new Machine(UDT, VIN, serial, manufactured, lastUDTEx, UDTExResult,
-                lastMaintenance, maintainerExResult, manufacturer, mainteiner, owner);
+        machine.setMainteiner(mainteiner);
 
 
         machineService.addMachine(machine);
 
     }
+
+
+//    @PostMapping("/new/{mainteiner-login}")
+//    public void addMachine(@PathVariable("mainteiner-login") String login,
+//                           @RequestParam String UDT,
+//                           @RequestParam String VIN,
+//                           @RequestParam String serial,
+//                           @RequestParam
+//                               @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate manufactured,
+//                           @RequestParam
+//                               @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate lastUDTEx,
+//                           @RequestParam boolean UDTExResult,
+//                           @RequestParam
+//                               @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate lastMaintenance,
+//                           @RequestParam boolean maintainerExResult,
+//                           @RequestParam String manufacturer,
+//                           @RequestParam String ownerName,
+//                           @RequestParam String email,
+//                           @RequestParam String phone,
+//                           @RequestParam String NIP) {
+//
+//        Mainteiner mainteiner = mainteinerService.findMainteinerByLogin(login);
+//        Owner owner = new Owner(ownerName, email, phone, NIP.replaceAll("[^0-9]", ""));
+//        ownerService.addOwner(owner);
+//        Machine machine = new Machine(UDT, VIN, serial, manufactured, lastUDTEx, UDTExResult,
+//                lastMaintenance, maintainerExResult, manufacturer, mainteiner, owner);
+//
+//
+//        machineService.addMachine(machine);
+//
+//    }
 
     @GetMapping("/{mainteiner-login}")
     public List<Machine> getMachine(@PathVariable("mainteiner-login") String login){

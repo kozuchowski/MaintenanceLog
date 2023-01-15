@@ -21,31 +21,29 @@ public class Machine {
     @NotEmpty
     @Pattern(regexp="^[0-9]{10}$", message="Invalid UDT number")
     private String UDTNumber;
-    @NotEmpty(message = "VIN number may not be empty")
-    @Size(min = 17, max = 17, message = "VIN number must be between 2 and 32 characters long")
-    @Pattern(regexp="^[A-Z0-9]$", message="Invalid UDT number")
+//    @Size(min = 10, max = 17, message = "VIN number must be between 10 and 17 characters long")
+//    @Pattern(regexp="^[0-9]$", message="Invalid UDT number")
     private String VINNumber;
-    @NotEmpty(message = "Serial Number number may not be empty")
     @Size(min = 2, max = 32, message = "Serial number number must be between 2 and 32 characters long")
     private String serialNumber;
     @DateTimeFormat
     private LocalDate dateOfManufacture;
     @DateTimeFormat
     private LocalDate lastUDOExamination;
-    @NotNull
+    @NotNull(message = "UDT examination result is required")
     private boolean UDTExaminationResult;
     @DateTimeFormat
     private LocalDate lastMaintenance;
-    @NotNull
+    @NotNull(message = "Mainteiner examination result is required")
     private boolean maintainerExaminationResult;
-    @NotBlank
+    @NotBlank(message = "Mabufacturer is required")
     private String manufacturer;
 
-    @NotNull
+//    @NotNull(message = "Mainteiner is required")
     @ManyToOne
     private Mainteiner mainteiner;
 
-    @NotNull
+//    @NotNull(message = "Owner is required")
     @ManyToOne
     private Owner owner;
 

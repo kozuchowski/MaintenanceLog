@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,5 +39,27 @@ public class MachineServiceImpl implements MachineService{
     public List<Machine> getAllMachinesForTheOwner(Owner owner){
        return machineRepository.findAllByOwner(owner);
     }
+
+    @Override
+    public void updateMachine(String UDT,
+                              String VIN,
+                              String serial,
+                              LocalDate manufactured,
+                              LocalDate lastUDTEx,
+                              boolean UDTExResult,
+                              LocalDate lastMaintenance,
+                              boolean mainteinerExResult,
+                              String manufacturer,
+                              Mainteiner mainteiner,
+                              Owner owner,
+                              Long id) {
+        throw new RuntimeException("Not implemented yet");
+    }
+
+    @Override
+    public void updateMachine(Mainteiner mainteiner, Long id) {
+        machineRepository.setMachine(mainteiner, id);
+    }
+
 
 }

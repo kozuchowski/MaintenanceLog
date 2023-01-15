@@ -7,6 +7,8 @@ import com.maintenecelog.maintenancelog.service.TokenServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/mainteiners")
 public class MainteinerController {
@@ -22,44 +24,33 @@ public class MainteinerController {
         this.mainteinerService = mainteinerService;
         this.tokenService = tokenService;
     }
-
     @PostMapping("/new")
-    public Token createUser(@RequestParam("name") String name,
-                            @RequestParam ("surname") String surname,
-                            @RequestParam ("login") String login,
-                            @RequestParam ("email") String email,
-                            @RequestParam ("licence") String licence,
-                            @RequestParam("password") String pass,
+    public Token createUser(@Valid @RequestBody Mainteiner mainteiner,
                             @RequestParam("confirmPass") String confirmPass){
-        mainteiner = new Mainteiner(name, surname, login, pass, email, licence );
-        mainteinerService.createMainteiner(mainteiner);
 
+        mainteinerService.createMainteiner(mainteiner);
         token = tokenService.createToken(mainteiner);
         return token;
     }
 
+
     @PostMapping("/")
     public Token loginUser(@RequestParam("login") String login,
-                            @RequestParam("password") String pass){
+                           @RequestParam("password") String pass){
 
         mainteiner = mainteinerService.findMainteinerByLogin(login);
         token = tokenService.createToken(mainteiner);
         return token;
     }
-
     @PutMapping("/{login}")
-    public String updateUser(@PathVariable("login") String login,
-                             @RequestParam("name") String name,
-                             @RequestParam ("surname") String surname,
-                             @RequestParam ("email") String email,
-                             @RequestParam ("licence") String licence,
-                             @RequestParam("password") String pass,
-                             @RequestParam("confirmPass") String confirmPass){
+    public String updateUser(@Valid @RequestBody Mainteiner mainteiner){
 
-        mainteiner = new Mainteiner(name, surname, login, pass, email, licence );
         mainteinerService.updateMaintener(mainteiner);
-        return login + " " + pass;
+        return "User updated";
     }
+
+
+
 
     @DeleteMapping("/{login}")
     public String deleteUser(@PathVariable String login) {

@@ -25,7 +25,7 @@ public class OwnerServiceImpl implements OwnerService{
 
     @Override
     public void updateOwner(Owner o) {
-        repository.updateOwner(o.getOwnerName(), o.getEmail(), o.getPhoneNumber(), o.getNIP(), o.getId());
+        repository.updateOwner(o.getOwnerName(), o.getOwnerEmail(), o.getOwnerPhoneNumber(), o.getOwnerNIP(), o.getId());
     }
 
     @Override

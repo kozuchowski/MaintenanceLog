@@ -20,10 +20,10 @@ public class Maintenence {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @NotNull
+    @NotNull(message = "Machine is required")
     @ManyToOne
     private Machine machine;
-    @NotBlank
+    @NotBlank(message = "Description is required")
     private String description;
     @DateTimeFormat
     private LocalDate exDate;
