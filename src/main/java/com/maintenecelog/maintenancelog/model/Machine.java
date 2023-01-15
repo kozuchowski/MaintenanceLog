@@ -21,8 +21,8 @@ public class Machine {
     @NotEmpty
     @Pattern(regexp="^[0-9]{10}$", message="Invalid UDT number")
     private String UDTNumber;
-//    @Size(min = 10, max = 17, message = "VIN number must be between 10 and 17 characters long")
-//    @Pattern(regexp="^[0-9]$", message="Invalid UDT number")
+    @Size(min = 10, max = 17, message = "VIN number must be between 10 and 17 characters long")
+    @Pattern(regexp="^[a-zA-Z0-9_.-]*$", message="Invalid UDT number")
     private String VINNumber;
     @Size(min = 2, max = 32, message = "Serial number number must be between 2 and 32 characters long")
     private String serialNumber;
