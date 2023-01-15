@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/mainteiner")
+@RequestMapping("/mainteiners")
 public class MainteinerController {
 
     private Mainteiner mainteiner;
@@ -23,7 +23,7 @@ public class MainteinerController {
         this.tokenService = tokenService;
     }
 
-    @PostMapping("/signIn")
+    @PostMapping("/new")
     public Token createUser(@RequestParam("name") String name,
                             @RequestParam ("surname") String surname,
                             @RequestParam ("login") String login,
@@ -38,7 +38,7 @@ public class MainteinerController {
         return token;
     }
 
-    @PostMapping("/logIn")
+    @PostMapping("/")
     public Token loginUser(@RequestParam("login") String login,
                             @RequestParam("password") String pass){
 
@@ -47,8 +47,8 @@ public class MainteinerController {
         return token;
     }
 
-    @PutMapping("/update")
-    public String updateUser(@RequestHeader() String auth,
+    @PutMapping("/{login}")
+    public String updateUser(@PathVariable("login") String login,
                              @RequestParam("name") String name,
                              @RequestParam ("surname") String surname,
                              @RequestParam ("email") String email,
@@ -56,23 +56,20 @@ public class MainteinerController {
                              @RequestParam("password") String pass,
                              @RequestParam("confirmPass") String confirmPass){
 
-        String login = mainteinerService.findMaintainerByToken(auth).getLogin();
         mainteiner = new Mainteiner(name, surname, login, pass, email, licence );
         mainteinerService.updateMaintener(mainteiner);
         return login + " " + pass;
     }
 
-    @DeleteMapping("/delete")
-    public String deleteUser(@RequestHeader() String auth) {
-
-        String login = mainteinerService.findMaintainerByToken(auth).getLogin();
+    @DeleteMapping("/{login}")
+    public String deleteUser(@PathVariable String login) {
         mainteinerService.deleteUserByLogin(login);
         return "deleted";
     }
-    @GetMapping("/get")
-    public Mainteiner showMaintener(@RequestHeader() String auth){
+    @GetMapping("/{login}")
+    public Mainteiner showMainteiner(@PathVariable String login){
 
-        mainteiner = mainteinerService.findMaintainerByToken(auth);
+        mainteiner = mainteinerService.findMainteinerByLogin(login);
         return mainteiner;
     }
 

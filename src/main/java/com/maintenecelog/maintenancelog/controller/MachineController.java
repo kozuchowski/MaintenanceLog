@@ -14,7 +14,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping("/machine")
+@RequestMapping("/machines")
 public class MachineController {
 
 
@@ -34,8 +34,8 @@ public class MachineController {
     }
 
 
-    @PostMapping("/add")
-    public void addMachine(@RequestHeader() String auth,
+    @PostMapping("/new/{mainteiner-login}")
+    public void addMachine(@PathVariable("mainteiner-login") String login,
                            @RequestParam String UDT,
                            @RequestParam String VIN,
                            @RequestParam String serial,
@@ -53,7 +53,7 @@ public class MachineController {
                            @RequestParam String phone,
                            @RequestParam String NIP) {
 
-        Mainteiner mainteiner = mainteinerService.findMaintainerByToken(auth);
+        Mainteiner mainteiner = mainteinerService.findMainteinerByLogin(login);
         Owner owner = new Owner(ownerName, email, phone, NIP.replaceAll("[^0-9]", ""));
         ownerService.addOwner(owner);
         Machine machine = new Machine(UDT, VIN, serial, manufactured, lastUDTEx, UDTExResult,
@@ -64,15 +64,15 @@ public class MachineController {
 
     }
 
-    @GetMapping("/get")
-    public List<Machine> getMachine(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorisation){
-        Mainteiner mainteiner = mainteinerService.findMaintainerByToken(authorisation);
+    @GetMapping("/{mainteiner-login}")
+    public List<Machine> getMachine(@PathVariable("mainteiner-login") String login){
+        Mainteiner mainteiner = mainteinerService.findMainteinerByLogin(login);
         return machineService.getAllMachinesForTheMainteiner(mainteiner);
     }
 
-    @GetMapping("/get/{machineId}")
-    public Machine getSingleMachine(@PathVariable Long machineId) {
-        return machineService.getMachineById(machineId).orElseThrow();
+    @GetMapping("/{id}")
+    public Machine getSingleMachine(@PathVariable Long id) {
+        return machineService.getMachineById(id).orElseThrow();
     }
 
 
