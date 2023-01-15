@@ -8,9 +8,9 @@ import java.util.regex.Pattern;
 @SpringBootApplication
 public class MaintenanceLogApplication {
 
+
     public static void main(String[] args) {
         SpringApplication.run(MaintenanceLogApplication.class, args);
-
     }
 
 }

@@ -39,6 +39,7 @@ public class AuthorisationFilter extends OncePerRequestFilter {
         if(token != null && now.isBefore(token.getExpiring())){
             filterChain.doFilter(request, response);
         }
+        filterChain.doFilter(request, response);
     }
 
 }

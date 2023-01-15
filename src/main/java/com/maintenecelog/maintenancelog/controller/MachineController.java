@@ -54,7 +54,7 @@ public class MachineController {
                            @RequestParam String NIP) {
 
         Mainteiner mainteiner = mainteinerService.findMaintainerByToken(auth);
-        Owner owner = new Owner(ownerName, email, phone, NIP);
+        Owner owner = new Owner(ownerName, email, phone, NIP.replaceAll("[^0-9]", ""));
         ownerService.addOwner(owner);
         Machine machine = new Machine(UDT, VIN, serial, manufactured, lastUDTEx, UDTExResult,
                 lastMaintenance, maintainerExResult, manufacturer, mainteiner, owner);
