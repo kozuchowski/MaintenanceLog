@@ -20,6 +20,7 @@ public class Mainteiner {
     private String name;
     @NotBlank(message = "Surname is required")
     private String surname;
+    @Column(unique = true)
     @NotBlank(message = "Login is required")
     private String login;
     @NotNull
@@ -27,8 +28,10 @@ public class Mainteiner {
             message = "Password minimum eight characters, at least one letter and one number")
     private String password;
     @Email
+    @Column(unique = true)
     private String email;
     @NotNull
+    @Column(unique = true)
     @Pattern(regexp = "^[0-9]{10,12}", message = "Licence number must contains at least 10 and maximum 12 digits")
     private String licenceNumber;
 
