@@ -3,7 +3,15 @@ package com.maintenecelog.maintenancelog.service;
 import com.maintenecelog.maintenancelog.model.Owner;
 import com.maintenecelog.maintenancelog.repository.OwnerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class OwnerServiceImpl implements OwnerService{
@@ -32,5 +40,7 @@ public class OwnerServiceImpl implements OwnerService{
     public Owner findOwnerById(Long id) {
         return repository.findById(id).orElseThrow();
     }
+
+
 
 }

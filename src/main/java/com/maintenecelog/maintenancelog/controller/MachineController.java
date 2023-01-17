@@ -49,35 +49,6 @@ public class MachineController {
     }
 
 
-//    @PostMapping("/new/{mainteiner-login}")
-//    public void addMachine(@PathVariable("mainteiner-login") String login,
-//                           @RequestParam String UDT,
-//                           @RequestParam String VIN,
-//                           @RequestParam String serial,
-//                           @RequestParam
-//                               @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate manufactured,
-//                           @RequestParam
-//                               @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate lastUDTEx,
-//                           @RequestParam boolean UDTExResult,
-//                           @RequestParam
-//                               @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate lastMaintenance,
-//                           @RequestParam boolean maintainerExResult,
-//                           @RequestParam String manufacturer,
-//                           @RequestParam String ownerName,
-//                           @RequestParam String email,
-//                           @RequestParam String phone,
-//                           @RequestParam String NIP) {
-//
-//        Mainteiner mainteiner = mainteinerService.findMainteinerByLogin(login);
-//        Owner owner = new Owner(ownerName, email, phone, NIP.replaceAll("[^0-9]", ""));
-//        ownerService.addOwner(owner);
-//        Machine machine = new Machine(UDT, VIN, serial, manufactured, lastUDTEx, UDTExResult,
-//                lastMaintenance, maintainerExResult, manufacturer, mainteiner, owner);
-//
-//
-//        machineService.addMachine(machine);
-//
-//    }
 
     @GetMapping("/{mainteiner-login}")
     public List<Machine> getMachine(@PathVariable("mainteiner-login") String login){

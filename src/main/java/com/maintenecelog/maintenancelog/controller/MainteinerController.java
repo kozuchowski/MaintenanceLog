@@ -5,9 +5,18 @@ import com.maintenecelog.maintenancelog.service.MaintainerServiceImpl;
 import com.maintenecelog.maintenancelog.model.Mainteiner;
 import com.maintenecelog.maintenancelog.service.TokenServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/mainteiners")
@@ -26,7 +35,10 @@ public class MainteinerController {
     }
     @PostMapping("/new")
     public Token createUser(@Valid @RequestBody Mainteiner mainteiner,
-                            @RequestParam("confirmPass") String confirmPass){
+                            @RequestParam("confirmPass") String confirmPass) throws Exception {
+        if(mainteinerService.findMainteinerByLogin(mainteiner.getLogin()) != null){
+            throw new Exception("User already exists");
+        }
 
         mainteinerService.createMainteiner(mainteiner);
         token = tokenService.createToken(mainteiner);
@@ -62,6 +74,25 @@ public class MainteinerController {
 
         mainteiner = mainteinerService.findMainteinerByLogin(login);
         return mainteiner;
+    }
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler({MethodArgumentNotValidException.class})
+    public Map<String, String> handleValidationExceptions(
+            MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getAllErrors().forEach((error) -> {
+            String fieldName = ((FieldError) error).getField();
+            String errorMessage = error.getDefaultMessage();
+            errors.put(fieldName, errorMessage);
+        });
+        return errors;
+    }
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler({Exception.class})
+    public String handleAlreadyExistsExceptions(
+            Exception ex) {
+
+        return ex.getMessage();
     }
 
 }
