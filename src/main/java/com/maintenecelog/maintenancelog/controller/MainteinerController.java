@@ -4,6 +4,7 @@ import com.maintenecelog.maintenancelog.model.Token;
 import com.maintenecelog.maintenancelog.service.MaintainerServiceImpl;
 import com.maintenecelog.maintenancelog.model.Mainteiner;
 import com.maintenecelog.maintenancelog.service.TokenServiceImpl;
+import org.jboss.jandex.Main;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -49,9 +50,11 @@ public class MainteinerController {
     @PostMapping("/")
     public Token loginUser(@RequestParam("login") String login,
                            @RequestParam("password") String pass){
+        Mainteiner mainteiner = mainteinerService.findMainteinerByLogin(login);
 
-        mainteiner = mainteinerService.findMainteinerByLogin(login);
-        token = tokenService.createToken(mainteiner);
+        if(mainteiner != null && pass.equals(mainteiner.getPassword())) {
+            token = tokenService.createToken(mainteiner);
+        }
         return token;
     }
     @PutMapping("/{login}")
