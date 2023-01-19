@@ -2,7 +2,6 @@ package com.maintenecelog.maintenancelog.service;
 
 import com.maintenecelog.maintenancelog.model.Mainteiner;
 import com.maintenecelog.maintenancelog.repository.MainteinerRepository;
-import com.maintenecelog.maintenancelog.repository.TokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -18,13 +17,11 @@ import java.util.Map;
 public class MaintainerServiceImpl implements MaintainerService {
 
     private final MainteinerRepository repository;
-    private final TokenRepository tokenRepository;
 
     @Autowired
-    public MaintainerServiceImpl(MainteinerRepository repository,
-                                 TokenRepository tokenRepository) {
+    public MaintainerServiceImpl(MainteinerRepository repository) {
         this.repository = repository;
-        this.tokenRepository = tokenRepository;
+
     }
 
     @Override
@@ -48,11 +45,12 @@ public class MaintainerServiceImpl implements MaintainerService {
     }
 
     @Override
-    public Mainteiner findMaintainerByToken(String token) {
-        return repository.findByToken(token);
+    public boolean isUnique(Long id, String email, String login) {
+        if(repository.findByUnique(id, email, login) != null){
+            return false;
+        }
+        return true;
     }
-
-
 
 
 }

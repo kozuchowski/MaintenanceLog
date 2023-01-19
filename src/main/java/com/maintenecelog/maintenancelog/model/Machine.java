@@ -1,5 +1,6 @@
 package com.maintenecelog.maintenancelog.model;
 
+import com.maintenecelog.maintenancelog.annotation.CustomUnique;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -8,6 +9,7 @@ import javax.validation.constraints.*;
 import java.time.LocalDate;
 
 
+@CustomUnique
 @Getter
 @Setter
 @NoArgsConstructor

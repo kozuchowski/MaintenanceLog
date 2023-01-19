@@ -1,5 +1,6 @@
 package com.maintenecelog.maintenancelog.model;
 
+import com.maintenecelog.maintenancelog.annotation.CustomUnique;
 import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -8,6 +9,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 
+@CustomUnique
 @Getter
 @Setter
 @Entity

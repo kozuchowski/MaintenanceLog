@@ -41,6 +41,12 @@ public class OwnerServiceImpl implements OwnerService{
         return repository.findById(id).orElseThrow();
     }
 
-
+    @Override
+    public boolean isUnique(String email, String NIP){
+        if(repository.findByUnique(email, NIP) != null){
+            return false;
+        }
+        return true;
+    }
 
 }

@@ -60,6 +60,14 @@ public class MachineServiceImpl implements MachineService{
     public void updateMachine(Mainteiner mainteiner, Long id) {
         machineRepository.setMachine(mainteiner, id);
     }
+    //No idea what I am doing :) Mindfuck level chess 3d ;D
+    @Override
+    public boolean isUnique(String UDT, String VIN, String serial){
+        if(machineRepository.findByUnique(UDT, VIN, serial) != null){
+            return false;
+        }
+        return true;
+    }
 
 
 }

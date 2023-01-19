@@ -1,5 +1,6 @@
 package com.maintenecelog.maintenancelog.model;
 
+import com.maintenecelog.maintenancelog.annotation.CustomUnique;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,6 +11,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 
+@CustomUnique
 @Setter
 @Getter
 @Entity

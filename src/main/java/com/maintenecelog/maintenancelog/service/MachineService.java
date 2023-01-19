@@ -23,4 +23,6 @@ public interface MachineService {
                      boolean UDTExResult, LocalDate lastMaintenance, boolean mainteinerExResult,
                      String manufacturer, Mainteiner mainteiner, Owner owner, Long id);
     void updateMachine (Mainteiner mainteiner, Long id);
+
+    boolean isUnique(String UDT, String VIN, String serial);
 }

@@ -38,4 +38,7 @@ public interface MachineRepository extends JpaRepository<Machine, Long> {
     @Query("select m from Machine m where m.owner = ?1 ")
     List<Machine> findAllByOwner(Owner owner);
 
+    @Query("select m from Machine m where m.UDTNumber = ?1 or m.VINNumber = ?2 or m.serialNumber = ?3")
+    Machine findByUnique(String UDT, String VIN, String Serial);
+
 }

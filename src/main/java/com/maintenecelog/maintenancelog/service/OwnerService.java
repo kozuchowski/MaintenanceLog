@@ -12,4 +12,6 @@ public interface OwnerService {
     void updateOwner(Owner owner);
 
     Owner findOwnerById(Long id);
+
+    boolean isUnique(String email, String NIP);
 }

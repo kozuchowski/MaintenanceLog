@@ -12,5 +12,6 @@ public interface MaintainerService {
 
     void updateMaintener(Mainteiner m);
 
-    Mainteiner findMaintainerByToken(String token);
+
+    boolean isUnique(Long id, String email, String login);
 }

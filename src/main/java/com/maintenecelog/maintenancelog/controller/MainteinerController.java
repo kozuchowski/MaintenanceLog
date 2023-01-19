@@ -37,9 +37,6 @@ public class MainteinerController {
     @PostMapping("/new")
     public Token createUser(@Valid @RequestBody Mainteiner mainteiner,
                             @RequestParam("confirmPass") String confirmPass) throws Exception {
-        if(mainteinerService.findMainteinerByLogin(mainteiner.getLogin()) != null){
-            throw new Exception("User already exists");
-        }
 
         mainteinerService.createMainteiner(mainteiner);
         token = tokenService.createToken(mainteiner);
@@ -52,9 +49,6 @@ public class MainteinerController {
                            @RequestParam("password") String pass){
         Mainteiner mainteiner = mainteinerService.findMainteinerByLogin(login);
 
-        if(mainteiner != null && pass.equals(mainteiner.getPassword())) {
-            token = tokenService.createToken(mainteiner);
-        }
         return token;
     }
     @PutMapping("/{login}")
@@ -92,8 +86,7 @@ public class MainteinerController {
     }
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({Exception.class})
-    public String handleAlreadyExistsExceptions(
-            Exception ex) {
+    public String handleAlreadyExistsExceptions(Exception ex) {
 
         return ex.getMessage();
     }

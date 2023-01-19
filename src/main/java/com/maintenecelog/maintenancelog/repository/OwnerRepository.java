@@ -12,7 +12,8 @@ public interface OwnerRepository extends JpaRepository<Owner, Long> {
     void updateOwner(String name, String email, String phone, String NIP, Long id);
 
 
-
+    @Query("select o from Owner o where o.ownerEmail = ?1 or o.ownerNIP = ?2")
+    Owner findByUnique(String email, String NIP);
 
 
 }
