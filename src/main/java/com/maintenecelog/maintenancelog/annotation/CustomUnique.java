@@ -12,7 +12,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface CustomUnique {
 
-    String message() default "Entity already exists in data base";
+    String message() default "Entity already exists in database";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 

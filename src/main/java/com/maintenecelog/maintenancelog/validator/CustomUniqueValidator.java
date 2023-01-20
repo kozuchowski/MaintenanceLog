@@ -11,10 +11,8 @@ import org.springframework.stereotype.Component;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.lang.reflect.Field;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 
 @Component
@@ -43,29 +41,21 @@ public class CustomUniqueValidator implements ConstraintValidator<CustomUnique, 
 
     @Override
     public boolean isValid(Object o, ConstraintValidatorContext ctx) {
-        Field[] fields = ctx.getClass().getFields();
-        Map<String, String> fieldsMap = new HashMap<String, String>();
-        for(Field f : fields)
-            try {
-                fieldsMap.put(f.getName(),(String) f.get(o));
-            } catch (IllegalAccessException e) {
-                throw new RuntimeException(e);
-            }
 
-        System.out.println(fieldsMap);
 
-        if(ctx.getClass().equals(Mainteiner.class)){
-            isUnique = maintainerService.isUnique(Long.valueOf(fieldsMap.get("id")),
-                    fieldsMap.get("email"), fieldsMap.get("login"));
+        if(o.getClass().equals(Mainteiner.class)){
+            isUnique = maintainerService.isUnique(((Mainteiner) o).getId(),
+                    ((Mainteiner) o).getEmail(), ((Mainteiner) o).getLogin());
         }
-        if(ctx.getClass().equals(Machine.class)){
-            isUnique = machineService.isUnique(fieldsMap.get("UDTNumber"),
-                    fieldsMap.get("VINNumber"), fieldsMap.get("serialNumber"));
-        }
-        if(ctx.getClass().equals(Owner.class)){
-            isUnique = ownerService.isUnique(fieldsMap.get("ownerEmail"), fieldsMap.get("ownerNIP"));
-        }
+        if(o.getClass().equals(Machine.class)){
+            isUnique = machineService.isUnique(((Machine) o).getUDTNumber(),
+                    ((Machine) o).getVINNumber(), ((Machine) o).getSerialNumber());
 
+        }
+        if(o.getClass().equals(Owner.class)){
+            isUnique = ownerService.isUnique(((Owner) o).getOwnerEmail(), ((Owner) o).getOwnerNIP());
+        }
+        System.out.println(isUnique);
         return isUnique;
     }
 }
