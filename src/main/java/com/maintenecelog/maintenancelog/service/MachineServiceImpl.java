@@ -1,11 +1,14 @@
 package com.maintenecelog.maintenancelog.service;
 
+import com.maintenecelog.maintenancelog.exception.ObjectAlreadyExistsException;
 import com.maintenecelog.maintenancelog.model.Machine;
 import com.maintenecelog.maintenancelog.model.Mainteiner;
 import com.maintenecelog.maintenancelog.model.Owner;
 import com.maintenecelog.maintenancelog.repository.MachineRepository;
+import org.hibernate.NonUniqueObjectException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 
 import java.time.LocalDate;
@@ -62,9 +65,9 @@ public class MachineServiceImpl implements MachineService{
     }
     //No idea what I am doing :) Mindfuck level chess 3d ;D
     @Override
-    public boolean isUnique(String UDT, String VIN, String serial){
+    public boolean isUnique(String UDT, String VIN, String serial) {
         if(machineRepository.findByUnique(UDT, VIN, serial) != null){
-            return false;
+            throw new ObjectAlreadyExistsException();
         }
         return true;
     }

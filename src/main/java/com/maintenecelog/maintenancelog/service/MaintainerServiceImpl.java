@@ -45,8 +45,8 @@ public class MaintainerServiceImpl implements MaintainerService {
     }
 
     @Override
-    public boolean isUnique(Long id, String email, String login) {
-        if(repository.findByUnique(id, email, login) != null){
+    public boolean isUnique(String licence, String email, String login) {
+        if(repository.findByUnique(licence, email, login) != null){
             return false;
         }
         return true;

@@ -24,6 +24,6 @@ public interface MainteinerRepository extends JpaRepository<Mainteiner, Long> {
     @Query("update Mainteiner m set m.name = ?1, m.surname = ?2, m.email = ?4, m.password = ?5, m.licenceNumber = ?6 where m.login = ?3")
     void setMaintainerByLogin(String name, String surname, String login, String email, String password, String licence);
 
-    @Query("select m from Mainteiner m where m.id = ?1 or m.email = ?2 or m.login = ?3")
-    Mainteiner findByUnique(Long id, String email, String login);
+    @Query("select m from Mainteiner m where m.licenceNumber = ?1 or m.email = ?2 or m.login = ?3")
+    Mainteiner findByUnique(String licence, String email, String login);
 }

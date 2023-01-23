@@ -1,6 +1,7 @@
 package com.maintenecelog.maintenancelog.validator;
 
 import com.maintenecelog.maintenancelog.annotation.CustomUnique;
+import com.maintenecelog.maintenancelog.exception.ObjectAlreadyExistsException;
 import com.maintenecelog.maintenancelog.model.Machine;
 import com.maintenecelog.maintenancelog.model.Mainteiner;
 import com.maintenecelog.maintenancelog.model.Owner;
@@ -10,9 +11,7 @@ import org.springframework.stereotype.Component;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import java.lang.reflect.Field;
-import java.util.HashMap;
-import java.util.Map;
+
 
 
 @Component
@@ -44,12 +43,16 @@ public class CustomUniqueValidator implements ConstraintValidator<CustomUnique, 
 
 
         if(o.getClass().equals(Mainteiner.class)){
-            isUnique = maintainerService.isUnique(((Mainteiner) o).getId(),
+            isUnique = maintainerService.isUnique(((Mainteiner) o).getLicenceNumber(),
                     ((Mainteiner) o).getEmail(), ((Mainteiner) o).getLogin());
         }
         if(o.getClass().equals(Machine.class)){
-            isUnique = machineService.isUnique(((Machine) o).getUDTNumber(),
-                    ((Machine) o).getVINNumber(), ((Machine) o).getSerialNumber());
+            try {
+                isUnique = machineService.isUnique(((Machine) o).getUDTNumber(),
+                        ((Machine) o).getVINNumber(), ((Machine) o).getSerialNumber());
+            } catch (ObjectAlreadyExistsException e) {
+                throw new RuntimeException(e);
+            }
 
         }
         if(o.getClass().equals(Owner.class)){

@@ -9,7 +9,7 @@ import javax.validation.constraints.*;
 import java.time.LocalDate;
 
 
-@CustomUnique
+//@CustomUnique
 @Getter
 @Setter
 @NoArgsConstructor
