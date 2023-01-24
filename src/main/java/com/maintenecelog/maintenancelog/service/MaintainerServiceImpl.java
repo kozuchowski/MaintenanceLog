@@ -5,15 +5,7 @@ import com.maintenecelog.maintenancelog.exception.ObjectDoesNotExistException;
 import com.maintenecelog.maintenancelog.model.Mainteiner;
 import com.maintenecelog.maintenancelog.repository.MainteinerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Service
 public class MaintainerServiceImpl implements MaintainerService {
@@ -32,7 +24,7 @@ public class MaintainerServiceImpl implements MaintainerService {
     }
 
     @Override
-    public Mainteiner findMainteinerByLogin(String login){
+    public Mainteiner findMainteinerByLogin(String login) {
         Mainteiner mainteiner = repository.findByLogin(login);
 
         if(mainteiner == null){
@@ -42,10 +34,13 @@ public class MaintainerServiceImpl implements MaintainerService {
     }
     @Override
     public void deleteUserByLogin(String login){
+        findMainteinerByLogin(login);
         repository.deleteByLogin(login);
     }
+
     @Override
-    public void updateMaintener(Mainteiner m){
+    public void updateMaintener(Mainteiner m) {
+        findMainteinerByLogin(m.getLogin());
         repository.setMaintainerByLogin(m.getName(), m.getSurname(), m.getLogin(),
                 m.getEmail(), m.getPassword(), m.getLicenceNumber());
 

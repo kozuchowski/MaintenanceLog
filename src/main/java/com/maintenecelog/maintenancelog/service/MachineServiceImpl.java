@@ -6,10 +6,12 @@ import com.maintenecelog.maintenancelog.model.Machine;
 import com.maintenecelog.maintenancelog.model.Mainteiner;
 import com.maintenecelog.maintenancelog.model.Owner;
 import com.maintenecelog.maintenancelog.repository.MachineRepository;
+import nonapi.io.github.classgraph.utils.VersionFinder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MachineServiceImpl implements MachineService{
@@ -26,12 +28,12 @@ public class MachineServiceImpl implements MachineService{
     }
 
     public Machine getMachineById(Long id){
-        Machine machine = machineRepository.findById(id).orElseThrow();
+        Optional<Machine> machine = machineRepository.findById(id);
+        if(!machine.isPresent()){
+            throw new ObjectDoesNotExistException("Machine does not exists in database");
+        };
 
-        if(machine == null){
-            throw new ObjectDoesNotExistException("Machine does not exist in database");
-        }
-        return machine;
+        return machine.get();
     }
 
     public List<Machine> getAllMachines() {
@@ -59,12 +61,14 @@ public class MachineServiceImpl implements MachineService{
                               Mainteiner mainteiner,
                               Owner owner,
                               Long id) {
+        getMachineById(id);
         machineRepository.setMachine(UDT, VIN, serial, manufactured, lastUDTEx, UDTExResult, lastMaintenance,
                 mainteinerExResult, manufacturer, mainteiner, owner, id);
     }
 
     @Override
     public void updateMachine(Mainteiner mainteiner, Long id) {
+        getMachineById(id);
         machineRepository.setMachine(mainteiner, id);
     }
     //No idea what I am doing :) Mindfuck level chess 3d ;D
