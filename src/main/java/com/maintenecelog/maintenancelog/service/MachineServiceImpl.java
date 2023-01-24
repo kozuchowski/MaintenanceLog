@@ -1,19 +1,15 @@
 package com.maintenecelog.maintenancelog.service;
 
 import com.maintenecelog.maintenancelog.exception.ObjectAlreadyExistsException;
+import com.maintenecelog.maintenancelog.exception.ObjectDoesNotExistException;
 import com.maintenecelog.maintenancelog.model.Machine;
 import com.maintenecelog.maintenancelog.model.Mainteiner;
 import com.maintenecelog.maintenancelog.model.Owner;
 import com.maintenecelog.maintenancelog.repository.MachineRepository;
-import org.hibernate.NonUniqueObjectException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.MethodArgumentNotValidException;
-
-
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class MachineServiceImpl implements MachineService{
@@ -28,9 +24,16 @@ public class MachineServiceImpl implements MachineService{
     public void addMachine(Machine machine){
         machineRepository.save(machine);
     }
-    public Optional<Machine> getMachineById(Long id){
-        return machineRepository.findById(id);
+
+    public Machine getMachineById(Long id){
+        Machine machine = machineRepository.findById(id).orElseThrow();
+
+        if(machine == null){
+            throw new ObjectDoesNotExistException("Machine does not exist in database");
+        }
+        return machine;
     }
+
     public List<Machine> getAllMachines() {
         return machineRepository.findAll();
     }
@@ -56,7 +59,8 @@ public class MachineServiceImpl implements MachineService{
                               Mainteiner mainteiner,
                               Owner owner,
                               Long id) {
-        throw new RuntimeException("Not implemented yet");
+        machineRepository.setMachine(UDT, VIN, serial, manufactured, lastUDTEx, UDTExResult, lastMaintenance,
+                mainteinerExResult, manufacturer, mainteiner, owner, id);
     }
 
     @Override
@@ -67,7 +71,7 @@ public class MachineServiceImpl implements MachineService{
     @Override
     public boolean isUnique(String UDT, String VIN, String serial) {
         if(machineRepository.findByUnique(UDT, VIN, serial) != null){
-            throw new ObjectAlreadyExistsException();
+            throw new ObjectAlreadyExistsException("Machine already exists in database");
         }
         return true;
     }

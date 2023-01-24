@@ -13,7 +13,7 @@ import java.util.Optional;
 
 public interface MachineService {
     void addMachine(Machine machine);
-    Optional<Machine> getMachineById(Long id);
+    Machine getMachineById(Long id);
     List<Machine> getAllMachines();
 
     List<Machine> getAllMachinesForTheMainteiner(Mainteiner mainteiner);

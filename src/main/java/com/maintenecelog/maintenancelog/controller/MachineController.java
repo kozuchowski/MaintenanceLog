@@ -1,6 +1,7 @@
 package com.maintenecelog.maintenancelog.controller;
 
 import com.maintenecelog.maintenancelog.exception.ObjectAlreadyExistsException;
+import com.maintenecelog.maintenancelog.exception.ObjectDoesNotExistException;
 import com.maintenecelog.maintenancelog.model.Machine;
 import com.maintenecelog.maintenancelog.model.Mainteiner;
 import com.maintenecelog.maintenancelog.model.Owner;
@@ -39,11 +40,13 @@ public class MachineController {
     @PostMapping("/new/{mainteiner-login}")
     public void addMachine(@PathVariable("mainteiner-login") String login,
                            @Valid @RequestBody Machine machine) {
+
         machineService.isUnique(machine.getUDTNumber(), machine.getVINNumber(), machine.getSerialNumber());
 
         Mainteiner mainteiner = mainteinerService.findMainteinerByLogin(login);
 
         Owner owner = machine.getOwner();
+        ownerService.isUnique(owner.getOwnerEmail(), owner.getOwnerNIP());
         ownerService.addOwner(owner);
         machine.setMainteiner(mainteiner);
 
@@ -62,7 +65,7 @@ public class MachineController {
 
     @GetMapping("/{id}")
     public Machine getSingleMachine(@PathVariable Long id) {
-        return machineService.getMachineById(id).orElseThrow();
+        return machineService.getMachineById(id);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -80,6 +83,13 @@ public class MachineController {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({ObjectAlreadyExistsException.class})
     public String handleAlreadyExistsExceptions(ObjectAlreadyExistsException ex) {
+
+        return ex.getMessage();
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler({ObjectDoesNotExistException.class})
+    public String handleObjectDoesNotExistsExceptions(ObjectDoesNotExistException ex) {
 
         return ex.getMessage();
     }

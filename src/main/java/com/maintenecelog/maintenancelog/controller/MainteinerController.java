@@ -1,22 +1,19 @@
 package com.maintenecelog.maintenancelog.controller;
 
+import com.maintenecelog.maintenancelog.exception.ObjectAlreadyExistsException;
+import com.maintenecelog.maintenancelog.exception.ObjectDoesNotExistException;
 import com.maintenecelog.maintenancelog.model.Token;
+import com.maintenecelog.maintenancelog.repository.MachineRepository;
 import com.maintenecelog.maintenancelog.service.MaintainerServiceImpl;
 import com.maintenecelog.maintenancelog.model.Mainteiner;
 import com.maintenecelog.maintenancelog.service.TokenServiceImpl;
-import org.jboss.jandex.Main;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -36,8 +33,8 @@ public class MainteinerController {
     }
     @PostMapping("/new")
     public Token createUser(@Valid @RequestBody Mainteiner mainteiner,
-                            @RequestParam("confirmPass") String confirmPass) throws Exception {
-
+                            @RequestParam("confirmPass") String confirmPass) {
+        mainteinerService.isUnique(mainteiner.getLicenceNumber(), mainteiner.getEmail(), mainteiner.getLogin());
         mainteinerService.createMainteiner(mainteiner);
         token = tokenService.createToken(mainteiner);
         return token;
@@ -48,7 +45,7 @@ public class MainteinerController {
     public Token loginUser(@RequestParam("login") String login,
                            @RequestParam("password") String pass){
         Mainteiner mainteiner = mainteinerService.findMainteinerByLogin(login);
-
+        Token token = tokenService.createToken(mainteiner);
         return token;
     }
     @PutMapping("/{login}")
@@ -85,8 +82,15 @@ public class MainteinerController {
         return errors;
     }
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler({Exception.class})
-    public String handleAlreadyExistsExceptions(Exception ex) {
+    @ExceptionHandler({ObjectAlreadyExistsException.class})
+    public String handleAlreadyExistsExceptions(ObjectAlreadyExistsException ex) {
+
+        return ex.getMessage();
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler({ObjectDoesNotExistException.class})
+    public String handleObjectDoesNotExistsExceptions(ObjectDoesNotExistException ex) {
 
         return ex.getMessage();
     }

@@ -1,5 +1,6 @@
 package com.maintenecelog.maintenancelog.service;
 
+import com.maintenecelog.maintenancelog.exception.ObjectAlreadyExistsException;
 import com.maintenecelog.maintenancelog.model.Owner;
 import com.maintenecelog.maintenancelog.repository.OwnerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,7 @@ public class OwnerServiceImpl implements OwnerService{
     @Override
     public boolean isUnique(String email, String NIP){
         if(repository.findByUnique(email, NIP) != null){
-            return false;
+            throw new ObjectAlreadyExistsException("Owner already exists in database");
         }
         return true;
     }

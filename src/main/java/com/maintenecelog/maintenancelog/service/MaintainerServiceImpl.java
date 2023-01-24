@@ -1,5 +1,7 @@
 package com.maintenecelog.maintenancelog.service;
 
+import com.maintenecelog.maintenancelog.exception.ObjectAlreadyExistsException;
+import com.maintenecelog.maintenancelog.exception.ObjectDoesNotExistException;
 import com.maintenecelog.maintenancelog.model.Mainteiner;
 import com.maintenecelog.maintenancelog.repository.MainteinerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +33,12 @@ public class MaintainerServiceImpl implements MaintainerService {
 
     @Override
     public Mainteiner findMainteinerByLogin(String login){
-        return repository.findByLogin(login);
+        Mainteiner mainteiner = repository.findByLogin(login);
+
+        if(mainteiner == null){
+            throw new ObjectDoesNotExistException("Mainteiner does not exist in database");
+        }
+        return mainteiner;
     }
     @Override
     public void deleteUserByLogin(String login){
@@ -47,7 +54,7 @@ public class MaintainerServiceImpl implements MaintainerService {
     @Override
     public boolean isUnique(String licence, String email, String login) {
         if(repository.findByUnique(licence, email, login) != null){
-            return false;
+            throw new ObjectAlreadyExistsException("Mainteiner already exists in database");
         }
         return true;
     }
