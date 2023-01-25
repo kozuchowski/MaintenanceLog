@@ -14,4 +14,8 @@ public interface MaintainerService {
 
 
     boolean isUnique(String licence, String email, String login);
+
+    boolean isPasswordsValid(String password, String confirm, String message);
+
+
 }

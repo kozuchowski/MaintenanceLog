@@ -81,18 +81,13 @@ public class MachineController {
         return errors;
     }
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler({ObjectAlreadyExistsException.class})
-    public String handleAlreadyExistsExceptions(ObjectAlreadyExistsException ex) {
+    @ExceptionHandler({ObjectAlreadyExistsException.class, ObjectDoesNotExistException.class})
+    public String handleAlreadyExistsExceptions(Exception ex) {
 
         return ex.getMessage();
     }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler({ObjectDoesNotExistException.class})
-    public String handleObjectDoesNotExistsExceptions(ObjectDoesNotExistException ex) {
 
-        return ex.getMessage();
-    }
 
 
 }

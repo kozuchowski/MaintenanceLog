@@ -8,11 +8,11 @@ public class ObjectDoesNotExistException extends RuntimeException {
         super(message);
     }
 
-    ObjectDoesNotExistException(String message, Throwable cause) {
+    public ObjectDoesNotExistException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    ObjectDoesNotExistException(Throwable cause) {
+    public ObjectDoesNotExistException(Throwable cause) {
         super(cause);
     }
 }

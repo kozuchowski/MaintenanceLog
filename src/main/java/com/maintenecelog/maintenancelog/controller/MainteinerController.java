@@ -2,6 +2,7 @@ package com.maintenecelog.maintenancelog.controller;
 
 import com.maintenecelog.maintenancelog.exception.ObjectAlreadyExistsException;
 import com.maintenecelog.maintenancelog.exception.ObjectDoesNotExistException;
+import com.maintenecelog.maintenancelog.exception.PasswordNotValidException;
 import com.maintenecelog.maintenancelog.model.Token;
 import com.maintenecelog.maintenancelog.repository.MachineRepository;
 import com.maintenecelog.maintenancelog.service.MaintainerServiceImpl;
@@ -34,6 +35,7 @@ public class MainteinerController {
     @PostMapping("/new")
     public Token createUser(@Valid @RequestBody Mainteiner mainteiner,
                             @RequestParam("confirmPass") String confirmPass) {
+        mainteinerService.isPasswordsValid(mainteiner.getPassword(), confirmPass,"Passwords don't match");
         mainteinerService.isUnique(mainteiner.getLicenceNumber(), mainteiner.getEmail(), mainteiner.getLogin());
         mainteinerService.createMainteiner(mainteiner);
         token = tokenService.createToken(mainteiner);
@@ -45,6 +47,7 @@ public class MainteinerController {
     public Token loginUser(@RequestParam("login") String login,
                            @RequestParam("password") String pass){
         Mainteiner mainteiner = mainteinerService.findMainteinerByLogin(login);
+        mainteinerService.isPasswordsValid(mainteiner.getPassword(), pass, "Password is not valid");
         Token token = tokenService.createToken(mainteiner);
         return token;
     }
@@ -82,17 +85,14 @@ public class MainteinerController {
         return errors;
     }
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler({ObjectAlreadyExistsException.class})
-    public String handleAlreadyExistsExceptions(ObjectAlreadyExistsException ex) {
+    @ExceptionHandler({ObjectAlreadyExistsException.class,
+                       ObjectDoesNotExistException.class,
+                       PasswordNotValidException.class})
+    public String handleAlreadyExistsExceptions(Exception ex) {
 
         return ex.getMessage();
     }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler({ObjectDoesNotExistException.class})
-    public String handleObjectDoesNotExistsExceptions(ObjectDoesNotExistException ex) {
 
-        return ex.getMessage();
-    }
 
 }
