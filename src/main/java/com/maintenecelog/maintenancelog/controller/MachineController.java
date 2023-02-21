@@ -25,7 +25,6 @@ public class MachineController {
 
     private final MachineServiceImpl machineService;
     private final MaintainerServiceImpl mainteinerService;
-
     private final OwnerServiceImpl ownerService;
 
 

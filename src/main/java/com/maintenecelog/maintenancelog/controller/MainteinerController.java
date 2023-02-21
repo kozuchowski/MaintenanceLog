@@ -8,7 +8,6 @@ import com.maintenecelog.maintenancelog.exception.PasswordNotValidException;
 import com.maintenecelog.maintenancelog.model.Token;
 import com.maintenecelog.maintenancelog.service.MaintainerServiceImpl;
 import com.maintenecelog.maintenancelog.model.Mainteiner;
-import com.maintenecelog.maintenancelog.service.TokenServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
@@ -22,16 +21,12 @@ import java.util.Map;
 @RequestMapping("/mainteiners")
 public class MainteinerController {
 
-    private Mainteiner mainteiner;
-
-    private Token token;
     private final MaintainerServiceImpl mainteinerService;
-    private final TokenServiceImpl tokenService;
 
     @Autowired
-    public MainteinerController(MaintainerServiceImpl mainteinerService, TokenServiceImpl tokenService) {
+    public MainteinerController(MaintainerServiceImpl mainteinerService) {
         this.mainteinerService = mainteinerService;
-        this.tokenService = tokenService;
+
     }
     @PostMapping("/new")
     public Token createUser(@Valid @RequestBody CreateMainteinerDto mainteinerDto) {
@@ -62,11 +57,9 @@ public class MainteinerController {
 
     @GetMapping("/{login}")
     public Mainteiner showMainteiner(@PathVariable String login){
-
-        mainteiner = mainteinerService.findMainteinerByLogin(login);
-
-        return mainteiner;
+        return mainteinerService.findMainteinerByLogin(login);
     }
+
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({MethodArgumentNotValidException.class})
     public Map<String, String> handleValidationExceptions(
