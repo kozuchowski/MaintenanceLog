@@ -22,8 +22,7 @@ public class TokenServiceImpl implements TokenService{
 
     @Override
     public Token createToken(Mainteiner mainteiner) {
-        Token token = new Token(generateNewToken(), mainteiner.getId());
-        return token;
+        return new Token(generateNewToken(), mainteiner.getId());
     }
 
 

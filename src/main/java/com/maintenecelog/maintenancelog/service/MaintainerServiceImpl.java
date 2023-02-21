@@ -1,6 +1,7 @@
 package com.maintenecelog.maintenancelog.service;
 
 import com.maintenecelog.maintenancelog.dto.CreateMainteinerDto;
+import com.maintenecelog.maintenancelog.dto.LoginUserDto;
 import com.maintenecelog.maintenancelog.exception.ObjectAlreadyExistsException;
 import com.maintenecelog.maintenancelog.exception.ObjectDoesNotExistException;
 import com.maintenecelog.maintenancelog.exception.PasswordNotValidException;
@@ -30,9 +31,15 @@ public class MaintainerServiceImpl implements MaintainerService {
         isPasswordsValid(dto.getPassword(), dto.getConfirmPassword(),"Passwords don't match");
         isUnique(dto.getLicenceNumber(), dto.getEmail(), dto.getLogin());
         Mainteiner mainteiner = dtoIntoMainteiner(dto);
-
         mainteinerRepository.save(mainteiner);
 
+        return tokenService.createToken(mainteiner);
+    }
+
+    @Override
+    public Token loginUser(LoginUserDto dto) {
+        Mainteiner mainteiner = mainteinerRepository.findByLogin(dto.getLogin());
+        isPasswordsValid(dto.getPassword(), mainteiner.getPassword(),"Wrong login or password");
         return tokenService.createToken(mainteiner);
     }
 

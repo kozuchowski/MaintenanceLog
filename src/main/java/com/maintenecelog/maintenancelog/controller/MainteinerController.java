@@ -1,6 +1,7 @@
 package com.maintenecelog.maintenancelog.controller;
 
 import com.maintenecelog.maintenancelog.dto.CreateMainteinerDto;
+import com.maintenecelog.maintenancelog.dto.LoginUserDto;
 import com.maintenecelog.maintenancelog.exception.ObjectAlreadyExistsException;
 import com.maintenecelog.maintenancelog.exception.ObjectDoesNotExistException;
 import com.maintenecelog.maintenancelog.exception.PasswordNotValidException;
@@ -38,15 +39,8 @@ public class MainteinerController {
     }
 
     @PostMapping("/")
-    public Token loginUser(@RequestParam("login") String login,
-                           @RequestParam("password") String pass){
-
-        Mainteiner mainteiner = mainteinerService.findMainteinerByLogin(login);
-        mainteinerService.isPasswordsValid(mainteiner.getPassword(), pass, "Password is not valid");
-
-        return tokenService.createToken(mainteiner);
-
-
+    public Token loginUser(@Valid @RequestBody LoginUserDto dto ){
+        return mainteinerService.loginUser(dto);
     }
 
     @PutMapping("/{login}")

@@ -1,12 +1,15 @@
 package com.maintenecelog.maintenancelog.service;
 
 import com.maintenecelog.maintenancelog.dto.CreateMainteinerDto;
+import com.maintenecelog.maintenancelog.dto.LoginUserDto;
 import com.maintenecelog.maintenancelog.model.Mainteiner;
 import com.maintenecelog.maintenancelog.model.Token;
 
 public interface MaintainerService {
 
     Token createMainteiner(CreateMainteinerDto dto);
+
+    Token loginUser(LoginUserDto dto);
 
     Mainteiner findMainteinerByLogin(String login);
     void deleteUserByLogin(String login);
