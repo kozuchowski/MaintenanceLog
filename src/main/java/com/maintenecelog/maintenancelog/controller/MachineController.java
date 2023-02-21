@@ -42,24 +42,21 @@ public class MachineController {
                            @Valid @RequestBody Machine machine) {
 
         machineService.isUnique(machine.getUDTNumber(), machine.getVINNumber(), machine.getSerialNumber());
-
         Mainteiner mainteiner = mainteinerService.findMainteinerByLogin(login);
-
         Owner owner = machine.getOwner();
         ownerService.isUnique(owner.getOwnerEmail(), owner.getOwnerNIP());
         ownerService.addOwner(owner);
         machine.setMainteiner(mainteiner);
-
-
         machineService.addMachine(machine);
 
     }
 
 
-
     @GetMapping("/{mainteiner-login}")
     public List<Machine> getMachine(@PathVariable("mainteiner-login") String login){
+
         Mainteiner mainteiner = mainteinerService.findMainteinerByLogin(login);
+
         return machineService.getAllMachinesForTheMainteiner(mainteiner);
     }
 
@@ -80,6 +77,7 @@ public class MachineController {
         });
         return errors;
     }
+
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({ObjectAlreadyExistsException.class, ObjectDoesNotExistException.class})
     public String handleAlreadyExistsExceptions(Exception ex) {

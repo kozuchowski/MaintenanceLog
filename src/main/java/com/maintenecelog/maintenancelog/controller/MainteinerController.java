@@ -1,10 +1,10 @@
 package com.maintenecelog.maintenancelog.controller;
 
+import com.maintenecelog.maintenancelog.dto.CreateMainteinerDto;
 import com.maintenecelog.maintenancelog.exception.ObjectAlreadyExistsException;
 import com.maintenecelog.maintenancelog.exception.ObjectDoesNotExistException;
 import com.maintenecelog.maintenancelog.exception.PasswordNotValidException;
 import com.maintenecelog.maintenancelog.model.Token;
-import com.maintenecelog.maintenancelog.repository.MachineRepository;
 import com.maintenecelog.maintenancelog.service.MaintainerServiceImpl;
 import com.maintenecelog.maintenancelog.model.Mainteiner;
 import com.maintenecelog.maintenancelog.service.TokenServiceImpl;
@@ -33,43 +33,44 @@ public class MainteinerController {
         this.tokenService = tokenService;
     }
     @PostMapping("/new")
-    public Token createUser(@Valid @RequestBody Mainteiner mainteiner,
-                            @RequestParam("confirmPass") String confirmPass) {
-        mainteinerService.isPasswordsValid(mainteiner.getPassword(), confirmPass,"Passwords don't match");
-        mainteinerService.isUnique(mainteiner.getLicenceNumber(), mainteiner.getEmail(), mainteiner.getLogin());
-        mainteinerService.createMainteiner(mainteiner);
-        token = tokenService.createToken(mainteiner);
-        return token;
+    public Token createUser(@Valid @RequestBody CreateMainteinerDto mainteinerDto) {
+        return mainteinerService.createMainteiner(mainteinerDto);
     }
-
 
     @PostMapping("/")
     public Token loginUser(@RequestParam("login") String login,
                            @RequestParam("password") String pass){
+
         Mainteiner mainteiner = mainteinerService.findMainteinerByLogin(login);
         mainteinerService.isPasswordsValid(mainteiner.getPassword(), pass, "Password is not valid");
-        Token token = tokenService.createToken(mainteiner);
-        return token;
+
+        return tokenService.createToken(mainteiner);
+
+
     }
+
     @PutMapping("/{login}")
     public String updateUser(@Valid @RequestBody Mainteiner mainteiner){
 
         mainteinerService.updateMaintener(mainteiner);
+
         return "User updated";
     }
 
 
-
-
     @DeleteMapping("/{login}")
     public String deleteUser(@PathVariable String login) {
+
         mainteinerService.deleteUserByLogin(login);
+
         return "deleted";
     }
+
     @GetMapping("/{login}")
     public Mainteiner showMainteiner(@PathVariable String login){
 
         mainteiner = mainteinerService.findMainteinerByLogin(login);
+
         return mainteiner;
     }
     @ResponseStatus(HttpStatus.BAD_REQUEST)

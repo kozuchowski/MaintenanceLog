@@ -1,9 +1,11 @@
 package com.maintenecelog.maintenancelog.service;
 
+import com.maintenecelog.maintenancelog.dto.CreateMainteinerDto;
 import com.maintenecelog.maintenancelog.exception.ObjectAlreadyExistsException;
 import com.maintenecelog.maintenancelog.exception.ObjectDoesNotExistException;
 import com.maintenecelog.maintenancelog.exception.PasswordNotValidException;
 import com.maintenecelog.maintenancelog.model.Mainteiner;
+import com.maintenecelog.maintenancelog.model.Token;
 import com.maintenecelog.maintenancelog.repository.MainteinerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,15 +15,25 @@ public class MaintainerServiceImpl implements MaintainerService {
 
     private final MainteinerRepository mainteinerRepository;
 
-    @Autowired
-    public MaintainerServiceImpl(MainteinerRepository repository) {
-        this.mainteinerRepository = repository;
+    private final TokenService tokenService;
 
+    @Autowired
+    public MaintainerServiceImpl(MainteinerRepository mainteinerRepository, TokenService tokenService) {
+        this.mainteinerRepository = mainteinerRepository;
+        this.tokenService = tokenService;
     }
 
+
+
     @Override
-    public void createMainteiner(Mainteiner mainteiner){
+    public Token createMainteiner(CreateMainteinerDto dto){
+        isPasswordsValid(dto.getPassword(), dto.getConfirmPassword(),"Passwords don't match");
+        isUnique(dto.getLicenceNumber(), dto.getEmail(), dto.getLogin());
+        Mainteiner mainteiner = dtoIntoMainteiner(dto);
+
         mainteinerRepository.save(mainteiner);
+
+        return tokenService.createToken(mainteiner);
     }
 
     @Override
@@ -63,7 +75,11 @@ public class MaintainerServiceImpl implements MaintainerService {
         return true;
     }
 
-
+    @Override
+    public Mainteiner dtoIntoMainteiner(CreateMainteinerDto dto) {
+        return new Mainteiner(dto.getName(), dto.getSurname(), dto.getLogin(), dto.getPassword(), dto.getEmail(),
+                dto.getLicenceNumber());
+    }
 
 
 }
