@@ -8,7 +8,7 @@ import java.security.SecureRandom;
 import java.util.Base64;
 
 @Service
-public class TokenServiceImpl implements TokenService{
+public class TokenServiceImpl{
 
     private static final SecureRandom secureRandom = new SecureRandom();
     private static final Base64.Encoder base64Encoder = Base64.getUrlEncoder();
@@ -20,7 +20,6 @@ public class TokenServiceImpl implements TokenService{
     }
 
 
-    @Override
     public Token createToken(Mainteiner mainteiner) {
         return new Token(generateNewToken(), mainteiner.getId());
     }

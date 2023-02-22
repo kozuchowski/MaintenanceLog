@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Service
-public class MainteneceServiceImpl implements MaintenenceService{
+public class MainteneceServiceImpl{
 
     private final MaintenenceRepository repository;
 
@@ -28,6 +28,6 @@ public class MainteneceServiceImpl implements MaintenenceService{
     }
 
     public void deleteByDate(LocalDate date, Machine machine){
-        repository.deleteByDate(date, machine);
+        repository.deleteByExDateAndMachine(date, machine);
     }
 }

@@ -1,13 +1,12 @@
 package com.maintenecelog.maintenancelog.controller;
 
+import com.maintenecelog.maintenancelog.dto.CreateMachineDto;
 import com.maintenecelog.maintenancelog.exception.ObjectAlreadyExistsException;
 import com.maintenecelog.maintenancelog.exception.ObjectDoesNotExistException;
 import com.maintenecelog.maintenancelog.model.Machine;
 import com.maintenecelog.maintenancelog.model.Mainteiner;
-import com.maintenecelog.maintenancelog.model.Owner;
 import com.maintenecelog.maintenancelog.service.MachineServiceImpl;
 import com.maintenecelog.maintenancelog.service.MaintainerServiceImpl;
-import com.maintenecelog.maintenancelog.service.OwnerServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
@@ -25,29 +24,19 @@ public class MachineController {
 
     private final MachineServiceImpl machineService;
     private final MaintainerServiceImpl mainteinerService;
-    private final OwnerServiceImpl ownerService;
+
 
 
     @Autowired
-    public MachineController(MachineServiceImpl machineService, MaintainerServiceImpl mainteinerService,
-                             OwnerServiceImpl ownerService) {
+    public MachineController(MachineServiceImpl machineService, MaintainerServiceImpl mainteinerService) {
         this.machineService = machineService;
         this.mainteinerService = mainteinerService;
-        this.ownerService = ownerService;
+
 
     }
-    @PostMapping("/new/{mainteiner-login}")
-    public void addMachine(@PathVariable("mainteiner-login") String login,
-                           @Valid @RequestBody Machine machine) {
-
-        machineService.isUnique(machine.getUDTNumber(), machine.getVINNumber(), machine.getSerialNumber());
-        Mainteiner mainteiner = mainteinerService.findMainteinerByLogin(login);
-        Owner owner = machine.getOwner();
-        ownerService.isUnique(owner.getOwnerEmail(), owner.getOwnerNIP());
-        ownerService.addOwner(owner);
-        machine.setMainteiner(mainteiner);
-        machineService.addMachine(machine);
-
+    @PostMapping("/new")
+    public void addMachine(@Valid @RequestBody CreateMachineDto dto) {
+        machineService.addMachine(dto);
     }
 
 

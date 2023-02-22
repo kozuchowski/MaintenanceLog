@@ -1,29 +1,47 @@
 package com.maintenecelog.maintenancelog.service;
 
+import com.maintenecelog.maintenancelog.dto.CreateMachineDto;
 import com.maintenecelog.maintenancelog.exception.ObjectAlreadyExistsException;
 import com.maintenecelog.maintenancelog.exception.ObjectDoesNotExistException;
 import com.maintenecelog.maintenancelog.model.Machine;
 import com.maintenecelog.maintenancelog.model.Mainteiner;
 import com.maintenecelog.maintenancelog.model.Owner;
 import com.maintenecelog.maintenancelog.repository.MachineRepository;
-import nonapi.io.github.classgraph.utils.VersionFinder;
+import com.maintenecelog.maintenancelog.repository.MainteinerRepository;
+import com.maintenecelog.maintenancelog.repository.OwnerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class MachineServiceImpl implements MachineService{
+public class MachineServiceImpl{
     private final MachineRepository machineRepository;
-
+    private final MainteinerRepository mainteinerRepository;
+    private OwnerRepository ownerRepository;
+    private OwnerServiceImpl ownerService;
 
     @Autowired
-    public MachineServiceImpl(MachineRepository machineRepository) {
+    public MachineServiceImpl(MachineRepository machineRepository, MainteinerRepository mainteinerRepository, OwnerRepository ownerRepository, OwnerServiceImpl ownerService) {
         this.machineRepository = machineRepository;
+        this.mainteinerRepository = mainteinerRepository;
+        this.ownerRepository = ownerRepository;
+        this.ownerService = ownerService;
     }
 
-    public void addMachine(Machine machine){
+    public void addMachine(CreateMachineDto dto){
+
+        isUnique(dto.getUDTNumber(), dto.getVINNumber(), dto.getSerialNumber());
+        Mainteiner mainteiner = mainteinerRepository.findByLogin(dto.getMainteinerLogin());
+
+        ownerService.isUnique(dto.getOwnerEmail(), dto.getOwnerNIP());
+        Owner owner = new Owner(dto.getOwnerName(), dto.getOwnerEmail(), dto.getOwnerPhoneNumber(), dto.getOwnerNIP());
+        ownerService.addOwner(owner);
+
+        Machine machine = new Machine(dto.getUDTNumber(), dto.getVINNumber(), dto.getSerialNumber(),
+                dto.getManufacturer(),mainteiner, owner);
+
+
         machineRepository.save(machine);
     }
 
@@ -48,31 +66,12 @@ public class MachineServiceImpl implements MachineService{
        return machineRepository.findAllByOwner(owner);
     }
 
-    @Override
-    public void updateMachine(String UDT,
-                              String VIN,
-                              String serial,
-                              LocalDate manufactured,
-                              LocalDate lastUDTEx,
-                              boolean UDTExResult,
-                              LocalDate lastMaintenance,
-                              boolean mainteinerExResult,
-                              String manufacturer,
-                              Mainteiner mainteiner,
-                              Owner owner,
-                              Long id) {
-        getMachineById(id);
-        machineRepository.setMachine(UDT, VIN, serial, manufactured, lastUDTEx, UDTExResult, lastMaintenance,
-                mainteinerExResult, manufacturer, mainteiner, owner, id);
+
+
+    public void updateMachine(Machine machine) {
+        machineRepository.save(machine);
     }
 
-    @Override
-    public void updateMachine(Mainteiner mainteiner, Long id) {
-        getMachineById(id);
-        machineRepository.setMachine(mainteiner, id);
-    }
-    //No idea what I am doing :) Mindfuck level chess 3d ;D
-    @Override
     public boolean isUnique(String UDT, String VIN, String serial) {
         if(machineRepository.findByUnique(UDT, VIN, serial) != null){
             throw new ObjectAlreadyExistsException("Machine already exists in database");

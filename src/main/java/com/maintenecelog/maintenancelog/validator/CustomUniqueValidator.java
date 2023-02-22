@@ -17,9 +17,9 @@ import javax.validation.ConstraintValidatorContext;
 @Component
 public class CustomUniqueValidator implements ConstraintValidator<CustomUnique, Object> {
 
-    private MaintainerService maintainerService;
-    private MachineService machineService;
-    private OwnerService ownerService;
+    private MaintainerServiceImpl maintainerService;
+    private MachineServiceImpl machineService;
+    private OwnerServiceImpl ownerService;
 
     private boolean isUnique = true;
 
