@@ -1,11 +1,7 @@
 package com.maintenecelog.maintenancelog.model;
 
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Setter
@@ -13,20 +9,18 @@ import java.time.LocalDate;
 @Entity
 @NoArgsConstructor
 public class Maintenence {
-    @Getter(AccessLevel.NONE)
-    @Setter(AccessLevel.NONE)
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private Long id;
-
-    @NotNull(message = "Machine is required")
     @ManyToOne
     private Machine machine;
-    @NotBlank(message = "Description is required")
+
     private String description;
-    @DateTimeFormat
+
     private LocalDate exDate;
+
+    private boolean exResult;
 
     public Maintenence(Machine machine, String description, LocalDate exDate) {
         this.machine = machine;

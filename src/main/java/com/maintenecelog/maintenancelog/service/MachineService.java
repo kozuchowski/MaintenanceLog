@@ -15,14 +15,14 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class MachineServiceImpl{
+public class MachineService {
     private final MachineRepository machineRepository;
     private final MainteinerRepository mainteinerRepository;
     private OwnerRepository ownerRepository;
-    private OwnerServiceImpl ownerService;
+    private OwnerService ownerService;
 
     @Autowired
-    public MachineServiceImpl(MachineRepository machineRepository, MainteinerRepository mainteinerRepository, OwnerRepository ownerRepository, OwnerServiceImpl ownerService) {
+    public MachineService(MachineRepository machineRepository, MainteinerRepository mainteinerRepository, OwnerRepository ownerRepository, OwnerService ownerService) {
         this.machineRepository = machineRepository;
         this.mainteinerRepository = mainteinerRepository;
         this.ownerRepository = ownerRepository;

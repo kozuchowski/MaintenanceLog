@@ -5,8 +5,8 @@ import com.maintenecelog.maintenancelog.exception.ObjectAlreadyExistsException;
 import com.maintenecelog.maintenancelog.exception.ObjectDoesNotExistException;
 import com.maintenecelog.maintenancelog.model.Machine;
 import com.maintenecelog.maintenancelog.model.Mainteiner;
-import com.maintenecelog.maintenancelog.service.MachineServiceImpl;
-import com.maintenecelog.maintenancelog.service.MaintainerServiceImpl;
+import com.maintenecelog.maintenancelog.service.MachineService;
+import com.maintenecelog.maintenancelog.service.MainteinerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
@@ -22,13 +22,13 @@ import java.util.Map;
 public class MachineController {
 
 
-    private final MachineServiceImpl machineService;
-    private final MaintainerServiceImpl mainteinerService;
+    private final MachineService machineService;
+    private final MainteinerService mainteinerService;
 
 
 
     @Autowired
-    public MachineController(MachineServiceImpl machineService, MaintainerServiceImpl mainteinerService) {
+    public MachineController(MachineService machineService, MainteinerService mainteinerService) {
         this.machineService = machineService;
         this.mainteinerService = mainteinerService;
 

@@ -17,18 +17,18 @@ import javax.validation.ConstraintValidatorContext;
 @Component
 public class CustomUniqueValidator implements ConstraintValidator<CustomUnique, Object> {
 
-    private MaintainerServiceImpl maintainerService;
-    private MachineServiceImpl machineService;
-    private OwnerServiceImpl ownerService;
+    private MainteinerService mainteinerService;
+    private MachineService machineService;
+    private OwnerService ownerService;
 
     private boolean isUnique = true;
 
     @Autowired
-    public CustomUniqueValidator(MaintainerServiceImpl maintainerService,
-                                 MachineServiceImpl machineService,
-                                 OwnerServiceImpl ownerService) {
+    public CustomUniqueValidator(MainteinerService mainteinerService,
+                                 MachineService machineService,
+                                 OwnerService ownerService) {
 
-        this.maintainerService = maintainerService;
+        this.mainteinerService = mainteinerService;
         this.machineService = machineService;
         this.ownerService = ownerService;
     }
@@ -43,7 +43,7 @@ public class CustomUniqueValidator implements ConstraintValidator<CustomUnique, 
 
 
         if(o.getClass().equals(Mainteiner.class)){
-            isUnique = maintainerService.isUnique(((Mainteiner) o).getLicenceNumber(),
+            isUnique = mainteinerService.isUnique(((Mainteiner) o).getLicenceNumber(),
                     ((Mainteiner) o).getEmail(), ((Mainteiner) o).getLogin());
         }
         if(o.getClass().equals(Machine.class)){

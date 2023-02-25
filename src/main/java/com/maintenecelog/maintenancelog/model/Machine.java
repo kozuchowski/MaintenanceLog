@@ -29,9 +29,6 @@ public class Machine {
 
     private boolean UDTExaminationResult;
 
-    private LocalDate lastMaintenance;
-
-    private boolean maintainerExaminationResult;
 
     private String manufacturer;
 

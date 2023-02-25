@@ -6,7 +6,7 @@ import com.maintenecelog.maintenancelog.exception.ObjectAlreadyExistsException;
 import com.maintenecelog.maintenancelog.exception.ObjectDoesNotExistException;
 import com.maintenecelog.maintenancelog.exception.PasswordNotValidException;
 import com.maintenecelog.maintenancelog.model.Token;
-import com.maintenecelog.maintenancelog.service.MaintainerServiceImpl;
+import com.maintenecelog.maintenancelog.service.MainteinerService;
 import com.maintenecelog.maintenancelog.model.Mainteiner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,10 +21,10 @@ import java.util.Map;
 @RequestMapping("/mainteiners")
 public class MainteinerController {
 
-    private final MaintainerServiceImpl mainteinerService;
+    private final MainteinerService mainteinerService;
 
     @Autowired
-    public MainteinerController(MaintainerServiceImpl mainteinerService) {
+    public MainteinerController(MainteinerService mainteinerService) {
         this.mainteinerService = mainteinerService;
 
     }

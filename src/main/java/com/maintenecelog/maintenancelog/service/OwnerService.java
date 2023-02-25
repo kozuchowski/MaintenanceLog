@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class OwnerServiceImpl{
+public class OwnerService {
     private final OwnerRepository repository;
 
     @Autowired
-    public OwnerServiceImpl(OwnerRepository repository) {
+    public OwnerService(OwnerRepository repository) {
         this.repository = repository;
     }
 
