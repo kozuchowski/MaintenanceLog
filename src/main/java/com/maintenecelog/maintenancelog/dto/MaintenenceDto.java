@@ -22,6 +22,7 @@ public class MaintenenceDto {
     private String description;
     @DateTimeFormat
     private LocalDate exDate;
+    @NotNull
     private boolean exResult;
 
 }

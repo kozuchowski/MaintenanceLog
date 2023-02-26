@@ -1,9 +1,7 @@
 package com.maintenecelog.maintenancelog.dto;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Column;
@@ -12,11 +10,12 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
-public class CreateMainteinerDto {
+public class UpdateMainteinerDto {
+
 
     @NotBlank(message = "Name is required")
     private String name;

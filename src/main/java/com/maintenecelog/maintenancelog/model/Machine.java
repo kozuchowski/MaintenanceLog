@@ -42,16 +42,14 @@ public class Machine {
 
 
     public Machine(String UDTNumber, String VINNumber, String serialNumber, LocalDate dateOfManufacture,
-                   LocalDate lastUDTExamination, boolean UDTExaminationResult, LocalDate lastMaintenance,
-                   boolean maintainerExaminationResult, String manufacturer, Mainteiner mainteiner, Owner owner) {
+                   LocalDate lastUDTExamination, boolean UDTExaminationResult,
+                    String manufacturer, Mainteiner mainteiner, Owner owner) {
         this.UDTNumber = UDTNumber;
         this.VINNumber = VINNumber;
         this.serialNumber = serialNumber;
         this.dateOfManufacture = dateOfManufacture;
         this.lastUDOExamination = lastUDTExamination;
         this.UDTExaminationResult = UDTExaminationResult;
-        this.lastMaintenance = lastMaintenance;
-        this.maintainerExaminationResult = maintainerExaminationResult;
         this.manufacturer = manufacturer;
         this.mainteiner = mainteiner;
         this.owner = owner;

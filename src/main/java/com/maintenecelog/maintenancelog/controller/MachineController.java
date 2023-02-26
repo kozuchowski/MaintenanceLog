@@ -36,12 +36,12 @@ public class MachineController {
     }
     @PostMapping("/new")
     public void addMachine(@Valid @RequestBody CreateMachineDto dto) {
-        machineService.addMachine(dto);
+        machineService.createMachine(dto);
     }
 
 
     @GetMapping("/{mainteiner-login}")
-    public List<Machine> getMachine(@PathVariable("mainteiner-login") String login){
+    public List<Machine> getMachines(@PathVariable("mainteiner-login") String login){
 
         Mainteiner mainteiner = mainteinerService.findMainteinerByLogin(login);
 

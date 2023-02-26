@@ -24,20 +24,18 @@ public class Mainteiner {
     private String password;
 
     private String email;
+    private String phoneNumber;
 
     private String licenceNumber;
 
 
-
-
-    public Mainteiner(String name, String surname, String login, String password, String email, String licenceNumber) {
+    public Mainteiner(String name, String surname, String login, String password, String email, String phoneNumber, String licenceNumber) {
         this.name = name;
         this.surname = surname;
         this.login = login;
         this.password = password;
         this.email = email;
+        this.phoneNumber = phoneNumber;
         this.licenceNumber = licenceNumber;
     }
-
-
 }

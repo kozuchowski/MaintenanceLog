@@ -29,7 +29,7 @@ public class MachineService {
         this.ownerService = ownerService;
     }
 
-    public void addMachine(CreateMachineDto dto){
+    public void createMachine(CreateMachineDto dto){
 
         isUnique(dto.getUDTNumber(), dto.getVINNumber(), dto.getSerialNumber());
         Mainteiner mainteiner = mainteinerRepository.findByLogin(dto.getMainteinerLogin());

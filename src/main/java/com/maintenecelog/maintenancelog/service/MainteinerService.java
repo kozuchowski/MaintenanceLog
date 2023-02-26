@@ -2,6 +2,7 @@ package com.maintenecelog.maintenancelog.service;
 
 import com.maintenecelog.maintenancelog.dto.CreateMainteinerDto;
 import com.maintenecelog.maintenancelog.dto.LoginUserDto;
+import com.maintenecelog.maintenancelog.dto.UpdateMainteinerDto;
 import com.maintenecelog.maintenancelog.exception.ObjectAlreadyExistsException;
 import com.maintenecelog.maintenancelog.exception.ObjectDoesNotExistException;
 import com.maintenecelog.maintenancelog.exception.PasswordNotValidException;
@@ -58,7 +59,8 @@ public class MainteinerService {
     }
 
 
-    public void updateMaintener(Mainteiner m) {
+    public void updateMaintener(UpdateMainteinerDto dto) {
+        Mainteiner m = dtoIntoMainteiner(dto);
         mainteinerRepository.save(m);
 
     }
@@ -82,7 +84,11 @@ public class MainteinerService {
 
     public Mainteiner dtoIntoMainteiner(CreateMainteinerDto dto) {
         return new Mainteiner(dto.getName(), dto.getSurname(), dto.getLogin(), dto.getPassword(), dto.getEmail(),
-                dto.getLicenceNumber());
+                dto.getPhoneNumber(), dto.getLicenceNumber());
+    }
+    public Mainteiner dtoIntoMainteiner(UpdateMainteinerDto dto) {
+        return new Mainteiner(dto.getName(), dto.getSurname(), dto.getLogin(), dto.getPassword(), dto.getEmail(),
+                dto.getPhoneNumber(), dto.getLicenceNumber());
     }
 
 

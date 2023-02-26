@@ -2,6 +2,7 @@ package com.maintenecelog.maintenancelog.controller;
 
 import com.maintenecelog.maintenancelog.dto.CreateMainteinerDto;
 import com.maintenecelog.maintenancelog.dto.LoginUserDto;
+import com.maintenecelog.maintenancelog.dto.UpdateMainteinerDto;
 import com.maintenecelog.maintenancelog.exception.ObjectAlreadyExistsException;
 import com.maintenecelog.maintenancelog.exception.ObjectDoesNotExistException;
 import com.maintenecelog.maintenancelog.exception.PasswordNotValidException;
@@ -29,26 +30,26 @@ public class MainteinerController {
 
     }
     @PostMapping("/new")
-    public Token createUser(@Valid @RequestBody CreateMainteinerDto mainteinerDto) {
+    public Token create(@Valid @RequestBody CreateMainteinerDto mainteinerDto) {
         return mainteinerService.createMainteiner(mainteinerDto);
     }
 
     @PostMapping("/")
-    public Token loginUser(@Valid @RequestBody LoginUserDto dto ){
+    public Token login(@Valid @RequestBody LoginUserDto dto ){
         return mainteinerService.loginUser(dto);
     }
 
     @PutMapping("/{login}")
-    public String updateUser(@Valid @RequestBody Mainteiner mainteiner){
+    public String update(@Valid @RequestBody UpdateMainteinerDto dto){
 
-        mainteinerService.updateMaintener(mainteiner);
+        mainteinerService.updateMaintener(dto);
 
         return "User updated";
     }
 
 
     @DeleteMapping("/{login}")
-    public String deleteUser(@PathVariable String login) {
+    public String delete(@PathVariable String login) {
 
         mainteinerService.deleteUserByLogin(login);
 
