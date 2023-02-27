@@ -58,8 +58,9 @@ public class MachineService {
         return machineRepository.findAll();
     }
 
-    public List<Machine> getAllMachinesForTheMainteiner(Long id){
-        return   machineRepository.findAllByMainteinerId(id);
+    public List<Machine> getAllMachinesForTheMainteiner(String login){
+        Mainteiner mainteiner = mainteinerRepository.findByLogin(login);
+        return   machineRepository.findAllByMainteinerId(mainteiner.getId());
     }
 
     public List<Machine> getAllMachinesForTheOwner(Long id){
