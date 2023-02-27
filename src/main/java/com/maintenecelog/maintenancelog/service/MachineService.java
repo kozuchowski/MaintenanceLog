@@ -39,7 +39,7 @@ public class MachineService {
         ownerService.addOwner(owner);
 
         Machine machine = new Machine(dto.getUDTNumber(), dto.getVINNumber(), dto.getSerialNumber(),
-                dto.getManufacturer(),mainteiner, owner);
+                dto.getDateOfManufacture(), dto.getManufacturer(),mainteiner, owner);
 
 
         machineRepository.save(machine);

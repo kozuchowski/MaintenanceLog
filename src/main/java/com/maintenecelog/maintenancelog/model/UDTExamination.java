@@ -16,8 +16,9 @@ public class UDTExamination {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @ManyToOne
+    private Machine machine;
     private LocalDate examinedAt;
-
     private boolean result;
     private String description;
 

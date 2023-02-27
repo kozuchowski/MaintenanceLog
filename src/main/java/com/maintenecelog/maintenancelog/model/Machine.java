@@ -25,13 +25,7 @@ public class Machine {
 
     private LocalDate dateOfManufacture;
 
-    private LocalDate lastUDOExamination;
-
-    private boolean UDTExaminationResult;
-
-
     private String manufacturer;
-
 
     @ManyToOne
     private Mainteiner mainteiner;
@@ -42,27 +36,15 @@ public class Machine {
 
 
     public Machine(String UDTNumber, String VINNumber, String serialNumber, LocalDate dateOfManufacture,
-                   LocalDate lastUDTExamination, boolean UDTExaminationResult,
                     String manufacturer, Mainteiner mainteiner, Owner owner) {
         this.UDTNumber = UDTNumber;
         this.VINNumber = VINNumber;
         this.serialNumber = serialNumber;
         this.dateOfManufacture = dateOfManufacture;
-        this.lastUDOExamination = lastUDTExamination;
-        this.UDTExaminationResult = UDTExaminationResult;
         this.manufacturer = manufacturer;
         this.mainteiner = mainteiner;
         this.owner = owner;
 
     }
 
-    public Machine(String UDTNumber, String VINNumber, String serialNumber,
-                   String manufacturer, Mainteiner mainteiner, Owner owner) {
-        this.UDTNumber = UDTNumber;
-        this.VINNumber = VINNumber;
-        this.serialNumber = serialNumber;
-        this.manufacturer = manufacturer;
-        this.mainteiner = mainteiner;
-        this.owner = owner;
-    }
 }
