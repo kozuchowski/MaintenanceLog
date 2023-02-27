@@ -47,9 +47,15 @@ public class MachineController {
 
 
     @GetMapping("/{mainteiner-login}")
-    public List<Machine> getMachines(@PathVariable("mainteiner-login") String login){
+    public List<Machine> getMachinesForMainteiner(@PathVariable("mainteiner-login") String login){
 
         return machineService.getAllMachinesForTheMainteiner(login);
+    }
+
+    @GetMapping("/{owner-id}")
+    public List<Machine> getMachinesForOwner(@PathVariable("owner-id") Long id){
+
+        return machineService.getAllMachinesForTheOwner(id);
     }
 
     @GetMapping("/{id}")
