@@ -34,9 +34,15 @@ public class MachineController {
 
 
     }
-    @PostMapping("/new")
+    @PostMapping("/")
     public void addMachine(@Valid @RequestBody CreateMachineDto dto) {
         machineService.createMachine(dto);
+    }
+
+    @PatchMapping("/{id}")
+    public String update(@Valid @PathVariable Long id, CreateMachineDto dto) {
+        machineService.updateMachine(id, dto);
+        return "Machine updated";
     }
 
 
@@ -45,7 +51,7 @@ public class MachineController {
 
         Mainteiner mainteiner = mainteinerService.findMainteinerByLogin(login);
 
-        return machineService.getAllMachinesForTheMainteiner(mainteiner);
+        return machineService.getAllMachinesForTheMainteiner(mainteiner.getId());
     }
 
     @GetMapping("/{id}")

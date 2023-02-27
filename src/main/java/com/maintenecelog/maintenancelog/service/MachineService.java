@@ -58,17 +58,23 @@ public class MachineService {
         return machineRepository.findAll();
     }
 
-    public List<Machine> getAllMachinesForTheMainteiner(Mainteiner mainteiner){
-        return   machineRepository.findAllByMainteiner(mainteiner);
+    public List<Machine> getAllMachinesForTheMainteiner(Long id){
+        return   machineRepository.findAllByMainteinerId(id);
     }
 
-    public List<Machine> getAllMachinesForTheOwner(Owner owner){
-       return machineRepository.findAllByOwner(owner);
+    public List<Machine> getAllMachinesForTheOwner(Long id){
+       return machineRepository.findAllByOwnerId(id);
     }
 
 
 
-    public void updateMachine(Machine machine) {
+    public void updateMachine(Long id, CreateMachineDto dto) {
+        Optional<Machine> optionalMachine = machineRepository.findById(id);
+        if(optionalMachine.isEmpty()) {
+            throw new ObjectDoesNotExistException("No such machine");
+        }
+        Machine machine = optionalMachine.get();
+
         machineRepository.save(machine);
     }
 
