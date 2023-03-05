@@ -77,8 +77,9 @@ public class MachineController {
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler({ObjectAlreadyExistsException.class, ObjectDoesNotExistException.class})
-    public String handleAlreadyExistsExceptions(Exception ex) {
+    @ExceptionHandler({ObjectAlreadyExistsException.class,
+            ObjectDoesNotExistException.class})
+    public String handleObjectsExceptions(Exception ex) {
 
         return ex.getMessage();
     }

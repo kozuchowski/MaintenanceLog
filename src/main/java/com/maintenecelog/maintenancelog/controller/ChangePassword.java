@@ -1,12 +1,11 @@
 package com.maintenecelog.maintenancelog.controller;
 
-import com.maintenecelog.maintenancelog.dto.MaintenenceDto;
+import com.maintenecelog.maintenancelog.dto.ChangePasswordDto;
 import com.maintenecelog.maintenancelog.exception.ObjectAlreadyExistsException;
 import com.maintenecelog.maintenancelog.exception.ObjectDoesNotExistException;
 import com.maintenecelog.maintenancelog.exception.PasswordNotValidException;
-import com.maintenecelog.maintenancelog.model.Maintenence;
-import com.maintenecelog.maintenancelog.service.MainteneceService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.maintenecelog.maintenancelog.service.PasswordService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -14,37 +13,20 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/mainteneces")
-public class MainteneceController {
+@RequestMapping("/passwords")
+@RequiredArgsConstructor
+public class ChangePassword {
 
-    private final MainteneceService mainteneceService;
-
-    @Autowired
-    public MainteneceController(MainteneceService mainteneceService) {
-        this.mainteneceService = mainteneceService;
-    }
-
-    @PostMapping("/")
-    public void create(@Valid @RequestBody MaintenenceDto dto) {
-        mainteneceService.create(dto);
-    }
+    private final PasswordService passwordService;
 
     @PatchMapping("/")
-    public void update(@Valid @RequestBody MaintenenceDto dto) {
-        mainteneceService.update(dto);
-    }
+    public String update(@Valid @RequestBody ChangePasswordDto dto) {
+        passwordService.update(dto);
 
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
-        mainteneceService.deleteById(id);
-    }
-    @GetMapping("/{machineId}")
-    public List<Maintenence> showAllByMachine(@PathVariable Long machineId) {
-        return mainteneceService.findAllByMachine(machineId);
+        return "Password updated";
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)

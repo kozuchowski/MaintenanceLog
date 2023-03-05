@@ -77,7 +77,7 @@ public class MainteinerController {
     @ExceptionHandler({ObjectAlreadyExistsException.class,
                        ObjectDoesNotExistException.class,
                        PasswordNotValidException.class})
-    public String handleAlreadyExistsExceptions(Exception ex) {
+    public String handleObjectsExceptions(Exception ex) {
 
         return ex.getMessage();
     }
