@@ -12,6 +12,8 @@ import com.maintenecelog.maintenancelog.repository.MainteinerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class MainteinerService {
 
@@ -89,6 +91,17 @@ public class MainteinerService {
     public Mainteiner dtoIntoMainteiner(UpdateMainteinerDto dto) {
         return new Mainteiner(dto.getName(), dto.getSurname(), dto.getLogin(), dto.getPassword(), dto.getEmail(),
                 dto.getPhoneNumber(), dto.getLicenceNumber());
+    }
+
+    public Mainteiner getMainteinerByIdIfExist(Long id) {
+        Optional<Mainteiner> optionalMainteiner = mainteinerRepository.findById(id);
+
+        if(optionalMainteiner.isEmpty()) {
+            throw new ObjectDoesNotExistException("No such mainteiner");
+        }
+
+        return optionalMainteiner.get();
+
     }
 
 
