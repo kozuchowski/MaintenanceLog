@@ -11,6 +11,8 @@ import com.maintenecelog.maintenancelog.repository.MainteinerRepository;
 import com.maintenecelog.maintenancelog.repository.OwnerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -18,8 +20,8 @@ import java.util.Optional;
 public class MachineService {
     private final MachineRepository machineRepository;
     private final MainteinerRepository mainteinerRepository;
-    private OwnerRepository ownerRepository;
-    private OwnerService ownerService;
+    private final OwnerRepository ownerRepository;
+    private final OwnerService ownerService;
 
     @Autowired
     public MachineService(MachineRepository machineRepository, MainteinerRepository mainteinerRepository, OwnerRepository ownerRepository, OwnerService ownerService) {
@@ -29,7 +31,7 @@ public class MachineService {
         this.ownerService = ownerService;
     }
 
-    public void createMachine(CreateMachineDto dto){
+    public Machine createMachine(CreateMachineDto dto){
 
         isUnique(dto.getUDTNumber(), dto.getVINNumber(), dto.getSerialNumber());
         Mainteiner mainteiner = mainteinerRepository.findByLogin(dto.getMainteinerLogin());
@@ -42,7 +44,7 @@ public class MachineService {
                 dto.getDateOfManufacture(), dto.getManufacturer(),mainteiner, owner);
 
 
-        machineRepository.save(machine);
+        return machineRepository.save(machine);
     }
 
     public Machine getMachineById(Long id){
@@ -84,6 +86,10 @@ public class MachineService {
             throw new ObjectAlreadyExistsException("Machine already exists in database");
         }
         return true;
+    }
+
+    public void delete(Long id) {
+        machineRepository.deleteById(id);
     }
 
 

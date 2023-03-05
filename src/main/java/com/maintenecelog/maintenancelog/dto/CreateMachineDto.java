@@ -13,7 +13,6 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
 public class CreateMachineDto {
     @NotEmpty
     @Column(unique = true)
@@ -40,7 +39,10 @@ public class CreateMachineDto {
     private String ownerEmail;
     @NotNull
     @Column(unique = true)
-    @Pattern(regexp = "^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]\\d{3}[\\s.-]\\d{3}$", message = "Invalid phone number")
+    @Pattern(regexp = "^(\\+\\d{1,3}( )?)?((\\(\\d{3}\\))|\\d{3})[- .]?\\d{3}[- .]?\\d{4}$"
+                        + "|^(\\+\\d{1,3}( )?)?(\\d{3}[ ]?){2}\\d{3}$"
+                        + "|^(\\+\\d{1,3}( )?)?(\\d{3}[ ]?)(\\d{2}[ ]?){2}\\d{2}$",
+                         message = "Not valid phone number format")
     private String ownerPhoneNumber;
     @NotNull(message = "NIP is required")
     @Column(unique = true)

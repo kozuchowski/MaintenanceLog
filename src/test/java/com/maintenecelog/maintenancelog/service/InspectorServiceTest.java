@@ -67,7 +67,7 @@ class InspectorServiceTest {
     void shouldUpdateInspector() {
         Inspector inspector = inspectorService.create(inspectorDto);
 
-        UpdateInspectorDto updateInspectorDto = new UpdateInspectorDto(34l, "updateName",
+        UpdateInspectorDto updateInspectorDto = new UpdateInspectorDto(inspector.getId(), "updateName",
                 "updateSurname", "+634938547488");
 
         inspectorService.update(updateInspectorDto);
@@ -76,6 +76,8 @@ class InspectorServiceTest {
         assertEquals(updateInspectorDto.getName(), updatedInspector.getFirstName());
         assertEquals(updateInspectorDto.getSurname(), updatedInspector.getSurname());
         assertEquals(updateInspectorDto.getPhoneNumber(), updatedInspector.getPhoneNumber());
+
+        inspectorService.delete(inspector.getId());
     }
 
 
