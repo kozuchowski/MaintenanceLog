@@ -5,8 +5,8 @@ import com.maintenecelog.maintenancelog.dto.UpdateInspectorDto;
 import com.maintenecelog.maintenancelog.exception.ObjectAlreadyExistsException;
 import com.maintenecelog.maintenancelog.exception.ObjectDoesNotExistException;
 import com.maintenecelog.maintenancelog.exception.PasswordNotValidException;
-import com.maintenecelog.maintenancelog.model.Examinator;
-import com.maintenecelog.maintenancelog.service.InspectorsService;
+import com.maintenecelog.maintenancelog.model.Inspector;
+import com.maintenecelog.maintenancelog.service.InspectorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
@@ -21,28 +21,28 @@ import java.util.Map;
 @RequestMapping("/inspectors")
 public class InspectorController {
 
-    private final InspectorsService inspectorsService;
+    private final InspectorService inspectorService;
 
     @Autowired
-    public InspectorController(InspectorsService inspectorsService) {
-        this.inspectorsService = inspectorsService;
+    public InspectorController(InspectorService inspectorService) {
+        this.inspectorService = inspectorService;
     }
 
     @PostMapping("/")
-    public Examinator create(@Valid @RequestBody CreateInspectorDto dto) {
-        return inspectorsService.create(dto);
+    public Inspector create(@Valid @RequestBody CreateInspectorDto dto) {
+        return inspectorService.create(dto);
     }
 
     @PatchMapping("/")
     public String update(@Valid @RequestBody UpdateInspectorDto dto) {
-        inspectorsService.update(dto);
+        inspectorService.update(dto);
 
         return "Inspector updated";
     }
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable Long id){
-        inspectorsService.delete(id);
+        inspectorService.delete(id);
 
         return "Inspector deleted";
     }

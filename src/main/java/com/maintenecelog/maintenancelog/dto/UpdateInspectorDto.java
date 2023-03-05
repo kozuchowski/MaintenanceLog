@@ -12,7 +12,7 @@ import javax.validation.constraints.Pattern;
 @AllArgsConstructor
 public class UpdateInspectorDto {
 
-    @NotBlank(message = "Examinator Id Is required")
+    @NotBlank(message = "Inspector Id Is required")
     private Long id;
     @NotBlank(message = "Name is required")
     private String name;

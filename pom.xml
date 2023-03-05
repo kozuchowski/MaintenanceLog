@@ -15,7 +15,7 @@
     <name>maintenanceLog</name>
     <description>maintenanceLog</description>
     <properties>
-        <java.version>19</java.version>
+        <java.version>11</java.version>
     </properties>
     <dependencies>
         <dependency>
@@ -65,11 +65,12 @@
             <version>6.0.10.Final</version>
         </dependency>
 
-
-
-
-
-
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.9.2</version>
+            <scope>test</scope>
+        </dependency>
 
     </dependencies>
 

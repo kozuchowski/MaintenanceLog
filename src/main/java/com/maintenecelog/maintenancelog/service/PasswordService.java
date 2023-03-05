@@ -1,6 +1,7 @@
 package com.maintenecelog.maintenancelog.service;
 
 import com.maintenecelog.maintenancelog.dto.ChangePasswordDto;
+import com.maintenecelog.maintenancelog.exception.PasswordNotValidException;
 import com.maintenecelog.maintenancelog.model.Mainteiner;
 import com.maintenecelog.maintenancelog.repository.MainteinerRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +18,12 @@ public class PasswordService {
     public void update(ChangePasswordDto dto) {
         Mainteiner mainteiner= mainteinerService.getMainteinerByIdIfExist(dto.getMainteinerId());
 
-        if(mainteinerService.isPasswordsValid(dto.getPassword(), dto.getConfirmPassword(), "Passwords do not match")) {
-            mainteiner.setPassword(dto.getPassword());
+        if(!mainteiner.getPassword().equals(dto.getPassword())) {
+            throw new PasswordNotValidException("Password or login not valid");
+        }
+
+        if(mainteinerService.isPasswordsValid(dto.getNewPassword(), dto.getConfirmPassword(), "Passwords do not match")) {
+            mainteiner.setPassword(dto.getNewPassword());
         }
 
         mainteinerRepository.save(mainteiner);
