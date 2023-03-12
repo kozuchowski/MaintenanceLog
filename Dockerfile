@@ -10,7 +10,7 @@ RUN mvn clean package
 
 FROM openjdk:18-jdk-alpine
 
-COPY --from=builder /app/target/finanseApp_backend-0.0.1-SNAPSHOT.jar /app/maintanancelog-0.0.1-SNAPSHOT.jar
+COPY --from=builder /app/target/maintenancelog-0.0.1-SNAPSHOT.jar /app/maintanancelog-0.0.1-SNAPSHOT.jar
 
 EXPOSE 8080
 

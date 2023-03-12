@@ -15,7 +15,7 @@ public class Owner {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    String ownerName;
+    private String ownerName;
 
     private String ownerEmail;
     private String ownerPhoneNumber;

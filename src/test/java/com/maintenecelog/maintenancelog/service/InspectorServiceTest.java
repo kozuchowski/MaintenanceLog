@@ -5,14 +5,10 @@ import com.maintenecelog.maintenancelog.dto.UpdateInspectorDto;
 import com.maintenecelog.maintenancelog.exception.ObjectDoesNotExistException;
 import com.maintenecelog.maintenancelog.model.Inspector;
 import com.maintenecelog.maintenancelog.repository.InspectorRepository;
-import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.Collection;
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 

@@ -1,10 +1,13 @@
 package com.maintenecelog.maintenancelog.service;
 
 import com.maintenecelog.maintenancelog.exception.ObjectAlreadyExistsException;
+import com.maintenecelog.maintenancelog.exception.ObjectDoesNotExistException;
 import com.maintenecelog.maintenancelog.model.Owner;
 import com.maintenecelog.maintenancelog.repository.OwnerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 
 @Service
@@ -16,8 +19,8 @@ public class OwnerService {
         this.repository = repository;
     }
 
-    public void addOwner(Owner owner) {
-        repository.save(owner);
+    public Owner addOwner(Owner owner) {
+       return repository.save(owner);
     }
 
 
@@ -31,7 +34,19 @@ public class OwnerService {
     }
 
     public Owner findOwnerById(Long id) {
-        return repository.findById(id).orElseThrow();
+        Optional<Owner> optionalOwner = repository.findById(id);
+        if(optionalOwner.isEmpty()) {
+            throw new ObjectDoesNotExistException("No such owner");
+        }
+        return optionalOwner.get();
+    }
+
+    public Owner findOwnerByNIP(String nip) {
+        Owner owner = null;
+        if((owner = repository.findOwnerByOwnerNIP(nip)) == null) {
+            throw new ObjectDoesNotExistException("No such owner");
+        }
+       return owner;
     }
 
 

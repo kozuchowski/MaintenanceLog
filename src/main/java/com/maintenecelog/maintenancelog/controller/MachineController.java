@@ -1,6 +1,7 @@
 package com.maintenecelog.maintenancelog.controller;
 
 import com.maintenecelog.maintenancelog.dto.CreateMachineDto;
+import com.maintenecelog.maintenancelog.dto.UpdateMachineDto;
 import com.maintenecelog.maintenancelog.exception.ObjectAlreadyExistsException;
 import com.maintenecelog.maintenancelog.exception.ObjectDoesNotExistException;
 import com.maintenecelog.maintenancelog.model.Machine;
@@ -40,7 +41,7 @@ public class MachineController {
     }
 
     @PatchMapping("/{id}")
-    public String update(@Valid @PathVariable Long id, CreateMachineDto dto) {
+    public String update(@Valid @PathVariable Long id, UpdateMachineDto dto) {
         machineService.updateMachine(id, dto);
         return "Machine updated";
     }
