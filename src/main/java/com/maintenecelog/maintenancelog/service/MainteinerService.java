@@ -63,10 +63,20 @@ public class MainteinerService {
     }
 
 
-    public void updateMaintener(UpdateMainteinerDto dto) {
-        Mainteiner m = dtoIntoMainteiner(dto);
-        mainteinerRepository.save(m);
+    public Mainteiner updateMaintener(UpdateMainteinerDto dto) {
+        Mainteiner m = mainteinerRepository.findByLogin(dto.getLogin());
+        m.setName(dto.getName());
+        m.setSurname(dto.getSurname());
+        m.setLogin(dto.getLogin());
+        if(!(dto.getPassword().equals(dto.getConfirmPassword()))) {
+            throw new PasswordNotValidException("Invalid password");
+        }
+        m.setPassword(dto.getPassword());
+        m.setEmail(dto.getEmail());
+        m.setPhoneNumber(dto.getPhoneNumber());
+        m.setLicenceNumber(dto.getLicenceNumber());
 
+        return mainteinerRepository.save(m);
     }
 
 
