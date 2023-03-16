@@ -146,4 +146,38 @@ class MainteinerServiceTest {
         });
     }
 
+    @Test
+    void passwordShouldEqualsConfirm() {
+        mainteinerService.isPasswordsValid("test", "test", "message");
+    }
+
+    @Test
+    void shouldThrowPasswordNotValidException2() {
+        assertThrows(PasswordNotValidException.class, () -> {
+            mainteinerService.isPasswordsValid("test1", "test2", "message");
+        });
+    }
+
+//    @Test
+//    void dtoIntoMainteiner() {
+//    }
+//
+//    @Test
+//    void testDtoIntoMainteiner() {
+//    }
+
+    @Test
+    void getMainteinerByIdIfExist() {
+        CreateMainteinerDto createMainteinerDto = new CreateMainteinerDto("Test", "test",
+                "test", "PtpJtsfeOlcrgKeeJzdRLPaeV5VPDAT0Nk5SE", "PtpJtsfeOlcrgKeeJzdRLPaeV5VPDAT0Nk5SE",
+                "test@gaml.cm","000 00 00 00", "000000000000");
+
+        Token token = mainteinerService.createMainteiner(createMainteinerDto);
+        assertThrows(ObjectDoesNotExistException.class, () -> {
+            mainteinerService.getMainteinerByIdIfExist(-1l);
+        });
+        assertNotNull(mainteinerService.getMainteinerByIdIfExist(token.getMainteinerId()));
+
+        mainteinerRepository.deleteById(token.getMainteinerId());
+    }
 }
