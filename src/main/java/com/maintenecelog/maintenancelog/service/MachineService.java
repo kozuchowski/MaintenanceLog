@@ -117,6 +117,7 @@ public class MachineService {
         return true;
     }
 
+    @Transactional
     public void delete(Long id) {
         machineRepository.deleteById(id);
     }

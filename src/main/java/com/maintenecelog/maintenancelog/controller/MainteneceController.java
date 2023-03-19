@@ -1,11 +1,11 @@
 package com.maintenecelog.maintenancelog.controller;
 
-import com.maintenecelog.maintenancelog.dto.MaintenenceDto;
+import com.maintenecelog.maintenancelog.dto.MaintenanceDto;
 import com.maintenecelog.maintenancelog.exception.ObjectAlreadyExistsException;
 import com.maintenecelog.maintenancelog.exception.ObjectDoesNotExistException;
 import com.maintenecelog.maintenancelog.exception.PasswordNotValidException;
 import com.maintenecelog.maintenancelog.model.Maintenence;
-import com.maintenecelog.maintenancelog.service.MainteneceService;
+import com.maintenecelog.maintenancelog.service.MaintenaceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
@@ -21,30 +21,30 @@ import java.util.Map;
 @RequestMapping("/mainteneces")
 public class MainteneceController {
 
-    private final MainteneceService mainteneceService;
+    private final MaintenaceService maintenaceService;
 
     @Autowired
-    public MainteneceController(MainteneceService mainteneceService) {
-        this.mainteneceService = mainteneceService;
+    public MainteneceController(MaintenaceService maintenaceService) {
+        this.maintenaceService = maintenaceService;
     }
 
     @PostMapping("/")
-    public void create(@Valid @RequestBody MaintenenceDto dto) {
-        mainteneceService.create(dto);
+    public void create(@Valid @RequestBody MaintenanceDto dto) {
+        maintenaceService.create(dto);
     }
 
     @PatchMapping("/")
-    public void update(@Valid @RequestBody MaintenenceDto dto) {
-        mainteneceService.update(dto);
+    public void update(@Valid @RequestBody MaintenanceDto dto) {
+        maintenaceService.update(dto);
     }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
-        mainteneceService.deleteById(id);
+        maintenaceService.deleteById(id);
     }
     @GetMapping("/{machineId}")
     public List<Maintenence> showAllByMachine(@PathVariable Long machineId) {
-        return mainteneceService.findAllByMachine(machineId);
+        return maintenaceService.findAllByMachine(machineId);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)

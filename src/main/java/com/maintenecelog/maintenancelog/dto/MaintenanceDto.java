@@ -1,6 +1,5 @@
 package com.maintenecelog.maintenancelog.dto;
 
-import com.maintenecelog.maintenancelog.model.Machine;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +13,7 @@ import java.time.LocalDate;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class MaintenenceDto {
+public class MaintenanceDto {
 
     @NotNull(message = "Machine id is required")
     private Long machineId;

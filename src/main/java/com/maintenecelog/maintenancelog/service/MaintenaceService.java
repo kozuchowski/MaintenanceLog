@@ -1,12 +1,12 @@
 package com.maintenecelog.maintenancelog.service;
 
-import com.maintenecelog.maintenancelog.dto.MaintenenceDto;
+import com.maintenecelog.maintenancelog.dto.MaintenanceDto;
 import com.maintenecelog.maintenancelog.exception.ObjectDoesNotExistException;
 import com.maintenecelog.maintenancelog.model.Machine;
 import com.maintenecelog.maintenancelog.model.Maintenence;
 import com.maintenecelog.maintenancelog.repository.MachineRepository;
 import com.maintenecelog.maintenancelog.repository.MainteinerRepository;
-import com.maintenecelog.maintenancelog.repository.MaintenenceRepository;
+import com.maintenecelog.maintenancelog.repository.MaintenanceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,54 +15,63 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class MainteneceService {
+public class MaintenaceService {
 
-    private final MaintenenceRepository maintenenceRepository;
+    private final MaintenanceRepository maintenanceRepository;
     private final MachineRepository machineRepository;
     private final MainteinerRepository mainteinerRepository;
 
     @Autowired
-    public MainteneceService(MaintenenceRepository maintenenceRepository,
+    public MaintenaceService(MaintenanceRepository maintenanceRepository,
                              MainteinerRepository mainteinerRepository,
                              MachineRepository machineRepository) {
-        this.maintenenceRepository = maintenenceRepository;
+        this.maintenanceRepository = maintenanceRepository;
         this.mainteinerRepository = mainteinerRepository;
         this.machineRepository = machineRepository;
     }
 
-    public void create(MaintenenceDto dto) {
+    public Maintenence create(MaintenanceDto dto) {
 
         Optional<Machine> optionalMachine = machineRepository.findById(dto.getMachineId());
         if(optionalMachine.isEmpty()){
             throw new ObjectDoesNotExistException("There is no such machine");
         }
         Machine machine = optionalMachine.get();
-        maintenenceRepository.save(new Maintenence(machine, dto.getDescription(), dto.getExDate()));
+        return maintenanceRepository.save(new Maintenence(machine, dto.getDescription(), dto.getExDate()));
     }
 
-    public void update(MaintenenceDto dto) {
-        Optional<Maintenence> optionalMaintenence = maintenenceRepository.findById(dto.getMachineId());
+    public Maintenence update(MaintenanceDto dto) {
+        Optional<Maintenence> optionalMaintenence = maintenanceRepository.findById(dto.getMachineId());
         if(optionalMaintenence.isEmpty()){
             throw new ObjectDoesNotExistException("There is no such maintenence");
         }
         Maintenence maintenence = optionalMaintenence.get();
 
-        maintenenceRepository.save(maintenence);
+        maintenence.setId(dto.getMachineId());
+        maintenence.setDescription(dto.getDescription());
+        maintenence.setExDate(dto.getExDate());
+        maintenence.setExResult(dto.isExResult());
+
+        return maintenanceRepository.save(maintenence);
     }
 
     public void deleteById(Long id) {
-        maintenenceRepository.deleteById(id);
+        maintenanceRepository.deleteById(id);
     }
 
     public List<Maintenence> findAllByMachine(Long id){
-        return maintenenceRepository.findAllByMachineId(id);
+        return maintenanceRepository.findAllByMachineId(id);
     }
 
     public Maintenence findByDate(LocalDate exDate) {
-        return maintenenceRepository.findByExDate(exDate);
+        Maintenence maintenence = maintenanceRepository.findByExDate(exDate);
+
+        if(maintenence == null) {
+            throw new ObjectDoesNotExistException("No such maintenance");
+        }
+
+        return maintenence;
     }
 
-    public void deleteByDate(LocalDate date, Machine machine){
-        maintenenceRepository.deleteByExDateAndMachine(date, machine);
-    }
+    
 }
