@@ -43,7 +43,7 @@ public class MachineService {
         try {
             owner = ownerService.findOwnerByNIP(dto.getOwnerNIP());
         } catch (ObjectDoesNotExistException e) {
-            owner = ownerService.addOwner(new Owner(dto.getOwnerName(), dto.getOwnerEmail(), dto.getOwnerPhoneNumber(),
+            owner = ownerService.create(new Owner(dto.getOwnerName(), dto.getOwnerEmail(), dto.getOwnerPhoneNumber(),
                     dto.getOwnerNIP()));
         }
 

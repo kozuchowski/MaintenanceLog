@@ -23,11 +23,6 @@ public class Owner {
     private String ownerNIP;
 
 
-    public Owner(String phoneNumber, String name) {
-        this.ownerName = name;
-        this.ownerPhoneNumber = phoneNumber;
-    }
-
     public Owner(String ownerName, String email, String phoneNumber, String NIP) {
         this.ownerName = ownerName;
         this.ownerEmail = email;

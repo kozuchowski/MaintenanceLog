@@ -1,5 +1,6 @@
 package com.maintenecelog.maintenancelog.service;
 
+import com.maintenecelog.maintenancelog.dto.UpdateOwnerDto;
 import com.maintenecelog.maintenancelog.exception.ObjectAlreadyExistsException;
 import com.maintenecelog.maintenancelog.exception.ObjectDoesNotExistException;
 import com.maintenecelog.maintenancelog.model.Owner;
@@ -19,18 +20,37 @@ public class OwnerService {
         this.repository = repository;
     }
 
-    public Owner addOwner(Owner owner) {
+    public Owner create(Owner owner) {
+        if(!isUnique(owner.getOwnerEmail(), owner.getOwnerNIP())){
+            throw new ObjectAlreadyExistsException("Owner already exists");
+        }
        return repository.save(owner);
     }
 
 
     public void deleteOwner(Owner owner) {
+        if(!repository.existsById(owner.getId())){
+            throw new ObjectDoesNotExistException("No such owner");
+        }
         repository.delete(owner);
     }
 
 
-    public void updateOwner(Owner o) {
-        repository.updateOwner(o.getOwnerName(), o.getOwnerEmail(), o.getOwnerPhoneNumber(), o.getOwnerNIP(), o.getId());
+    public Owner updateOwner(UpdateOwnerDto dto) {
+        Optional<Owner> optionalOwner = repository.findById(dto.getId());
+
+        if(optionalOwner.isEmpty()){
+            throw new ObjectDoesNotExistException("No such owner");
+        }
+
+        Owner owner = optionalOwner.get();
+
+        owner.setOwnerName(dto.getOwnerName());
+        owner.setOwnerEmail(dto.getOwnerEmail());
+        owner.setOwnerPhoneNumber(dto.getOwnerPhoneNumber());
+        owner.setOwnerNIP(dto.getOwnerNIP());
+
+        return repository.save(owner);
     }
 
     public Owner findOwnerById(Long id) {
