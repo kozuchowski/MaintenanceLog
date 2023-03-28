@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @AllArgsConstructor
-public class UpdateMachineDto {
+public class    UpdateMachineDto {
     @NotEmpty
     @Column(unique = true)
     @Pattern(regexp = "^[0-9]{10}$", message = "Invalid UDT number")

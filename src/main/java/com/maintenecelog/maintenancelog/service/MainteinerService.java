@@ -20,10 +20,10 @@ public class MainteinerService {
 
     private final MainteinerRepository mainteinerRepository;
 
-    private final TokenServiceImpl tokenService;
+    private final TokenService tokenService;
 
     @Autowired
-    public MainteinerService(MainteinerRepository mainteinerRepository, TokenServiceImpl tokenService) {
+    public MainteinerService(MainteinerRepository mainteinerRepository, TokenService tokenService) {
         this.mainteinerRepository = mainteinerRepository;
         this.tokenService = tokenService;
     }

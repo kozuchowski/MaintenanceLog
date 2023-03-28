@@ -1,7 +1,7 @@
 //package com.maintenecelog.maintenancelog.filter;
 //
 //import com.maintenecelog.maintenancelog.model.Token;
-//import com.maintenecelog.maintenancelog.service.TokenServiceImpl;
+//import com.maintenecelog.maintenancelog.service.TokenService;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.stereotype.Component;
 //import org.springframework.web.filter.OncePerRequestFilter;
@@ -15,10 +15,10 @@
 //@Component
 //public class AuthorisationFilter extends OncePerRequestFilter {
 //
-//    private final TokenServiceImpl tokenService;
+//    private final TokenService tokenService;
 //
 //    @Autowired
-//    public AuthorisationFilter(TokenServiceImpl tokenService) {
+//    public AuthorisationFilter(TokenService tokenService) {
 //        this.tokenService = tokenService;
 //    }
 //

@@ -39,7 +39,7 @@ public class MachineService {
 
         isUnique(dto.getUDTNumber(), dto.getVINNumber(), dto.getSerialNumber());
         Mainteiner mainteiner = mainteinerService.findMainteinerByLogin(dto.getMainteinerLogin());
-        Owner owner = null;
+        Owner owner;
         try {
             owner = ownerService.findOwnerByNIP(dto.getOwnerNIP());
         } catch (ObjectDoesNotExistException e) {

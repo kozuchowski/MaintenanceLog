@@ -22,12 +22,12 @@ public class UDTExamination {
     private boolean result;
     private String description;
 
-    private Long examinatorId;
+    private Long inspectorId;
 
     public UDTExamination(LocalDate examinedAt, boolean result, String description, Long examinatorId) {
         this.examinedAt = examinedAt;
         this.result = result;
         this.description = description;
-        this.examinatorId = examinatorId;
+        this.inspectorId = examinatorId;
     }
 }

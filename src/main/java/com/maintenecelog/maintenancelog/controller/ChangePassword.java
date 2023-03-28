@@ -1,6 +1,6 @@
 package com.maintenecelog.maintenancelog.controller;
 
-import com.maintenecelog.maintenancelog.dto.ChangePasswordDto;
+import com.maintenecelog.maintenancelog.dto.UpdatePasswordDto;
 import com.maintenecelog.maintenancelog.exception.ObjectAlreadyExistsException;
 import com.maintenecelog.maintenancelog.exception.ObjectDoesNotExistException;
 import com.maintenecelog.maintenancelog.exception.PasswordNotValidException;
@@ -23,7 +23,7 @@ public class ChangePassword {
     private final PasswordService passwordService;
 
     @PatchMapping("/")
-    public String update(@Valid @RequestBody ChangePasswordDto dto) {
+    public String update(@Valid @RequestBody UpdatePasswordDto dto) {
         passwordService.update(dto);
 
         return "Password updated";

@@ -1,6 +1,6 @@
 package com.maintenecelog.maintenancelog.service;
 
-import com.maintenecelog.maintenancelog.dto.ChangePasswordDto;
+import com.maintenecelog.maintenancelog.dto.UpdatePasswordDto;
 import com.maintenecelog.maintenancelog.exception.PasswordNotValidException;
 import com.maintenecelog.maintenancelog.model.Mainteiner;
 import com.maintenecelog.maintenancelog.repository.MainteinerRepository;
@@ -15,7 +15,7 @@ public class PasswordService {
     private final MainteinerRepository mainteinerRepository;
     private final MainteinerService mainteinerService;
 
-    public void update(ChangePasswordDto dto) {
+    public void update(UpdatePasswordDto dto) {
         Mainteiner mainteiner= mainteinerService.getMainteinerByIdIfExist(dto.getMainteinerId());
 
         if(!mainteiner.getPassword().equals(dto.getPassword())) {

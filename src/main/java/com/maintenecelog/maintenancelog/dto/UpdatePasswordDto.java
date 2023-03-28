@@ -8,8 +8,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 @Getter
-@Setter@AllArgsConstructor
-public class ChangePasswordDto {
+@Setter
+@AllArgsConstructor
+public class UpdatePasswordDto {
 
     @NotNull(message = "Mainteiner id is required")
     private Long mainteinerId;

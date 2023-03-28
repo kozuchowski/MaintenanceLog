@@ -20,6 +20,6 @@ public class UDTExaminationDto {
     private String description;
     @NotNull
     @Pattern(regexp = "^[0-9]{10,12}", message = "Licence number must contains at least 10 and maximum 12 digits")
-    private Long examinatorId;
+    private Long inspectorId;
 
 }

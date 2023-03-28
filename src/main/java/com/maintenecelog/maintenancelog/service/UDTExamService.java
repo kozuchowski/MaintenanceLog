@@ -23,7 +23,7 @@ public class UDTExamService {
 
     public UDTExamination create(UDTExaminationDto dto) {
         UDTExamination examination = new UDTExamination(dto.getExaminedAt(), dto.isResult(),
-                dto.getDescription(), dto.getExaminatorId());
+                dto.getDescription(), dto.getInspectorId());
 
        return uDTExaminationRepository.save(examination);
     }
