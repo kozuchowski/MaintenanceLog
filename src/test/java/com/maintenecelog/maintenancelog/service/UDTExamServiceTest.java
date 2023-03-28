@@ -69,7 +69,7 @@ class UDTExamServiceTest {
     }
 
     @Test
-    void update() {
+    void shouldUpdateUdtExamination() {
     }
 
     @Test
