@@ -28,14 +28,19 @@ public class UDTExamService {
        return uDTExaminationRepository.save(examination);
     }
 
-    public void update(Long id, UDTExaminationDto dto) {
+    public UDTExamination update(Long id, UDTExaminationDto dto) {
         Optional<UDTExamination> optionalExam = uDTExaminationRepository.findById(id);
         if(optionalExam.isEmpty()) {
             throw new ObjectDoesNotExistException("No such examination");
         }
         UDTExamination examination = optionalExam.get();
 
-        uDTExaminationRepository.save(examination);
+        examination.setExaminedAt(dto.getExaminedAt());
+        examination.setResult(dto.isResult());
+        examination.setDescription(dto.getDescription());
+        examination.setInspectorId(dto.getInspectorId());
+
+        return uDTExaminationRepository.save(examination);
 
     }
 
