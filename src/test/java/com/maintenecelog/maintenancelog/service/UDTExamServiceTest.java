@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -110,14 +112,90 @@ class UDTExamServiceTest {
     }
 
     @Test
-    void delete() {
+    void shouldDeleteUdtExamination() {
+        mainteinerService.createMainteiner(
+                new CreateMainteinerDto("Test", "test",
+                        "test", "PtpJtsfeOlcrgKeeJzdRLPaeV5VPDAT0Nk5SE", "PtpJtsfeOlcrgKeeJzdRLPaeV5VPDAT0Nk5SE",
+                        "test@gaml.cm","257 35 43 93", "580236776220"));
+        Mainteiner mainteiner = mainteinerService.findMainteinerByLogin("test");
+
+        Machine machine = machineService.createMachine(new CreateMachineDto("1234", "12343",
+                "34523", LocalDate.of(2000, 01, 01), "faun" , "Test",
+                "test@gmail.com", "671 68 5398", "3153635084", mainteiner.getLogin()));
+        CreateInspectorDto inspectorDto = new CreateInspectorDto("test", "test", "000 00 00 00");
+        Inspector inspector = inspectorService.create(inspectorDto);
+        UDTExaminationDto udtExaminationDto = new UDTExaminationDto(LocalDate.of(2000,01,01), false,
+                "test", inspector.getId());
+        UDTExamination udtExamination = udtExamService.create(udtExaminationDto);
+
+
+        udtExamService.delete(udtExamination.getId());
+
+        assertThrows(NoSuchElementException.class, () -> {
+            udtExamRepository.findById(udtExamination.getId()).get();
+        });
+
+
+        inspectorService.delete(inspector.getId());
+        machineService.delete(machine.getId());
+        ownerService.deleteOwner(machine.getOwner());
+        mainteinerService.deleteUserByLogin(mainteiner.getLogin());
     }
 
     @Test
-    void showUDTExaminations() {
+    void shouldGetUDTExaminations() {
+        mainteinerService.createMainteiner(
+                new CreateMainteinerDto("Test", "test",
+                        "test", "PtpJtsfeOlcrgKeeJzdRLPaeV5VPDAT0Nk5SE", "PtpJtsfeOlcrgKeeJzdRLPaeV5VPDAT0Nk5SE",
+                        "test@gaml.cm","257 35 43 93", "580236776220"));
+        Mainteiner mainteiner = mainteinerService.findMainteinerByLogin("test");
+
+        Machine machine = machineService.createMachine(new CreateMachineDto("1234", "12343",
+                "34523", LocalDate.of(2000, 01, 01), "faun" , "Test",
+                "test@gmail.com", "671 68 5398", "3153635084", mainteiner.getLogin()));
+        CreateInspectorDto inspectorDto = new CreateInspectorDto("test", "test", "000 00 00 00");
+        Inspector inspector = inspectorService.create(inspectorDto);
+        UDTExaminationDto udtExaminationDto = new UDTExaminationDto(LocalDate.of(2000,01,01), false,
+                "test", inspector.getId());
+        UDTExamination udtExamination = udtExamService.create(udtExaminationDto);
+
+        List<UDTExamination> exams = udtExamService.showUDTExaminations();
+
+        assertNotNull(exams.get(0));
+
+        inspectorService.delete(inspector.getId());
+        udtExamService.delete(udtExamination.getId());
+        machineService.delete(machine.getId());
+        ownerService.deleteOwner(machine.getOwner());
+        mainteinerService.deleteUserByLogin(mainteiner.getLogin());
     }
 
     @Test
-    void showUdtExamination() {
+    void shouldGetUdtExamination() {
+        mainteinerService.createMainteiner(
+                new CreateMainteinerDto("Test", "test",
+                        "test", "PtpJtsfeOlcrgKeeJzdRLPaeV5VPDAT0Nk5SE", "PtpJtsfeOlcrgKeeJzdRLPaeV5VPDAT0Nk5SE",
+                        "test@gaml.cm","257 35 43 93", "580236776220"));
+        Mainteiner mainteiner = mainteinerService.findMainteinerByLogin("test");
+
+        Machine machine = machineService.createMachine(new CreateMachineDto("1234", "12343",
+                "34523", LocalDate.of(2000, 01, 01), "faun" , "Test",
+                "test@gmail.com", "671 68 5398", "3153635084", mainteiner.getLogin()));
+        CreateInspectorDto inspectorDto = new CreateInspectorDto("test", "test", "000 00 00 00");
+        Inspector inspector = inspectorService.create(inspectorDto);
+        UDTExaminationDto udtExaminationDto = new UDTExaminationDto(LocalDate.of(2000,01,01), false,
+                "test", inspector.getId());
+        UDTExamination udtExamination = udtExamService.create(udtExaminationDto);
+
+        UDTExamination exam = udtExamService.showUdtExamination(udtExamination.getId());
+
+        assertNotNull(exam);
+
+        inspectorService.delete(inspector.getId());
+        udtExamService.delete(udtExamination.getId());
+        machineService.delete(machine.getId());
+        ownerService.deleteOwner(machine.getOwner());
+        mainteinerService.deleteUserByLogin(mainteiner.getLogin());
+
     }
 }
