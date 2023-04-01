@@ -28,7 +28,7 @@ public class OwnerService {
     }
 
 
-    public void deleteOwner(Owner owner) {
+    public void delete(Owner owner) {
         if(!repository.existsById(owner.getId())){
             throw new ObjectDoesNotExistException("No such owner");
         }
@@ -36,7 +36,7 @@ public class OwnerService {
     }
 
 
-    public Owner updateOwner(UpdateOwnerDto dto) {
+    public Owner update(UpdateOwnerDto dto) {
         Optional<Owner> optionalOwner = repository.findById(dto.getId());
 
         if(optionalOwner.isEmpty()){

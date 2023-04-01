@@ -50,13 +50,13 @@ class UDTExamServiceTest {
     }
     @Test
     void shouldCreateUDTExam() {
-        mainteinerService.createMainteiner(
+        mainteinerService.create(
                 new CreateMainteinerDto("Test", "test",
                         "test", "PtpJtsfeOlcrgKeeJzdRLPaeV5VPDAT0Nk5SE", "PtpJtsfeOlcrgKeeJzdRLPaeV5VPDAT0Nk5SE",
                         "test@gaml.cm","257 35 43 93", "580236776220"));
         Mainteiner mainteiner = mainteinerService.findMainteinerByLogin("test");
 
-        Machine machine = machineService.createMachine(new CreateMachineDto("1234", "12343",
+        Machine machine = machineService.create(new CreateMachineDto("1234", "12343",
                 "34523", LocalDate.of(2000, 01, 01), "faun" , "Test",
                 "test@gmail.com", "671 68 5398", "3153635084", mainteiner.getLogin()));
         CreateInspectorDto inspectorDto = new CreateInspectorDto("test", "test", "000 00 00 00");
@@ -70,19 +70,19 @@ class UDTExamServiceTest {
         inspectorService.delete(inspector.getId());
         udtExamService.delete(udtExamination.getId());
         machineService.delete(machine.getId());
-        ownerService.deleteOwner(machine.getOwner());
+        ownerService.delete(machine.getOwner());
         mainteinerService.deleteUserByLogin(mainteiner.getLogin());
     }
 
     @Test
     void shouldUpdateUdtExamination() {
-        mainteinerService.createMainteiner(
+        mainteinerService.create(
                 new CreateMainteinerDto("Test", "test",
                         "test", "PtpJtsfeOlcrgKeeJzdRLPaeV5VPDAT0Nk5SE", "PtpJtsfeOlcrgKeeJzdRLPaeV5VPDAT0Nk5SE",
                         "test@gaml.cm","257 35 43 93", "580236776220"));
         Mainteiner mainteiner = mainteinerService.findMainteinerByLogin("test");
 
-        Machine machine = machineService.createMachine(new CreateMachineDto("1234", "12343",
+        Machine machine = machineService.create(new CreateMachineDto("1234", "12343",
                 "34523", LocalDate.of(2000, 01, 01), "faun" , "Test",
                 "test@gmail.com", "671 68 5398", "3153635084", mainteiner.getLogin()));
         CreateInspectorDto inspectorDto = new CreateInspectorDto("test", "test", "000 00 00 00");
@@ -106,20 +106,20 @@ class UDTExamServiceTest {
         inspectorService.delete(inspector.getId());
         udtExamService.delete(udtExamination.getId());
         machineService.delete(machine.getId());
-        ownerService.deleteOwner(machine.getOwner());
+        ownerService.delete(machine.getOwner());
         mainteinerService.deleteUserByLogin(mainteiner.getLogin());
 
     }
 
     @Test
     void shouldDeleteUdtExamination() {
-        mainteinerService.createMainteiner(
+        mainteinerService.create(
                 new CreateMainteinerDto("Test", "test",
                         "test", "PtpJtsfeOlcrgKeeJzdRLPaeV5VPDAT0Nk5SE", "PtpJtsfeOlcrgKeeJzdRLPaeV5VPDAT0Nk5SE",
                         "test@gaml.cm","257 35 43 93", "580236776220"));
         Mainteiner mainteiner = mainteinerService.findMainteinerByLogin("test");
 
-        Machine machine = machineService.createMachine(new CreateMachineDto("1234", "12343",
+        Machine machine = machineService.create(new CreateMachineDto("1234", "12343",
                 "34523", LocalDate.of(2000, 01, 01), "faun" , "Test",
                 "test@gmail.com", "671 68 5398", "3153635084", mainteiner.getLogin()));
         CreateInspectorDto inspectorDto = new CreateInspectorDto("test", "test", "000 00 00 00");
@@ -138,19 +138,19 @@ class UDTExamServiceTest {
 
         inspectorService.delete(inspector.getId());
         machineService.delete(machine.getId());
-        ownerService.deleteOwner(machine.getOwner());
+        ownerService.delete(machine.getOwner());
         mainteinerService.deleteUserByLogin(mainteiner.getLogin());
     }
 
     @Test
     void shouldGetUDTExaminations() {
-        mainteinerService.createMainteiner(
+        mainteinerService.create(
                 new CreateMainteinerDto("Test", "test",
                         "test", "PtpJtsfeOlcrgKeeJzdRLPaeV5VPDAT0Nk5SE", "PtpJtsfeOlcrgKeeJzdRLPaeV5VPDAT0Nk5SE",
                         "test@gaml.cm","257 35 43 93", "580236776220"));
         Mainteiner mainteiner = mainteinerService.findMainteinerByLogin("test");
 
-        Machine machine = machineService.createMachine(new CreateMachineDto("1234", "12343",
+        Machine machine = machineService.create(new CreateMachineDto("1234", "12343",
                 "34523", LocalDate.of(2000, 01, 01), "faun" , "Test",
                 "test@gmail.com", "671 68 5398", "3153635084", mainteiner.getLogin()));
         CreateInspectorDto inspectorDto = new CreateInspectorDto("test", "test", "000 00 00 00");
@@ -166,19 +166,19 @@ class UDTExamServiceTest {
         inspectorService.delete(inspector.getId());
         udtExamService.delete(udtExamination.getId());
         machineService.delete(machine.getId());
-        ownerService.deleteOwner(machine.getOwner());
+        ownerService.delete(machine.getOwner());
         mainteinerService.deleteUserByLogin(mainteiner.getLogin());
     }
 
     @Test
     void shouldGetUdtExamination() {
-        mainteinerService.createMainteiner(
+        mainteinerService.create(
                 new CreateMainteinerDto("Test", "test",
                         "test", "PtpJtsfeOlcrgKeeJzdRLPaeV5VPDAT0Nk5SE", "PtpJtsfeOlcrgKeeJzdRLPaeV5VPDAT0Nk5SE",
                         "test@gaml.cm","257 35 43 93", "580236776220"));
         Mainteiner mainteiner = mainteinerService.findMainteinerByLogin("test");
 
-        Machine machine = machineService.createMachine(new CreateMachineDto("1234", "12343",
+        Machine machine = machineService.create(new CreateMachineDto("1234", "12343",
                 "34523", LocalDate.of(2000, 01, 01), "faun" , "Test",
                 "test@gmail.com", "671 68 5398", "3153635084", mainteiner.getLogin()));
         CreateInspectorDto inspectorDto = new CreateInspectorDto("test", "test", "000 00 00 00");
@@ -194,7 +194,7 @@ class UDTExamServiceTest {
         inspectorService.delete(inspector.getId());
         udtExamService.delete(udtExamination.getId());
         machineService.delete(machine.getId());
-        ownerService.deleteOwner(machine.getOwner());
+        ownerService.delete(machine.getOwner());
         mainteinerService.deleteUserByLogin(mainteiner.getLogin());
 
     }

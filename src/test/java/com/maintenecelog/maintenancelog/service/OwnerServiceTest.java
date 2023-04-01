@@ -36,22 +36,22 @@ class OwnerServiceTest {
             ownerService.create(owner);
         });
 
-        ownerService.deleteOwner(owner);
+        ownerService.delete(owner);
     }
 
     @Test
     void shouldDeleteOwner() {
         Owner owner = ownerService.create(new Owner("test", "te@gm.c", "000 00 00 00", "000000000000"));
-        ownerService.deleteOwner(owner);
+        ownerService.delete(owner);
         assertThrows(ObjectDoesNotExistException.class, () -> {
-            ownerService.deleteOwner(owner);
+            ownerService.delete(owner);
         });
     }
 
     @Test
     void shoulUpdateOwner() {
         Owner owner = ownerService.create(new Owner("test", "te@gm.c", "000 00 00 00", "000000000000"));
-        Owner uOwner = ownerService.updateOwner(new UpdateOwnerDto(owner.getId(), "uTest", "u@gm.c",
+        Owner uOwner = ownerService.update(new UpdateOwnerDto(owner.getId(), "uTest", "u@gm.c",
                 "111 11 11 11", "111111111111"));
 
         assertEquals("uTest", uOwner.getOwnerName());
@@ -59,7 +59,7 @@ class OwnerServiceTest {
         assertEquals("111 11 11 11", uOwner.getOwnerPhoneNumber());
         assertEquals("111111111111", uOwner.getOwnerNIP());
 
-        ownerService.deleteOwner(uOwner);
+        ownerService.delete(uOwner);
     }
 
     @Test
@@ -67,7 +67,7 @@ class OwnerServiceTest {
         Owner owner = ownerService.create(new Owner("test", "te@gm.c", "000 00 00 00", "000000000000"));
         assertNotNull(ownerService.findOwnerById(owner.getId()));
 
-        ownerService.deleteOwner(owner);
+        ownerService.delete(owner);
     }
 
     @Test
@@ -75,7 +75,7 @@ class OwnerServiceTest {
         Owner owner = ownerService.create(new Owner("test", "te@gm.c", "000 00 00 00", "000000000000"));
         assertNotNull(ownerService.findOwnerByNIP(owner.getOwnerNIP()));
 
-        ownerService.deleteOwner(owner);
+        ownerService.delete(owner);
     }
 
     @Test
@@ -86,7 +86,7 @@ class OwnerServiceTest {
             ownerService.isUnique(owner.getOwnerEmail(), owner.getOwnerNIP());
         });
 
-        ownerService.deleteOwner(owner);
+        ownerService.delete(owner);
 
         assertTrue(ownerService.isUnique(owner.getOwnerEmail(), owner.getOwnerNIP()));
     }

@@ -30,7 +30,7 @@ public class MainteinerService {
 
 
 
-    public Token createMainteiner(CreateMainteinerDto dto){
+    public Token create(CreateMainteinerDto dto){
         isPasswordsValid(dto.getPassword(), dto.getConfirmPassword(),"Passwords don't match");
         isUnique(dto.getLicenceNumber(), dto.getEmail(), dto.getLogin());
         Mainteiner mainteiner = dtoIntoMainteiner(dto);
@@ -63,7 +63,7 @@ public class MainteinerService {
     }
 
 
-    public Mainteiner updateMaintener(UpdateMainteinerDto dto) {
+    public Mainteiner update(UpdateMainteinerDto dto) {
         Mainteiner m = mainteinerRepository.findByLogin(dto.getLogin());
         m.setName(dto.getName());
         m.setSurname(dto.getSurname());
@@ -105,7 +105,7 @@ public class MainteinerService {
                 dto.getPhoneNumber(), dto.getLicenceNumber());
     }
 
-    public Mainteiner getMainteinerByIdIfExist(Long id) {
+    public Mainteiner getMainteinerByIdI(Long id) {
         Optional<Mainteiner> optionalMainteiner = mainteinerRepository.findById(id);
 
         if(optionalMainteiner.isEmpty()) {

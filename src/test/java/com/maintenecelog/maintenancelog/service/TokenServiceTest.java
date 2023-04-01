@@ -26,7 +26,7 @@ class TokenServiceTest {
         CreateMainteinerDto createMainteinerDto = new CreateMainteinerDto("Test", "test",
                 "test", "PtpJtsfeOlcrgKeeJzdRLPaeV5VPDAT0Nk5SE", "PtpJtsfeOlcrgKeeJzdRLPaeV5VPDAT0Nk5SE",
                 "test@gaml.cm","000 00 00 00", "000000000000");
-        Token t = mainteinerService.createMainteiner(createMainteinerDto);
+        Token t = mainteinerService.create(createMainteinerDto);
         Mainteiner m = mainteinerService.findMainteinerByLogin("test");
         Token token = tokenService.createToken(m);
 

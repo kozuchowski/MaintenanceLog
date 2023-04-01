@@ -5,7 +5,6 @@ import com.maintenecelog.maintenancelog.dto.UpdateMachineDto;
 import com.maintenecelog.maintenancelog.exception.ObjectAlreadyExistsException;
 import com.maintenecelog.maintenancelog.exception.ObjectDoesNotExistException;
 import com.maintenecelog.maintenancelog.model.Machine;
-import com.maintenecelog.maintenancelog.model.Mainteiner;
 import com.maintenecelog.maintenancelog.service.MachineService;
 import com.maintenecelog.maintenancelog.service.MainteinerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,12 +36,12 @@ public class MachineController {
     }
     @PostMapping("/")
     public void addMachine(@Valid @RequestBody CreateMachineDto dto) {
-        machineService.createMachine(dto);
+        machineService.create(dto);
     }
 
     @PatchMapping("/{id}")
     public String update(@Valid @PathVariable Long id, UpdateMachineDto dto) {
-        machineService.updateMachine(id, dto);
+        machineService.update(id, dto);
         return "Machine updated";
     }
 

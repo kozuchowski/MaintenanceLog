@@ -16,7 +16,7 @@ public class PasswordService {
     private final MainteinerService mainteinerService;
 
     public void update(UpdatePasswordDto dto) {
-        Mainteiner mainteiner= mainteinerService.getMainteinerByIdIfExist(dto.getMainteinerId());
+        Mainteiner mainteiner= mainteinerService.getMainteinerByIdI(dto.getMainteinerId());
 
         if(!mainteiner.getPassword().equals(dto.getPassword())) {
             throw new PasswordNotValidException("Password or login not valid");

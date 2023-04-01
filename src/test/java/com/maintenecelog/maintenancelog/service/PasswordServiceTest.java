@@ -9,8 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -35,7 +33,7 @@ class PasswordServiceTest {
         CreateMainteinerDto createMainteinerDto = new CreateMainteinerDto("Test", "test",
                 "test", "PtpJtsfeOlcrgKeeJzdRLPaeV5VPDAT0Nk5SE", "PtpJtsfeOlcrgKeeJzdRLPaeV5VPDAT0Nk5SE",
                 "test@gaml.cm","000 00 00 00", "000000000000");
-        Token token = mainteinerService.createMainteiner(createMainteinerDto);
+        Token token = mainteinerService.create(createMainteinerDto);
         Mainteiner m = mainteinerRepository.findById(token.getMainteinerId()).get();
 
         passwordService.update(new UpdatePasswordDto(token.getMainteinerId(), m.getPassword(),

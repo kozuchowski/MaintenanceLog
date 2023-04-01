@@ -31,7 +31,7 @@ public class MainteinerController {
     }
     @PostMapping("/new")
     public Token create(@Valid @RequestBody CreateMainteinerDto mainteinerDto) {
-        return mainteinerService.createMainteiner(mainteinerDto);
+        return mainteinerService.create(mainteinerDto);
     }
 
     @PostMapping("/")
@@ -42,7 +42,7 @@ public class MainteinerController {
     @PutMapping("/{login}")
     public String update(@Valid @RequestBody UpdateMainteinerDto dto){
 
-        mainteinerService.updateMaintener(dto);
+        mainteinerService.update(dto);
 
         return "User updated";
     }

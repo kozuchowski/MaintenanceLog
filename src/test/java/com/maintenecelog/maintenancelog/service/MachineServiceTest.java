@@ -35,13 +35,13 @@ class MachineServiceTest {
 
     @Test
     void shouldCreateMachine() {
-        mainteinerService.createMainteiner(
+        mainteinerService.create(
                 new CreateMainteinerDto("Test", "test",
                 "test", "PtpJtsfeOlcrgKeeJzdRLPaeV5VPDAT0Nk5SE", "PtpJtsfeOlcrgKeeJzdRLPaeV5VPDAT0Nk5SE",
                 "test@gaml.cm","257 35 43 93", "580236776220"));
         Mainteiner mainteiner = mainteinerService.findMainteinerByLogin("test");
 
-        Machine machine = machineService.createMachine(new CreateMachineDto("1234", "12343",
+        Machine machine = machineService.create(new CreateMachineDto("1234", "12343",
                 "34523", LocalDate.of(2000, 01, 01), "faun" , "Test",
                 "test@gmail.com", "671 68 5398", "3153635084", mainteiner.getLogin()));
 
@@ -50,7 +50,7 @@ class MachineServiceTest {
 
 
         machineService.delete(machine.getId());
-        ownerService.deleteOwner(machine.getOwner());
+        ownerService.delete(machine.getOwner());
         mainteinerService.deleteUserByLogin(mainteiner.getLogin());
 
     }
@@ -66,15 +66,15 @@ class MachineServiceTest {
 
     @Test
     void shouldReturnListOfMachines() {
-        mainteinerService.createMainteiner(
+        mainteinerService.create(
                 new CreateMainteinerDto("Test", "test",
                         "test", "PtpJtsfeOlcrgKeeJzdRLPaeV5VPDAT0Nk5SE", "PtpJtsfeOlcrgKeeJzdRLPaeV5VPDAT0Nk5SE",
                         "test@gaml.cm","000 00 00 00", "580236776220"));
         Mainteiner mainteiner = mainteinerService.findMainteinerByLogin("test");
-        Machine machine1 = machineService.createMachine(new CreateMachineDto("1234", "12343",
+        Machine machine1 = machineService.create(new CreateMachineDto("1234", "12343",
                 "34523", LocalDate.of(2000, 01, 01), "faun" , "Test",
                 "test@gmail.com", "111 11 1111", "0000000000", mainteiner.getLogin()));
-        Machine machine2 = machineService.createMachine(new CreateMachineDto("12345", "123432",
+        Machine machine2 = machineService.create(new CreateMachineDto("12345", "123432",
                 "345234", LocalDate.of(2000, 01, 01), "faun" , "Test",
                 "test@gmail.com", "111 11 1111", "0000000000", mainteiner.getLogin()));
         Owner owner = machine1.getOwner();
@@ -87,7 +87,7 @@ class MachineServiceTest {
 
         machineService.delete(machine1.getId());
         machineService.delete(machine2.getId());
-        ownerService.deleteOwner(machine1.getOwner());
+        ownerService.delete(machine1.getOwner());
         mainteinerService.deleteUserByLogin("test");
     }
 
@@ -95,19 +95,19 @@ class MachineServiceTest {
 
     @Test
     void shouldUpdateMachine() {
-        mainteinerService.createMainteiner(
+        mainteinerService.create(
                 new CreateMainteinerDto("Test", "test",
                         "test", "PtpJtsfeOlcrgKeeJzdRLPaeV5VPDAT0Nk5SE", "PtpJtsfeOlcrgKeeJzdRLPaeV5VPDAT0Nk5SE",
                         "test@gaml.cm","000 00 00 00", "000000000000"));
         Mainteiner mainteiner = mainteinerService.findMainteinerByLogin("test");
-        Machine machine = machineService.createMachine(new CreateMachineDto("1234", "12343",
+        Machine machine = machineService.create(new CreateMachineDto("1234", "12343",
                 "34523", LocalDate.of(2000, 01, 01), "faun" , "Test",
                 "test@gmail.com", "111 11 1111", "0000000000", mainteiner.getLogin()));
 
         UpdateMachineDto uDto = new UpdateMachineDto("1111", "11111",
                 "111111", LocalDate.of(2001, 01, 01), "Faun" ,
                  "0000000000", mainteiner.getLogin());
-        machineService.updateMachine(machine.getId(), uDto);
+        machineService.update(machine.getId(), uDto);
         Machine updatedMachine = machineService.getMachineById(machine.getId());
 
 
@@ -120,40 +120,40 @@ class MachineServiceTest {
 
 
         machineService.delete(machine.getId());
-        ownerService.deleteOwner(machine.getOwner());
+        ownerService.delete(machine.getOwner());
         mainteinerService.deleteUserByLogin("test");
 
     }
 
     @Test
     void shouldThrowObjectAlreadyExistsExcetion() {
-        mainteinerService.createMainteiner(
+        mainteinerService.create(
                 new CreateMainteinerDto("Test", "test",
                         "test", "PtpJtsfeOlcrgKeeJzdRLPaeV5VPDAT0Nk5SE", "PtpJtsfeOlcrgKeeJzdRLPaeV5VPDAT0Nk5SE",
                         "test@gaml.cm","000 00 00 00", "000000000000"));
         Mainteiner mainteiner = mainteinerService.findMainteinerByLogin("test");
-        Machine machine = machineService.createMachine(new CreateMachineDto("1234", "12343",
+        Machine machine = machineService.create(new CreateMachineDto("1234", "12343",
                 "34523", LocalDate.of(2000, 01, 01), "faun" , "Test",
                 "test@gmail.com", "111 11 1111", "3153635084", mainteiner.getLogin()));
 
         assertThrows(ObjectAlreadyExistsException.class, () -> {
-           machineService.createMachine(new CreateMachineDto("1234", "1234",
+           machineService.create(new CreateMachineDto("1234", "1234",
                    "3452", LocalDate.of(2000, 01, 01), "faun" , "Test",
                    "test@gmail.com", "671 68 5398", "3153635084", mainteiner.getLogin()));
         });
         assertThrows(ObjectAlreadyExistsException.class, () -> {
-            machineService.createMachine(new CreateMachineDto("12342", "12343",
+            machineService.create(new CreateMachineDto("12342", "12343",
                     "3452", LocalDate.of(2000, 01, 01), "faun" , "Test",
                     "test@gmail.com", "671 68 5398", "3153635084", mainteiner.getLogin()));
         });
         assertThrows(ObjectAlreadyExistsException.class, () -> {
-            machineService.createMachine(new CreateMachineDto("12343", "1234",
+            machineService.create(new CreateMachineDto("12343", "1234",
                     "34523", LocalDate.of(2000, 01, 01), "faun" , "Test",
                     "test@gmail.com", "671 68 5398", "3153635084", mainteiner.getLogin()));
         });
 
         machineService.delete(machine.getId());
-        ownerService.deleteOwner(machine.getOwner());
+        ownerService.delete(machine.getOwner());
         mainteinerService.deleteUserByLogin(mainteiner.getLogin());
 
     }

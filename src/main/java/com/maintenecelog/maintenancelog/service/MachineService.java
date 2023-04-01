@@ -35,7 +35,7 @@ public class MachineService {
         this.mainteinerService = mainteinerService;
     }
 
-    public Machine createMachine(CreateMachineDto dto){
+    public Machine create(CreateMachineDto dto){
 
         isUnique(dto.getUDTNumber(), dto.getVINNumber(), dto.getSerialNumber());
         Mainteiner mainteiner = mainteinerService.findMainteinerByLogin(dto.getMainteinerLogin());
@@ -86,7 +86,7 @@ public class MachineService {
 
 
 
-    public Machine updateMachine(Long id, UpdateMachineDto dto) {
+    public Machine update(Long id, UpdateMachineDto dto) {
         Optional<Machine> optionalMachine = machineRepository.findById(id);
         if(optionalMachine.isEmpty()) {
             throw new ObjectDoesNotExistException("No such machine");

@@ -1,7 +1,6 @@
 package com.maintenecelog.maintenancelog.controller;
 
 import com.maintenecelog.maintenancelog.dto.UpdateOwnerDto;
-import com.maintenecelog.maintenancelog.model.Owner;
 import com.maintenecelog.maintenancelog.service.OwnerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +17,7 @@ public class OwnerController {
 
     @PostMapping("/")
     String update(@RequestBody UpdateOwnerDto dto) {
-        ownerService.updateOwner(dto);
+        ownerService.update(dto);
         return "Owner updated";
     }
 }
