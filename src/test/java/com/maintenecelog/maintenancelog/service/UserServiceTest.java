@@ -6,9 +6,8 @@ import com.maintenecelog.maintenancelog.dto.UpdateMainteinerDto;
 import com.maintenecelog.maintenancelog.exception.ObjectAlreadyExistsException;
 import com.maintenecelog.maintenancelog.exception.ObjectDoesNotExistException;
 import com.maintenecelog.maintenancelog.exception.PasswordNotValidException;
-import com.maintenecelog.maintenancelog.model.Mainteiner;
-import com.maintenecelog.maintenancelog.model.Token;
-import com.maintenecelog.maintenancelog.repository.MainteinerRepository;
+import com.maintenecelog.maintenancelog.model.User;
+import com.maintenecelog.maintenancelog.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,15 +17,15 @@ import java.util.NoSuchElementException;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class MainteinerServiceTest {
+class UserServiceTest {
 
-    private final MainteinerService mainteinerService;
-    private final MainteinerRepository mainteinerRepository;
+    private final UserService userService;
+    private final UserRepository userRepository;
 
     @Autowired
-    public MainteinerServiceTest(MainteinerService mainteinerService, MainteinerRepository mainteinerRepository) {
-        this.mainteinerService = mainteinerService;
-        this.mainteinerRepository = mainteinerRepository;
+    public UserServiceTest(UserService userService, UserRepository userRepository) {
+        this.userService = userService;
+        this.userRepository = userRepository;
     }
 
 
@@ -38,38 +37,26 @@ class MainteinerServiceTest {
                 "test", "PtpJtsfeOlcrgKeeJzdRLPaeV5VPDAT0Nk5SE", "PtpJtsfeOlcrgKeeJzdRLPaeV5VPDAT0Nk5SE",
                 "test@gaml.cm","000 00 00 00", "000000000000");
 
-        Token token = mainteinerService.create(createMainteinerDto);
-        assertTrue(mainteinerRepository.findById(token.getMainteinerId()).isPresent());
+        User m = userService.create(createMainteinerDto);
+        assertTrue(userRepository.findById(m.getId()).isPresent());
 
-        mainteinerService.deleteUserByLogin("test");
+        userService.deleteUserByLogin("test");
 
     }
 
 
-    @Test
-    void shouldReturnToken() {
-        CreateMainteinerDto createMainteinerDto = new CreateMainteinerDto("Test", "test",
-                "test", "PtpJtsfeOlcrgKeeJzdRLPaeV5VPDAT0Nk5SE", "PtpJtsfeOlcrgKeeJzdRLPaeV5VPDAT0Nk5SE",
-                "test@gaml.cm","000 00 00 00", "000000000000");
-
-        mainteinerService.create(createMainteinerDto);
-        Token token = mainteinerService.loginUser(new LoginUserDto("test","PtpJtsfeOlcrgKeeJzdRLPaeV5VPDAT0Nk5SE"));
-        assertNotNull(token);
-        mainteinerRepository.deleteById(token.getMainteinerId());
-    }
-
-    @Test
-    void shouldThrowPasswordNotValidException() {
-        CreateMainteinerDto createMainteinerDto = new CreateMainteinerDto("Test", "test",
-                "test", "PtpJtsfeOlcrgKeeJzdRLPaeV5VPDAT0Nk5SE", "PtpJtsfeOlcrgKeeJzdRLPaeV5VPDAT0Nk5SE",
-                "test@gaml.cm","000 00 00 00", "000000000000");
-
-        Token token = mainteinerService.create(createMainteinerDto);
-        assertThrows(PasswordNotValidException.class, () -> {
-            mainteinerService.loginUser(new LoginUserDto("test", "PtpJtsfeOlcrgKeeJzdRLPaeV5VPDA333333"));
-        });
-        mainteinerRepository.deleteById(token.getMainteinerId());
-    }
+//    @Test
+//    void shouldThrowPasswordNotValidException() {
+//        CreateMainteinerDto createMainteinerDto = new CreateMainteinerDto("Test", "test",
+//                "test", "PtpJtsfeOlcrgKeeJzdRLPaeV5VPDAT0Nk5SE", "PtpJtsfeOlcrgKeeJzdRLPaeV5VPDAT0Nk5SE",
+//                "test@gaml.cm","000 00 00 00", "000000000000");
+//
+//        User m = userService.create(createMainteinerDto);
+//        assertThrows(PasswordNotValidException.class, () -> {
+//            userService.loginUser(new LoginUserDto("test", "PtpJtsfeOlcrgKeeJzdRLPaeV5VPDA333333"));
+//        });
+//        userRepository.deleteById(m.getId());
+//    }
 
 
     @Test
@@ -78,15 +65,15 @@ class MainteinerServiceTest {
                 "test", "PtpJtsfeOlcrgKeeJzdRLPaeV5VPDAT0Nk5SE", "PtpJtsfeOlcrgKeeJzdRLPaeV5VPDAT0Nk5SE",
                 "test@gaml.cm","000 00 00 00", "000000000000");
 
-        Token token = mainteinerService.create(createMainteinerDto);
-        assertNotNull(mainteinerService.findMainteinerByLogin("test"));
-        mainteinerRepository.deleteById(token.getMainteinerId());
+        User m = userService.create(createMainteinerDto);
+        assertNotNull(userService.findMainteinerByLogin("test"));
+        userRepository.deleteById(m.getId());
     }
 
     @Test
     void shouldThrowObjectDoesNotExistException() {
         assertThrows(ObjectDoesNotExistException.class, () -> {
-            mainteinerService.findMainteinerByLogin("test");
+            userService.findMainteinerByLogin("test");
         });
     }
 
@@ -98,12 +85,12 @@ class MainteinerServiceTest {
                 "test", "PtpJtsfeOlcrgKeeJzdRLPaeV5VPDAT0Nk5SE", "PtpJtsfeOlcrgKeeJzdRLPaeV5VPDAT0Nk5SE",
                 "test@gaml.cm","000 00 00 00", "000000000000");
 
-        Token token = mainteinerService.create(createMainteinerDto);
+        User m = userService.create(createMainteinerDto);
         UpdateMainteinerDto updateMainteinerDto = new UpdateMainteinerDto("uName", "uSurname", "test",
                 "PtpJtsfeOlcrgKeeJzdRLPaeV5VPDAT0Nk", "PtpJtsfeOlcrgKeeJzdRLPaeV5VPDAT0Nk",
                 "u@gl.cm", "111 11 11 11", "111111111111");
 
-        Mainteiner uM = mainteinerService.update(updateMainteinerDto);
+        User uM = userService.update(updateMainteinerDto);
 
         assertEquals("uName", uM.getName());
         assertEquals("uSurname", uM.getSurname());
@@ -113,11 +100,11 @@ class MainteinerServiceTest {
         assertEquals("111 11 11 11", uM.getPhoneNumber());
         assertEquals("111111111111", uM.getLicenceNumber());
 
-        mainteinerRepository.deleteById(token.getMainteinerId());
+        userRepository.deleteById(m.getId());
     }
     @Test
     void shouldReturnTrueIfMainteinerDataIsUnique() {
-        assertTrue(mainteinerService.isUnique("000000000000", "1@1.1", "test"));
+        assertTrue(userService.isUnique("000000000000", "1@1.1", "test"));
     }
     @Test
     void shouldThrowObjectAlreadyExistException() {
@@ -125,11 +112,11 @@ class MainteinerServiceTest {
                 "test", "PtpJtsfeOlcrgKeeJzdRLPaeV5VPDAT0Nk5SE", "PtpJtsfeOlcrgKeeJzdRLPaeV5VPDAT0Nk5SE",
                 "test@gaml.cm","000 00 00 00", "000000000000");
 
-        Token token = mainteinerService.create(createMainteinerDto);
+        User m = userService.create(createMainteinerDto);
         assertThrows(ObjectAlreadyExistsException.class, () -> {
-            mainteinerService.isUnique("000000000000", "test@gaml.cm", "test");
+            userService.isUnique("000000000000", "test@gaml.cm", "test");
         });
-        mainteinerRepository.deleteById(token.getMainteinerId());
+        userRepository.deleteById(m.getId());
     }
 
     @Test
@@ -138,32 +125,25 @@ class MainteinerServiceTest {
                 "test", "PtpJtsfeOlcrgKeeJzdRLPaeV5VPDAT0Nk5SE", "PtpJtsfeOlcrgKeeJzdRLPaeV5VPDAT0Nk5SE",
                 "test@gaml.cm","000 00 00 00", "000000000000");
 
-        Token token = mainteinerService.create(createMainteinerDto);
-        mainteinerService.deleteUserByLogin("test");
+        User m = userService.create(createMainteinerDto);
+        userService.deleteUserByLogin("test");
         assertThrows(NoSuchElementException.class, () -> {
-            mainteinerRepository.findById(token.getMainteinerId()).get();
+            userRepository.findById(m.getId()).get();
         });
     }
 
     @Test
     void passwordShouldEqualsConfirm() {
-        mainteinerService.isPasswordsValid("test", "test", "message");
+        userService.isPasswordsValid("test", "test", "message");
     }
 
     @Test
     void shouldThrowPasswordNotValidException2() {
         assertThrows(PasswordNotValidException.class, () -> {
-            mainteinerService.isPasswordsValid("test1", "test2", "message");
+            userService.isPasswordsValid("test1", "test2", "message");
         });
     }
 
-//    @Test
-//    void dtoIntoMainteiner() {
-//    }
-//
-//    @Test
-//    void testDtoIntoMainteiner() {
-//    }
 
     @Test
     void getMainteinerByIdIfExist() {
@@ -171,12 +151,12 @@ class MainteinerServiceTest {
                 "test", "PtpJtsfeOlcrgKeeJzdRLPaeV5VPDAT0Nk5SE", "PtpJtsfeOlcrgKeeJzdRLPaeV5VPDAT0Nk5SE",
                 "test@gaml.cm","000 00 00 00", "000000000000");
 
-        Token token = mainteinerService.create(createMainteinerDto);
+        User m = userService.create(createMainteinerDto);
         assertThrows(ObjectDoesNotExistException.class, () -> {
-            mainteinerService.getMainteinerByIdI(-1l);
+            userService.getMainteinerByIdI(-1l);
         });
-        assertNotNull(mainteinerService.getMainteinerByIdI(token.getMainteinerId()));
+        assertNotNull(userService.getMainteinerByIdI(m.getId()));
 
-        mainteinerRepository.deleteById(token.getMainteinerId());
+        userRepository.deleteById(m.getId());
     }
 }

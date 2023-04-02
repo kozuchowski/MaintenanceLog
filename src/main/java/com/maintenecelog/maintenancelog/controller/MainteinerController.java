@@ -6,11 +6,11 @@ import com.maintenecelog.maintenancelog.dto.UpdateMainteinerDto;
 import com.maintenecelog.maintenancelog.exception.ObjectAlreadyExistsException;
 import com.maintenecelog.maintenancelog.exception.ObjectDoesNotExistException;
 import com.maintenecelog.maintenancelog.exception.PasswordNotValidException;
-import com.maintenecelog.maintenancelog.model.Token;
-import com.maintenecelog.maintenancelog.service.MainteinerService;
-import com.maintenecelog.maintenancelog.model.Mainteiner;
+import com.maintenecelog.maintenancelog.model.User;
+import com.maintenecelog.maintenancelog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
@@ -22,27 +22,27 @@ import java.util.Map;
 @RequestMapping("/mainteiners")
 public class MainteinerController {
 
-    private final MainteinerService mainteinerService;
+    private final UserService userService;
 
     @Autowired
-    public MainteinerController(MainteinerService mainteinerService) {
-        this.mainteinerService = mainteinerService;
+    public MainteinerController(UserService userService) {
+        this.userService = userService;
 
     }
     @PostMapping("/new")
-    public Token create(@Valid @RequestBody CreateMainteinerDto mainteinerDto) {
-        return mainteinerService.create(mainteinerDto);
+    public User create(@Valid @RequestBody CreateMainteinerDto mainteinerDto) {
+        return userService.create(mainteinerDto);
     }
 
     @PostMapping("/")
-    public Token login(@Valid @RequestBody LoginUserDto dto ){
-        return mainteinerService.loginUser(dto);
+    public User login(@Valid @RequestBody LoginUserDto dto ){
+        return userService.loginUser(dto);
     }
 
     @PutMapping("/{login}")
     public String update(@Valid @RequestBody UpdateMainteinerDto dto){
 
-        mainteinerService.update(dto);
+        userService.update(dto);
 
         return "User updated";
     }
@@ -51,14 +51,14 @@ public class MainteinerController {
     @DeleteMapping("/{login}")
     public String delete(@PathVariable String login) {
 
-        mainteinerService.deleteUserByLogin(login);
+        userService.deleteUserByLogin(login);
 
         return "deleted";
     }
 
     @GetMapping("/{login}")
-    public Mainteiner showMainteiner(@PathVariable String login){
-        return mainteinerService.findMainteinerByLogin(login);
+    public User showMainteiner(@PathVariable String login){
+        return userService.findMainteinerByLogin(login);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)

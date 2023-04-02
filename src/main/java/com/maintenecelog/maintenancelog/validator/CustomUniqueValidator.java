@@ -3,7 +3,7 @@ package com.maintenecelog.maintenancelog.validator;
 import com.maintenecelog.maintenancelog.annotation.CustomUnique;
 import com.maintenecelog.maintenancelog.exception.ObjectAlreadyExistsException;
 import com.maintenecelog.maintenancelog.model.Machine;
-import com.maintenecelog.maintenancelog.model.Mainteiner;
+import com.maintenecelog.maintenancelog.model.User;
 import com.maintenecelog.maintenancelog.model.Owner;
 import com.maintenecelog.maintenancelog.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,18 +17,18 @@ import javax.validation.ConstraintValidatorContext;
 @Component
 public class CustomUniqueValidator implements ConstraintValidator<CustomUnique, Object> {
 
-    private MainteinerService mainteinerService;
+    private UserService userService;
     private MachineService machineService;
     private OwnerService ownerService;
 
     private boolean isUnique = true;
 
     @Autowired
-    public CustomUniqueValidator(MainteinerService mainteinerService,
+    public CustomUniqueValidator(UserService userService,
                                  MachineService machineService,
                                  OwnerService ownerService) {
 
-        this.mainteinerService = mainteinerService;
+        this.userService = userService;
         this.machineService = machineService;
         this.ownerService = ownerService;
     }
@@ -42,9 +42,9 @@ public class CustomUniqueValidator implements ConstraintValidator<CustomUnique, 
     public boolean isValid(Object o, ConstraintValidatorContext ctx) {
 
 
-        if(o.getClass().equals(Mainteiner.class)){
-            isUnique = mainteinerService.isUnique(((Mainteiner) o).getLicenceNumber(),
-                    ((Mainteiner) o).getEmail(), ((Mainteiner) o).getLogin());
+        if(o.getClass().equals(User.class)){
+            isUnique = userService.isUnique(((User) o).getLicenceNumber(),
+                    ((User) o).getEmail(), ((User) o).getLogin());
         }
         if(o.getClass().equals(Machine.class)){
             try {

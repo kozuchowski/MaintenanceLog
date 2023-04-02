@@ -28,7 +28,7 @@ public class Machine {
     private String manufacturer;
 
     @ManyToOne
-    private Mainteiner mainteiner;
+    private User user;
 
 
     @ManyToOne
@@ -36,13 +36,13 @@ public class Machine {
 
 
     public Machine(String UDTNumber, String VINNumber, String serialNumber, LocalDate dateOfManufacture,
-                    String manufacturer, Mainteiner mainteiner, Owner owner) {
+                   String manufacturer, User user, Owner owner) {
         this.UDTNumber = UDTNumber;
         this.VINNumber = VINNumber;
         this.serialNumber = serialNumber;
         this.dateOfManufacture = dateOfManufacture;
         this.manufacturer = manufacturer;
-        this.mainteiner = mainteiner;
+        this.user = user;
         this.owner = owner;
 
     }

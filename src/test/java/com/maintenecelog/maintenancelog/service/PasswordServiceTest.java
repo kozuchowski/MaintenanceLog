@@ -2,9 +2,8 @@ package com.maintenecelog.maintenancelog.service;
 
 import com.maintenecelog.maintenancelog.dto.CreateMainteinerDto;
 import com.maintenecelog.maintenancelog.dto.UpdatePasswordDto;
-import com.maintenecelog.maintenancelog.model.Mainteiner;
-import com.maintenecelog.maintenancelog.model.Token;
-import com.maintenecelog.maintenancelog.repository.MainteinerRepository;
+import com.maintenecelog.maintenancelog.model.User;
+import com.maintenecelog.maintenancelog.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,16 +15,16 @@ import static org.junit.jupiter.api.Assertions.*;
 class PasswordServiceTest {
 
     private final PasswordService passwordService;
-    private final MainteinerService mainteinerService;
+    private final UserService userService;
 
-    private final MainteinerRepository mainteinerRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public PasswordServiceTest(PasswordService passwordService, MainteinerService mainteinerService,
-                               MainteinerRepository mainteinerRepository) {
+    public PasswordServiceTest(PasswordService passwordService, UserService userService,
+                               UserRepository userRepository) {
         this.passwordService = passwordService;
-        this.mainteinerService = mainteinerService;
-        this.mainteinerRepository = mainteinerRepository;
+        this.userService = userService;
+        this.userRepository = userRepository;
     }
 
     @Test
@@ -33,16 +32,15 @@ class PasswordServiceTest {
         CreateMainteinerDto createMainteinerDto = new CreateMainteinerDto("Test", "test",
                 "test", "PtpJtsfeOlcrgKeeJzdRLPaeV5VPDAT0Nk5SE", "PtpJtsfeOlcrgKeeJzdRLPaeV5VPDAT0Nk5SE",
                 "test@gaml.cm","000 00 00 00", "000000000000");
-        Token token = mainteinerService.create(createMainteinerDto);
-        Mainteiner m = mainteinerRepository.findById(token.getMainteinerId()).get();
+        User m = userService.create(createMainteinerDto);
 
-        passwordService.update(new UpdatePasswordDto(token.getMainteinerId(), m.getPassword(),
+        passwordService.update(new UpdatePasswordDto(m.getId(), m.getPassword(),
                 "PtpJtsfeOlcrgKeeJzdRLPaeV5VPDAT0N000", "PtpJtsfeOlcrgKeeJzdRLPaeV5VPDAT0N000"));
-        Mainteiner uMainteiner = mainteinerRepository.findById(token.getMainteinerId()).get();
+        User uUser = userRepository.findById(m.getId()).get();
 
-        assertEquals("PtpJtsfeOlcrgKeeJzdRLPaeV5VPDAT0N000", uMainteiner.getPassword());
+        assertEquals("PtpJtsfeOlcrgKeeJzdRLPaeV5VPDAT0N000", uUser.getPassword());
 
-        mainteinerRepository.deleteById(token.getMainteinerId());
+        userRepository.deleteById(m.getId());
     }
 
 }

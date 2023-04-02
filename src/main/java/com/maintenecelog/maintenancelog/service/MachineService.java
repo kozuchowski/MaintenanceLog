@@ -5,10 +5,10 @@ import com.maintenecelog.maintenancelog.dto.UpdateMachineDto;
 import com.maintenecelog.maintenancelog.exception.ObjectAlreadyExistsException;
 import com.maintenecelog.maintenancelog.exception.ObjectDoesNotExistException;
 import com.maintenecelog.maintenancelog.model.Machine;
-import com.maintenecelog.maintenancelog.model.Mainteiner;
+import com.maintenecelog.maintenancelog.model.User;
 import com.maintenecelog.maintenancelog.model.Owner;
 import com.maintenecelog.maintenancelog.repository.MachineRepository;
-import com.maintenecelog.maintenancelog.repository.MainteinerRepository;
+import com.maintenecelog.maintenancelog.repository.UserRepository;
 import com.maintenecelog.maintenancelog.repository.OwnerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,25 +20,25 @@ import java.util.Optional;
 @Service
 public class MachineService {
     private final MachineRepository machineRepository;
-    private final MainteinerRepository mainteinerRepository;
+    private final UserRepository userRepository;
     private final OwnerRepository ownerRepository;
     private final OwnerService ownerService;
 
-    private final MainteinerService mainteinerService;
+    private final UserService userService;
 
     @Autowired
-    public MachineService(MachineRepository machineRepository, MainteinerRepository mainteinerRepository, OwnerRepository ownerRepository, OwnerService ownerService, MainteinerService mainteinerService) {
+    public MachineService(MachineRepository machineRepository, UserRepository userRepository, OwnerRepository ownerRepository, OwnerService ownerService, UserService userService) {
         this.machineRepository = machineRepository;
-        this.mainteinerRepository = mainteinerRepository;
+        this.userRepository = userRepository;
         this.ownerRepository = ownerRepository;
         this.ownerService = ownerService;
-        this.mainteinerService = mainteinerService;
+        this.userService = userService;
     }
 
     public Machine create(CreateMachineDto dto){
 
         isUnique(dto.getUDTNumber(), dto.getVINNumber(), dto.getSerialNumber());
-        Mainteiner mainteiner = mainteinerService.findMainteinerByLogin(dto.getMainteinerLogin());
+        User user = userService.findMainteinerByLogin(dto.getMainteinerLogin());
         Owner owner;
         try {
             owner = ownerService.findOwnerByNIP(dto.getOwnerNIP());
@@ -49,7 +49,7 @@ public class MachineService {
 
 
         Machine machine = new Machine(dto.getUDTNumber(), dto.getVINNumber(), dto.getSerialNumber(),
-                dto.getDateOfManufacture(), dto.getManufacturer(),mainteiner, owner);
+                dto.getDateOfManufacture(), dto.getManufacturer(), user, owner);
 
 
         return machineRepository.save(machine);
@@ -70,13 +70,13 @@ public class MachineService {
     }
 
     public List<Machine> getAllMachinesForTheMainteiner(String login){
-        Mainteiner mainteiner = mainteinerRepository.findByLogin(login);
+        User user = userRepository.findByLogin(login);
 
-        if(mainteiner == null) {
-            throw new ObjectDoesNotExistException("No such mainteiner");
+        if(user == null) {
+            throw new ObjectDoesNotExistException("No such user");
         }
 
-        return machineRepository.findAllByMainteinerId(mainteiner.getId());
+        return machineRepository.findAllByUserId(user.getId());
     }
 
     public List<Machine> getAllMachinesForTheOwner(Long id){
@@ -91,7 +91,7 @@ public class MachineService {
         if(optionalMachine.isEmpty()) {
             throw new ObjectDoesNotExistException("No such machine");
         }
-        Mainteiner mainteiner = mainteinerService.findMainteinerByLogin(dto.getMainteinerLogin());
+        User user = userService.findMainteinerByLogin(dto.getMainteinerLogin());
         Owner owner = ownerService.findOwnerByNIP(dto.getOwnerNIP());
 
         if(owner == null) {
@@ -105,7 +105,7 @@ public class MachineService {
         machine.setDateOfManufacture(dto.getDateOfManufacture());
         machine.setManufacturer(dto.getManufacturer());
         machine.setOwner(owner);
-        machine.setMainteiner(mainteiner);
+        machine.setUser(user);
 
         return machineRepository.save(machine);
     }

@@ -2,8 +2,8 @@ package com.maintenecelog.maintenancelog.service;
 
 import com.maintenecelog.maintenancelog.dto.UpdatePasswordDto;
 import com.maintenecelog.maintenancelog.exception.PasswordNotValidException;
-import com.maintenecelog.maintenancelog.model.Mainteiner;
-import com.maintenecelog.maintenancelog.repository.MainteinerRepository;
+import com.maintenecelog.maintenancelog.model.User;
+import com.maintenecelog.maintenancelog.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,21 +12,21 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class PasswordService {
 
-    private final MainteinerRepository mainteinerRepository;
-    private final MainteinerService mainteinerService;
+    private final UserRepository userRepository;
+    private final UserService userService;
 
     public void update(UpdatePasswordDto dto) {
-        Mainteiner mainteiner= mainteinerService.getMainteinerByIdI(dto.getMainteinerId());
+        User user = userService.getMainteinerByIdI(dto.getMainteinerId());
 
-        if(!mainteiner.getPassword().equals(dto.getPassword())) {
+        if(!user.getPassword().equals(dto.getPassword())) {
             throw new PasswordNotValidException("Password or login not valid");
         }
 
-        if(mainteinerService.isPasswordsValid(dto.getNewPassword(), dto.getConfirmPassword(), "Passwords do not match")) {
-            mainteiner.setPassword(dto.getNewPassword());
+        if(userService.isPasswordsValid(dto.getNewPassword(), dto.getConfirmPassword(), "Passwords do not match")) {
+            user.setPassword(dto.getNewPassword());
         }
 
-        mainteinerRepository.save(mainteiner);
+        userRepository.save(user);
     }
 
 

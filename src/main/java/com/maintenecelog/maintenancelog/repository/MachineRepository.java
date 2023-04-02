@@ -13,7 +13,7 @@ public interface MachineRepository extends JpaRepository<Machine, Long> {
 
     void deleteById(Long id);
 
-    List<Machine> findAllByMainteinerId(Long id);
+    List<Machine> findAllByUserId(Long id);
 
 
     List<Machine> findAllByOwnerId(Long id);

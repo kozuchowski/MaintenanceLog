@@ -5,7 +5,7 @@ import com.maintenecelog.maintenancelog.exception.ObjectDoesNotExistException;
 import com.maintenecelog.maintenancelog.model.Machine;
 import com.maintenecelog.maintenancelog.model.Maintenence;
 import com.maintenecelog.maintenancelog.repository.MachineRepository;
-import com.maintenecelog.maintenancelog.repository.MainteinerRepository;
+import com.maintenecelog.maintenancelog.repository.UserRepository;
 import com.maintenecelog.maintenancelog.repository.MaintenanceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,14 +19,14 @@ public class MaintenaceService {
 
     private final MaintenanceRepository maintenanceRepository;
     private final MachineRepository machineRepository;
-    private final MainteinerRepository mainteinerRepository;
+    private final UserRepository userRepository;
 
     @Autowired
     public MaintenaceService(MaintenanceRepository maintenanceRepository,
-                             MainteinerRepository mainteinerRepository,
+                             UserRepository userRepository,
                              MachineRepository machineRepository) {
         this.maintenanceRepository = maintenanceRepository;
-        this.mainteinerRepository = mainteinerRepository;
+        this.userRepository = userRepository;
         this.machineRepository = machineRepository;
     }
 

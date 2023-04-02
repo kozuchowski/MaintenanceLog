@@ -6,7 +6,7 @@ import com.maintenecelog.maintenancelog.exception.ObjectAlreadyExistsException;
 import com.maintenecelog.maintenancelog.exception.ObjectDoesNotExistException;
 import com.maintenecelog.maintenancelog.model.Machine;
 import com.maintenecelog.maintenancelog.service.MachineService;
-import com.maintenecelog.maintenancelog.service.MainteinerService;
+import com.maintenecelog.maintenancelog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
@@ -23,19 +23,19 @@ public class MachineController {
 
 
     private final MachineService machineService;
-    private final MainteinerService mainteinerService;
+    private final UserService userService;
 
 
 
     @Autowired
-    public MachineController(MachineService machineService, MainteinerService mainteinerService) {
+    public MachineController(MachineService machineService, UserService userService) {
         this.machineService = machineService;
-        this.mainteinerService = mainteinerService;
+        this.userService = userService;
 
 
     }
     @PostMapping("/")
-    public void addMachine(@Valid @RequestBody CreateMachineDto dto) {
+    public void add(@Valid @RequestBody CreateMachineDto dto) {
         machineService.create(dto);
     }
 
@@ -47,13 +47,13 @@ public class MachineController {
 
 
     @GetMapping("/{mainteiner-login}")
-    public List<Machine> getMachinesForMainteiner(@PathVariable("mainteiner-login") String login){
+    public List<Machine> findAllByMainteiner(@PathVariable("mainteiner-login") String login){
 
         return machineService.getAllMachinesForTheMainteiner(login);
     }
 
     @GetMapping("/{owner-id}")
-    public List<Machine> getMachinesForOwner(@PathVariable("owner-id") Long id){
+    public List<Machine> findAllByOwner(@PathVariable("owner-id") Long id){
 
         return machineService.getAllMachinesForTheOwner(id);
     }

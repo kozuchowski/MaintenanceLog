@@ -12,7 +12,7 @@ import javax.validation.constraints.Pattern;
 @AllArgsConstructor
 public class UpdatePasswordDto {
 
-    @NotNull(message = "Mainteiner id is required")
+    @NotNull(message = "User id is required")
     private Long mainteinerId;
 
     @NotNull
